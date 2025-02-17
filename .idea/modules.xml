@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jc-draft-utility.iml" filepath="$PROJECT_DIR$/.idea/modules/jc-draft-utility.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api-app/jc-draft-utility.api-app.iml" filepath="$PROJECT_DIR$/.idea/modules/api-app/jc-draft-utility.api-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api-app/jc-draft-utility.api-app.test.iml" filepath="$PROJECT_DIR$/.idea/modules/api-app/jc-draft-utility.api-app.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/buildSrc/jc-draft-utility.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/buildSrc/jc-draft-utility.buildSrc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/buildSrc/jc-draft-utility.buildSrc.main.iml" filepath="$PROJECT_DIR$/.idea/modules/buildSrc/jc-draft-utility.buildSrc.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/buildSrc/jc-draft-utility.buildSrc.test.iml" filepath="$PROJECT_DIR$/.idea/modules/buildSrc/jc-draft-utility.buildSrc.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cli-app/jc-draft-utility.cli-app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/cli-app/jc-draft-utility.cli-app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cli-app/jc-draft-utility.cli-app.test.iml" filepath="$PROJECT_DIR$/.idea/modules/cli-app/jc-draft-utility.cli-app.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/jc-draft-utility.data.main.iml" filepath="$PROJECT_DIR$/.idea/modules/data/jc-draft-utility.data.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/jc-draft-utility.data.test.iml" filepath="$PROJECT_DIR$/.idea/modules/data/jc-draft-utility.data.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/utility/jc-draft-utility.utility.main.iml" filepath="$PROJECT_DIR$/.idea/modules/utility/jc-draft-utility.utility.main.iml" />
+    </modules>
+  </component>
+</project>
