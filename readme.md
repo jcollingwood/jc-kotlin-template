@@ -2,6 +2,27 @@
 
 Basic kotlin project setup for fast project setup with my updated and preferred tech stack.
 
+The idea is that this will serve as my central catch-all project sample where I can experiment with new tech, maintain
+samples and references, and this project can be cloned and modified to give a fully functional starting point for a new
+project requiring a backend server.
+
+## TODOs
+
+- [x] create new project from template
+- [x] basic project structure
+- [x] OAUTH integration
+- [x] MPA sample
+- [x] HTMX sample
+- [ ] Javascript sample
+- [ ] Database integration sample (SQLite)
+- [ ] Database integration sample (Postgres)
+- [ ] Unit tests sample
+- [ ] GH Actions sample
+- [ ] Docker sample
+- [ ] Infrastructure sample
+- [ ] CI/CD sample
+- [ ] Data viz sample
+
 ## Backend Server:
 
 - [ktor](https://ktor.io/)
@@ -20,4 +41,15 @@ Basic kotlin project setup for fast project setup with my updated and preferred 
 ## Running
 
 To run in development mode with autoreload enabled, run with system property `-Dio.ktor.development=true`
+
+Required environment variables:
+
+- `GOOGLE_CLIENT_ID` - google client id of OAUTH google application
+- `GOOGLE_CLIENT_SECRET` - google client secret of OAUTH google application
+
+Optional environment variables:
+
+- `PORT`
+    - port to run on, defaults to 3333
+    - note: ensure this port value is reflected on OAUTH configured redirect urls
 

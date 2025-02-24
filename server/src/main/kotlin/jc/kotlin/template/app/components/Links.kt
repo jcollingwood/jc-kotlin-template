@@ -1,4 +1,4 @@
-package jc.kotlin.template.app
+package jc.kotlin.template.app.components
 
 import kotlinx.html.FlowOrMetaDataOrPhrasingContent
 import kotlinx.html.link

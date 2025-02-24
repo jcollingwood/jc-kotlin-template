@@ -8,6 +8,8 @@ import kotlinx.serialization.json.Json
 
 /**
  * to be shared and used by all/most services
+ *
+ * using this in place of DI atm
  */
 data class CoreServices(
     val httpClient: HttpClient = HttpClient(CIO) {
