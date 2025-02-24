@@ -16,17 +16,13 @@ import io.ktor.server.routing.routing
 import io.ktor.server.sessions.Sessions
 import io.ktor.server.sessions.cookie
 import io.ktor.server.sessions.sessions
+import jc.kotlin.template.app.components.appHead
 import jc.kotlin.template.app.config.CoreServices
 import jc.kotlin.template.app.config.GOOGLE_CLIENT_ID
 import jc.kotlin.template.app.config.GOOGLE_CLIENT_SECRET
-import jc.kotlin.template.app.htmx
-import jc.kotlin.template.app.matIcons
-import jc.kotlin.template.app.stylesAndFonts
 import kotlinx.html.a
 import kotlinx.html.body
-import kotlinx.html.head
 import kotlinx.html.p
-import kotlinx.html.title
 
 fun Application.authModule(core: CoreServices) {
     install(Sessions) {
@@ -66,12 +62,7 @@ fun Application.authRouting() {
     routing {
         get("/") {
             call.respondHtml {
-                head {
-                    title { +"Login" }
-                    stylesAndFonts()
-                    matIcons()
-                    htmx()
-                }
+                appHead("Login")
                 body {
                     p {
                         a(LOGIN_ROUTE) { +"Login with Google" }
