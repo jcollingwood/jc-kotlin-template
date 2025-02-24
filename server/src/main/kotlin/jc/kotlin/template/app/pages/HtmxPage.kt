@@ -1,11 +1,11 @@
 package jc.kotlin.template.app.pages
 
-import jc.kotlin.template.app.Page
-import jc.kotlin.template.app.hxGet
-import jc.kotlin.template.app.hxIndicator
-import jc.kotlin.template.app.hxSwap
-import jc.kotlin.template.app.hxTarget
-import jc.kotlin.template.app.hxTrigger
+import jc.kotlin.template.app.components.hxGet
+import jc.kotlin.template.app.components.hxIndicator
+import jc.kotlin.template.app.components.hxSwap
+import jc.kotlin.template.app.components.hxTarget
+import jc.kotlin.template.app.components.hxTrigger
+import jc.kotlin.template.app.routes.Page
 import kotlinx.html.FlowContent
 import kotlinx.html.button
 import kotlinx.html.classes

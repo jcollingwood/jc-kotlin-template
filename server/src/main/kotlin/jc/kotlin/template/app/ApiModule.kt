@@ -3,8 +3,6 @@ package jc.kotlin.template.app
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
 import io.ktor.server.plugins.compression.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
@@ -24,19 +22,22 @@ val testUsers = listOf(
     UserDto(3, "Hodor"),
 )
 
-fun main() {
-    embeddedServer(Netty, 8080) {
-        install(ContentNegotiation) {
-            json()
-        }
-        install(CORS) {
-            allowMethod(HttpMethod.Get)
-            anyHost()
-        }
-        install(Compression) {
-            gzip()
-        }
-        routing {
+/**
+ * very basic API module setup to handle json http requests
+ */
+fun Application.apiModule() {
+    install(ContentNegotiation) {
+        json()
+    }
+    install(CORS) {
+        // depends on use case of API what CORS options to allow
+        allowMethod(HttpMethod.Get)
+    }
+    install(Compression) {
+        gzip()
+    }
+    routing {
+        route("/api") {
             get("/users") {
                 call.respond(testUsers)
             }
@@ -45,5 +46,5 @@ fun main() {
                 call.respond(testUsers.find { it.id == playerId } ?: error("User not found"))
             }
         }
-    }.start(wait = true)
+    }
 }

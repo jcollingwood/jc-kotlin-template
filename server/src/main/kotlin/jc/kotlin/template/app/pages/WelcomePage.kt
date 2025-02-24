@@ -1,7 +1,7 @@
 package jc.kotlin.template.app.pages
 
-import jc.kotlin.template.app.Page
 import jc.kotlin.template.app.auth.UserInfo
+import jc.kotlin.template.app.routes.Page
 import kotlinx.html.FlowContent
 import kotlinx.html.classes
 import kotlinx.html.div
