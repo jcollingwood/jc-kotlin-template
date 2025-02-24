@@ -21,3 +21,7 @@ fun HTMLTag.hxTrigger(by: String = "click") {
 fun HTMLTag.hxTarget(target: String = "#content") {
     this.attributes["hx-target"] = target
 }
+
+fun HTMLTag.hxIndicator(target: String = "#content") {
+    this.attributes["hx-indicator"] = target
+}

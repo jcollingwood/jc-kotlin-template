@@ -11,5 +11,4 @@
 
     <logger name="io.netty.util" level="info"/>
     <logger name="io.netty.buffer" level="info"/>
-    <logger name="Exposed" level="info"/>
 </configuration>
