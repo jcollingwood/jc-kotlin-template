@@ -1,4 +1,4 @@
-package jc.kotlin.template.app
+package jc.kotlin.template.server
 
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*

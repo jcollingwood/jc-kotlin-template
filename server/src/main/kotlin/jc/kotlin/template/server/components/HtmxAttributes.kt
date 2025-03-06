@@ -1,4 +1,4 @@
-package jc.kotlin.template.app.components
+package jc.kotlin.template.server.components
 
 import kotlinx.html.HTMLTag
 

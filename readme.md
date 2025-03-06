@@ -1,4 +1,4 @@
-# jc kotlin template
+# Kotlin Template Project
 
 Basic kotlin project setup for fast project setup with my updated and preferred tech stack.
 
@@ -44,12 +44,18 @@ To run in development mode with autoreload enabled, run with system property `-D
 
 Required environment variables:
 
-- `GOOGLE_CLIENT_ID` - google client id of OAUTH google application
-- `GOOGLE_CLIENT_SECRET` - google client secret of OAUTH google application
+- `JC_TEMPLATE_GOOGLE_CLIENT_ID` - google client id of OAUTH google application
+- `JC_TEMPLATE_GOOGLE_CLIENT_SECRET` - google client secret of OAUTH google application
 
 Optional environment variables:
 
 - `PORT`
     - port to run on, defaults to 3333
     - note: ensure this port value is reflected on OAUTH configured redirect urls
+
+To run the app, run the following command:
+
+```bash
+./gradlew run
+```
 

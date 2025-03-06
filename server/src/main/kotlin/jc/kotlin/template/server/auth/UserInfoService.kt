@@ -1,4 +1,4 @@
-package jc.kotlin.template.app.auth
+package jc.kotlin.template.server.auth
 
 import io.ktor.client.request.get
 import io.ktor.client.request.headers
@@ -7,7 +7,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.response.respondRedirect
-import jc.kotlin.template.app.config.CoreServices
+import jc.kotlin.template.server.config.CoreServices
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

@@ -11,7 +11,7 @@ plugins {
 }
 
 application {
-    mainClass.set("jc.kotlin.template.app.AppKt")
+    mainClass.set("jc.kotlin.template.server.ServerMainKt")
 }
 
 dependencies {

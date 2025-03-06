@@ -1,14 +1,14 @@
-package jc.kotlin.template.app.routes
+package jc.kotlin.template.server.routes
 
 import io.ktor.server.html.respondHtml
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import io.ktor.server.routing.route
-import jc.kotlin.template.app.auth.UserInfoService
-import jc.kotlin.template.app.auth.UserSession
-import jc.kotlin.template.app.auth.getSession
-import jc.kotlin.template.app.components.mainTemplate
-import jc.kotlin.template.app.pages.welcomePage
+import jc.kotlin.template.server.auth.UserInfoService
+import jc.kotlin.template.server.auth.UserSession
+import jc.kotlin.template.server.auth.getSession
+import jc.kotlin.template.server.components.mainTemplate
+import jc.kotlin.template.server.pages.welcomePage
 
 fun Route.welcomeRoute(userInfoService: UserInfoService) {
     route(welcomePage.path) {

@@ -1,4 +1,4 @@
-package jc.kotlin.template.app.auth
+package jc.kotlin.template.server.auth
 
 import io.ktor.http.HttpMethod
 import io.ktor.server.application.Application
@@ -16,10 +16,10 @@ import io.ktor.server.routing.routing
 import io.ktor.server.sessions.Sessions
 import io.ktor.server.sessions.cookie
 import io.ktor.server.sessions.sessions
-import jc.kotlin.template.app.components.appHead
-import jc.kotlin.template.app.config.CoreServices
-import jc.kotlin.template.app.config.GOOGLE_CLIENT_ID
-import jc.kotlin.template.app.config.GOOGLE_CLIENT_SECRET
+import jc.kotlin.template.server.components.appHead
+import jc.kotlin.template.server.config.CoreServices
+import jc.kotlin.template.server.config.GOOGLE_CLIENT_ID
+import jc.kotlin.template.server.config.GOOGLE_CLIENT_SECRET
 import kotlinx.html.a
 import kotlinx.html.body
 import kotlinx.html.p

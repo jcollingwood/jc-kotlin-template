@@ -1,4 +1,4 @@
-package jc.kotlin.template.app.config
+package jc.kotlin.template.server.config
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO

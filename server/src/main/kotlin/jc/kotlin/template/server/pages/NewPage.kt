@@ -1,6 +1,6 @@
-package jc.kotlin.template.app.pages
+package jc.kotlin.template.server.pages
 
-import jc.kotlin.template.app.routes.Page
+import jc.kotlin.template.server.routes.Page
 import kotlinx.html.FlowContent
 import kotlinx.html.h1
 import kotlinx.html.p
