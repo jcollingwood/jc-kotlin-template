@@ -1,10 +1,10 @@
-package jc.kotlin.template.app.routes
+package jc.kotlin.template.server.routes
 
 import io.ktor.server.application.Application
 import io.ktor.server.http.content.staticFiles
 import io.ktor.server.routing.routing
-import jc.kotlin.template.app.auth.UserInfoService
-import jc.kotlin.template.app.config.CoreServices
+import jc.kotlin.template.server.auth.UserInfoService
+import jc.kotlin.template.server.config.CoreServices
 import java.io.File
 
 data class Page(val path: String, val title: String)

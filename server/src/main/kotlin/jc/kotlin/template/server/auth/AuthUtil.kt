@@ -1,11 +1,11 @@
-package jc.kotlin.template.app.auth
+package jc.kotlin.template.server.auth
 
 import io.ktor.http.URLBuilder
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.uri
 import io.ktor.server.response.respondRedirect
 import io.ktor.server.sessions.sessions
-import jc.kotlin.template.app.config.PORT
+import jc.kotlin.template.server.config.PORT
 import kotlinx.serialization.Serializable
 
 @Serializable

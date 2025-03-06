@@ -1,11 +1,11 @@
-package jc.kotlin.template.app.pages
+package jc.kotlin.template.server.pages
 
-import jc.kotlin.template.app.components.hxGet
-import jc.kotlin.template.app.components.hxIndicator
-import jc.kotlin.template.app.components.hxSwap
-import jc.kotlin.template.app.components.hxTarget
-import jc.kotlin.template.app.components.hxTrigger
-import jc.kotlin.template.app.routes.Page
+import jc.kotlin.template.server.components.hxGet
+import jc.kotlin.template.server.components.hxIndicator
+import jc.kotlin.template.server.components.hxSwap
+import jc.kotlin.template.server.components.hxTarget
+import jc.kotlin.template.server.components.hxTrigger
+import jc.kotlin.template.server.routes.Page
 import kotlinx.html.FlowContent
 import kotlinx.html.button
 import kotlinx.html.classes

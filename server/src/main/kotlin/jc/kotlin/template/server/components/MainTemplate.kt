@@ -1,9 +1,9 @@
-package jc.kotlin.template.app.components
+package jc.kotlin.template.server.components
 
-import jc.kotlin.template.app.pages.htmxPage
-import jc.kotlin.template.app.pages.newPage
-import jc.kotlin.template.app.pages.welcomePage
-import jc.kotlin.template.app.routes.Page
+import jc.kotlin.template.server.pages.htmxPage
+import jc.kotlin.template.server.pages.newPage
+import jc.kotlin.template.server.pages.welcomePage
+import jc.kotlin.template.server.routes.Page
 import kotlinx.html.FlowContent
 import kotlinx.html.HTML
 import kotlinx.html.body
@@ -17,6 +17,7 @@ fun HTML.mainTemplate(page: Page, content: FlowContent.() -> Unit) {
     body {
         main {
             classes = setOf(
+                "font-inter",
                 "flex",
                 "flex-col",
                 "h-full",

@@ -1,4 +1,4 @@
-package jc.kotlin.template.app.config
+package jc.kotlin.template.server.config
 
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application

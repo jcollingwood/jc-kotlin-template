@@ -1,7 +1,7 @@
-package jc.kotlin.template.app.pages
+package jc.kotlin.template.server.pages
 
-import jc.kotlin.template.app.auth.UserInfo
-import jc.kotlin.template.app.routes.Page
+import jc.kotlin.template.server.auth.UserInfo
+import jc.kotlin.template.server.routes.Page
 import kotlinx.html.FlowContent
 import kotlinx.html.classes
 import kotlinx.html.div
@@ -12,7 +12,9 @@ val welcomePage = Page("/welcome", "Welcome")
 
 fun FlowContent.welcomePage(userInfo: UserInfo) {
     h1(classes = "text-2xl") { +"Welcome" }
-    p { +"You are logged in as ${userInfo.name}" }
+    p {
+        +"You are logged in as ${userInfo.name}"
+    }
     div {
         classes =
             setOf("mt-4", "border", "p-4", "border-gray-200", "rounded-md", "max-w-2xl", "space-y-4")
