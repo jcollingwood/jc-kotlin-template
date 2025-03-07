@@ -5,9 +5,10 @@ import jc.kotlin.template.server.components.hxIndicator
 import jc.kotlin.template.server.components.hxSwap
 import jc.kotlin.template.server.components.hxTarget
 import jc.kotlin.template.server.components.hxTrigger
+import jc.kotlin.template.server.components.inputStyles
+import jc.kotlin.template.server.components.jcButton
 import jc.kotlin.template.server.routes.Page
 import kotlinx.html.FlowContent
-import kotlinx.html.button
 import kotlinx.html.classes
 import kotlinx.html.div
 import kotlinx.html.h1
@@ -22,9 +23,6 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 val sectionStyles = setOf("h-full", "border", "border-gray-400", "p-4", "rounded-md", "shadow-sm", "space-y-4")
-
-// TODO finalize button style components
-val buttonStyles = setOf("border", "border-gray-400", "py-1", "px-3", "rounded-full", "shadow-sm", "hover:bg-gray-100")
 
 val htmxPage = Page("/htmx", "HTMX Page")
 
@@ -71,13 +69,11 @@ fun FlowContent.htmxPage() {
             p {
                 +"This section will reload when you click the button"
             }
-            button {
+            jcButton {
                 hxGet("/htmx/section/3")
                 hxSwap("outerHTML")
                 hxTrigger("click")
                 hxTarget("#htmx-section-3")
-
-                classes = buttonStyles
 
                 +"Reload myself"
             }
@@ -93,13 +89,11 @@ fun FlowContent.htmxPage() {
             p {
                 +"This section will replace section 1 when you click the button"
             }
-            button {
+            jcButton {
                 hxGet("/htmx/section/1")
                 hxSwap("outerHTML")
                 hxTrigger("click")
                 hxTarget("#htmx-section-1")
-
-                classes = buttonStyles
 
                 +"Reload Section 1"
             }
@@ -157,14 +151,12 @@ fun FlowContent.htmxPage() {
                 classes = setOf("htmx-indicator")
                 +"Loading... (set 2s delay on server)"
             }
-            button {
+            jcButton {
                 hxGet("/htmx/section/7?ms_delay=2000")
                 hxSwap("outerHTML swap:1500ms")
                 hxTrigger("click")
                 hxTarget("#htmx-section-7")
                 hxIndicator("#loading-indicator")
-
-                classes = buttonStyles
 
                 +"Reload with delay"
             }
@@ -184,13 +176,11 @@ fun FlowContent.htmxPage() {
             span {
                 classes = setOf("grid", "grid-cols-2", "gap-2")
                 colors.map {
-                    button {
+                    jcButton(extraClasses = setOf("capitalize")) {
                         hxGet("/htmx/section/8?color=${it}")
                         hxSwap("outerHTML")
                         hxTrigger("click")
                         hxTarget("#htmx-section-8")
-
-                        classes = buttonStyles + setOf("capitalize")
 
                         +it
                     }
@@ -214,8 +204,7 @@ fun FlowContent.htmxPage() {
                 hxTrigger("keyup delay:2s")
                 hxTarget("#htmx-section-9")
 
-                classes =
-                    setOf("w-full", "border", "border-gray-400", "py-1", "px-3", "rounded-full", "shadow-sm")
+                classes = inputStyles
 
                 placeholder = "Typing anything"
             }

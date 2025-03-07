@@ -17,6 +17,7 @@ fun Application.appRoutes(core: CoreServices) {
 
         welcomeRoute(userInfoService)
         htmxRoutes()
+        componentsRoutes()
         newRoutes()
     }
 }
