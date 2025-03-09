@@ -1,5 +1,6 @@
 package jc.kotlin.template.server.components
 
+import jc.kotlin.template.server.pages.componentsPage
 import jc.kotlin.template.server.pages.htmxPage
 import jc.kotlin.template.server.pages.newPage
 import jc.kotlin.template.server.pages.welcomePage
@@ -10,7 +11,7 @@ import kotlinx.html.body
 import kotlinx.html.classes
 import kotlinx.html.main
 
-val navPages = setOf(welcomePage, htmxPage, newPage)
+val navPages = setOf(welcomePage, htmxPage, componentsPage, newPage)
 
 fun HTML.mainTemplate(page: Page, content: FlowContent.() -> Unit) {
     appHead(page.title)

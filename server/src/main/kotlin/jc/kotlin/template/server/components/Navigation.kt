@@ -11,7 +11,14 @@ fun FlowContent.navigation(currentPage: Page, navPages: Set<Page>) {
     nav {
         classes = setOf(" min-w-2xl", "flex", "flex-row", "divide-x-2")
 
-        val defaultClasses = setOf("p-1", "px-8", "border-b-2", "border-gray-200", "hover:bg-gray-100")
+        val defaultClasses = setOf(
+            "p-1",
+            "px-8",
+            "border-b-2",
+            "border-gray-200",
+            "hover:bg-gray-100",
+            "active:bg-gray-200"
+        )
         val isCurrentClasses = setOf("font-bold", "border-gray-400")
 
         navPages.map {
