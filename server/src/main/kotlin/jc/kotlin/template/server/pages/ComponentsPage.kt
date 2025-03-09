@@ -4,19 +4,24 @@ import jc.kotlin.template.server.components.ButtonColor
 import jc.kotlin.template.server.components.IconPosition
 import jc.kotlin.template.server.components.cardStyles
 import jc.kotlin.template.server.components.hxGet
+import jc.kotlin.template.server.components.hxPost
 import jc.kotlin.template.server.components.hxSwap
 import jc.kotlin.template.server.components.hxTarget
 import jc.kotlin.template.server.components.inputStyles
 import jc.kotlin.template.server.components.jcButton
 import jc.kotlin.template.server.components.jcCard
+import jc.kotlin.template.server.components.jcIconButton
 import jc.kotlin.template.server.routes.Page
+import kotlinx.html.ButtonType
 import kotlinx.html.FlowContent
 import kotlinx.html.classes
 import kotlinx.html.div
+import kotlinx.html.form
 import kotlinx.html.h1
 import kotlinx.html.h2
 import kotlinx.html.id
 import kotlinx.html.input
+import kotlinx.html.label
 import kotlinx.html.p
 
 data class Component(
@@ -33,7 +38,7 @@ fun FlowContent.componentsPage() {
             classes = setOf("grid", "grid-cols-1", "sm:grid-cols-3", "gap-4", "items-center")
             val componentButtons = listOf(
                 Component("Button", "/components/button"),
-                Component("Input", "/components/input"),
+                Component("Form", "/components/form"),
                 Component("Card", "/components/card")
             )
             componentButtons.map { component ->
@@ -136,23 +141,79 @@ fun FlowContent.buttonComponent() {
             ) {
                 +"Flat"
             }
+            div {
+                classes = setOf("flex", "flex-col", "gap-2")
+                p { +"Icon Buttons" }
+                div {
+                    classes = setOf("flex", "gap-2")
+                    jcIconButton(
+                        icon = "add", buttonColor = ButtonColor(
+                            color = "bg-green-100",
+                            hover = "hover:bg-green-200",
+                            active = "active:bg-green-300",
+                        )
+                    ) {}
+                    jcIconButton("star") {}
+                    jcIconButton(
+                        icon = "bolt",
+                        buttonColor = ButtonColor(
+                            text = "text-white",
+                            hoverText = "hover:text-white",
+                            color = "bg-yellow-500",
+                            hover = "hover:bg-yellow-600",
+                            active = "active:bg-yellow-700",
+                            border = "border-white",
+                            activeBorder = "active:border-white",
+                        )
+                    ) {}
+                }
+            }
         }
     }
 }
 
-fun FlowContent.inputComponent() {
+fun FlowContent.formComponent() {
     div {
         classes = setOf("flex", "flex-col", "gap-4")
         h2 {
             classes = setOf("text-xl")
-            +"Input"
+            +"Form"
         }
         p {
             +"This is an input... nothing crazy here... yet."
         }
-        input {
-            classes = inputStyles
-            placeholder = "Placeholder"
+        form {
+            hxPost("/components/form/submit")
+            hxTarget("#form-result")
+            hxSwap("outerHTML")
+
+            classes = setOf("flex", "flex-col", "gap-3")
+
+            label {
+                +"Input Label"
+            }
+            input {
+                classes = inputStyles
+                placeholder = "Placeholder"
+            }
+
+            // TODO radio button
+
+            // TODO checkbox
+
+            // TODO select
+
+            // TODO textarea
+
+            // TODO disable button until valid form
+            // TODO loading spinner
+            jcButton {
+                type = ButtonType.submit
+                +"Submit"
+            }
+        }
+        p {
+            id = "form-result"
         }
     }
 }

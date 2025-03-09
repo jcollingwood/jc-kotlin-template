@@ -7,7 +7,7 @@ import kotlinx.html.button
 import kotlinx.html.classes
 import kotlinx.html.span
 
-val buttonStyles = setOf("border", "py-1", "px-3", "rounded-md", "shadow-md")
+val buttonStyles = setOf("border", "p-1", "rounded-md", "shadow-md")
 val iconButtonStyles = setOf("flex", "flex-row", "items-center", "justify-center", "gap-1")
 
 // default button color is grayscale with white base
@@ -61,5 +61,27 @@ fun FlowOrInteractiveOrPhrasingContent.jcButton(
             if (iconPosition == IconPosition.AFTER) iconSpan(icon)
 
         }
+    }
+}
+
+fun FlowOrInteractiveOrPhrasingContent.jcIconButton(
+    icon: String, buttonColor: ButtonColor = ButtonColor(),
+    contents: BUTTON.() -> Unit
+) {
+    val styles = buttonStyles + setOf(
+        "!p-2",
+        "!rounded-full",
+        buttonColor.text,
+        buttonColor.hoverText,
+        buttonColor.color,
+        buttonColor.border,
+        buttonColor.hover,
+        buttonColor.active,
+        buttonColor.activeBorder
+    )
+    button {
+        classes = styles + iconButtonStyles
+        contents()
+        iconSpan(icon)
     }
 }
