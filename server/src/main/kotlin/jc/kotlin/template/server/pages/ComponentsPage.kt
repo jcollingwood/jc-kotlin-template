@@ -1,17 +1,28 @@
 package jc.kotlin.template.server.pages
 
+import jc.kotlin.template.server.components.ButtonColor
+import jc.kotlin.template.server.components.IconPosition
+import jc.kotlin.template.server.components.cardStyles
 import jc.kotlin.template.server.components.hxGet
 import jc.kotlin.template.server.components.hxSwap
 import jc.kotlin.template.server.components.hxTarget
+import jc.kotlin.template.server.components.inputStyles
 import jc.kotlin.template.server.components.jcButton
+import jc.kotlin.template.server.components.jcCard
 import jc.kotlin.template.server.routes.Page
 import kotlinx.html.FlowContent
 import kotlinx.html.classes
 import kotlinx.html.div
 import kotlinx.html.h1
+import kotlinx.html.h2
 import kotlinx.html.id
+import kotlinx.html.input
 import kotlinx.html.p
 
+data class Component(
+    val name: String,
+    val route: String
+)
 
 val componentsPage = Page("/components", "Components")
 fun FlowContent.componentsPage() {
@@ -20,20 +31,23 @@ fun FlowContent.componentsPage() {
         classes = setOf("flex", "flex-col", "w-full", "items-center", "mt-4", "gap-4")
         div {
             classes = setOf("grid", "grid-cols-1", "sm:grid-cols-3", "gap-4", "items-center")
-            jcButton {
-                hxGet("/components/button")
-                hxTarget("#component-area")
-                hxSwap("innerHTML")
-
-                +"Button"
-            }
-            jcButton {
-                +"Input"
+            val componentButtons = listOf(
+                Component("Button", "/components/button"),
+                Component("Input", "/components/input"),
+                Component("Card", "/components/card")
+            )
+            componentButtons.map { component ->
+                jcButton {
+                    hxGet(component.route)
+                    hxTarget("#component-area")
+                    hxSwap("innerHTML")
+                    +component.name
+                }
             }
         }
         div {
             id = "component-area"
-            classes = setOf("w-1/2", "p-4", "py-12", "border", "border-gray-200", "rounded-md", "items-center")
+            classes = cardStyles + setOf("!w-1/2", "p-4", "py-4")
             p {
                 classes = setOf("text-center")
                 +"Select a component to test"
@@ -44,24 +58,130 @@ fun FlowContent.componentsPage() {
 
 fun FlowContent.buttonComponent() {
     div {
-        classes = setOf("grid", "grid-cols-1", "sm:grid-cols-2", "w-full", "items-center", "gap-4")
-        jcButton {
-            +"Default"
+        classes = setOf("flex", "flex-col", "gap-4")
+        h2 {
+            classes = setOf("text-xl")
+            +"Button"
         }
-        jcButton(setOf("border-red-400", "bg-red-100", "hover:bg-red-500", "hover:text-white")) {
-            +"Snazzy Styles"
+        p {
+            +"""
+            Default button styling can be configured in one spot. 
+            Color overrides are available via a typed object. 
+            Basic icon configuration either before or after the text is supported. 
+            Additionally, extra classes are supported as additional arguments to accommodate button styling.
+            """
         }
-        jcButton(setOf("hover:bg-green-100")) {
-            +"Green Hover"
+        div {
+            classes = setOf("grid", "grid-cols-1", "sm:grid-cols-2", "w-full", "items-center", "gap-4")
+            jcButton {
+                +"Default"
+            }
+            jcButton(
+                buttonColor = ButtonColor(
+                    hoverText = "hover:text-white",
+                    color = "bg-red-100",
+                    hover = "hover:bg-red-400",
+                    active = "active:bg-red-500",
+                    border = "border-red-400",
+                    activeBorder = "active:border-red-300"
+                )
+            ) {
+                +"Snazzy Styles"
+            }
+            jcButton(
+                buttonColor = ButtonColor(
+                    hover = "hover:bg-green-100",
+                    active = "active:bg-green-200",
+                )
+            ) {
+
+                +"Green Hover"
+            }
+            jcButton(setOf("font-bold")) {
+                +"Bold"
+            }
+            jcButton(setOf("!rounded-full")) {
+                +"Rounded"
+            }
+            jcButton(
+                setOf("rounded-none"),
+                buttonColor = ButtonColor(
+                    text = "text-white",
+                    hoverText = "hover:text-white",
+                    color = "bg-gray-500",
+                    hover = "hover:bg-gray-600",
+                    active = "active:bg-black"
+                )
+            ) {
+                +"Serious"
+            }
+            jcButton(icon = "add") {
+                +"Icon"
+            }
+            jcButton(icon = "chevron_right", iconPosition = IconPosition.AFTER) {
+                +"Alt Icon"
+            }
+            jcButton(setOf("!shadow-lg")) {
+                +"Extra Shadow"
+            }
+            jcButton(
+                setOf("border-none"),
+                buttonColor = ButtonColor(
+                    text = "text-white",
+                    hoverText = "hover:text-white",
+                    color = "bg-blue-500",
+                    hover = "hover:bg-blue-600",
+                    active = "active:bg-blue-700"
+                )
+            ) {
+                +"Flat"
+            }
         }
-        jcButton(setOf("font-bold", "text-24")) {
-            +"Large and Bold"
+    }
+}
+
+fun FlowContent.inputComponent() {
+    div {
+        classes = setOf("flex", "flex-col", "gap-4")
+        h2 {
+            classes = setOf("text-xl")
+            +"Input"
         }
-        jcButton(setOf("rounded-full")) {
-            +"Rounded"
+        p {
+            +"This is an input... nothing crazy here... yet."
         }
-        jcButton(setOf("bg-black", "text-white", "hover:bg-gray-500", "rounded-none")) {
-            +"Serious"
+        input {
+            classes = inputStyles
+            placeholder = "Placeholder"
+        }
+    }
+}
+
+fun FlowContent.cardComponent() {
+    div {
+        classes = setOf("flex", "flex-col", "gap-4")
+        h2 {
+            classes = setOf("text-xl")
+            +"Card"
+        }
+        p {
+            +"""
+            Also boring... 
+            basic card available as component or basic styles constant is also a viable solution.
+            Cards by default will take up the entire width given by their parent.
+            """
+        }
+        jcCard {
+            +"This is a standard card... cardception..."
+        }
+        div {
+            classes = setOf("grid", "grid-cols-1", "sm:grid-cols-2", "gap-4")
+            jcCard { +"These" }
+            jcCard { +"Cards" }
+            jcCard { +"Are" }
+            jcCard { +"In" }
+            jcCard { +"A" }
+            jcCard { +"Grid" }
         }
     }
 }

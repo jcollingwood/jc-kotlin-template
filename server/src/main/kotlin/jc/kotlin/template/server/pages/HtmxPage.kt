@@ -1,5 +1,6 @@
 package jc.kotlin.template.server.pages
 
+import jc.kotlin.template.server.components.cardStyles
 import jc.kotlin.template.server.components.hxGet
 import jc.kotlin.template.server.components.hxIndicator
 import jc.kotlin.template.server.components.hxSwap
@@ -34,7 +35,7 @@ fun FlowContent.htmxPage() {
 
         section {
             id = "htmx-section-1"
-            classes = sectionStyles
+            classes = cardStyles
             h2 {
                 classes = setOf("text-xl")
                 +"HTMX Section 1"
@@ -46,7 +47,7 @@ fun FlowContent.htmxPage() {
 
         section {
             id = "htmx-section-2"
-            classes = sectionStyles
+            classes = cardStyles
             hxGet("/htmx/section/2")
             hxSwap("outerHTML")
             hxTrigger("load delay:1000ms")
@@ -61,7 +62,7 @@ fun FlowContent.htmxPage() {
 
         section {
             id = "htmx-section-3"
-            classes = sectionStyles
+            classes = cardStyles
             h2 {
                 classes = setOf("text-xl")
                 +"HTMX Section 3"
@@ -81,7 +82,7 @@ fun FlowContent.htmxPage() {
 
         section {
             id = "htmx-section-4"
-            classes = sectionStyles
+            classes = cardStyles
             h2 {
                 classes = setOf("text-xl")
                 +"HTMX Section 4"
@@ -106,7 +107,7 @@ fun FlowContent.htmxPage() {
             hxSwap("outerHTML")
             section {
                 id = "htmx-section-5"
-                classes = sectionStyles
+                classes = cardStyles
                 h2 {
                     classes = setOf("text-xl")
                     +"HTMX Section 5"
@@ -119,7 +120,7 @@ fun FlowContent.htmxPage() {
 
         section {
             id = "htmx-section-6"
-            classes = sectionStyles + setOf("hover:bg-gray-100")
+            classes = cardStyles + setOf("hover:bg-gray-100")
             hxGet("/htmx/section/6")
             hxSwap("outerHTML")
             hxTrigger("mouseenter delay:500ms")
@@ -138,7 +139,7 @@ fun FlowContent.htmxPage() {
 
         section {
             id = "htmx-section-7"
-            classes = sectionStyles
+            classes = cardStyles
             h2 {
                 classes = setOf("text-xl")
                 +"HTMX Section 7"
@@ -164,7 +165,7 @@ fun FlowContent.htmxPage() {
 
         section {
             id = "htmx-section-8"
-            classes = sectionStyles
+            classes = cardStyles
             h2 {
                 classes = setOf("text-xl")
                 +"HTMX Section 8"
@@ -190,7 +191,7 @@ fun FlowContent.htmxPage() {
 
         section {
             id = "htmx-section-9"
-            classes = sectionStyles
+            classes = cardStyles
             h2 {
                 classes = setOf("text-xl")
                 +"HTMX Section 9"
@@ -223,7 +224,7 @@ fun FlowContent.genericHtmxSection(sectionNum: Int, color: String? = null) {
         else if (color == "yellow") "bg-yellow-100"
         else bgs.random()
 
-        classes = sectionStyles + setOf(background)
+        classes = cardStyles + setOf(background)
         h2 {
             classes = setOf("text-xl")
             +"HTMX Section $sectionNum"

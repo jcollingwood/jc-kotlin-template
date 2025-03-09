@@ -1,6 +1,7 @@
 package jc.kotlin.template.server.pages
 
 import jc.kotlin.template.server.auth.UserInfo
+import jc.kotlin.template.server.components.jcCard
 import jc.kotlin.template.server.routes.Page
 import kotlinx.html.FlowContent
 import kotlinx.html.classes
@@ -16,14 +17,18 @@ fun FlowContent.welcomePage(userInfo: UserInfo) {
         +"You are logged in as ${userInfo.name}"
     }
     div {
-        classes =
-            setOf("mt-4", "border", "p-4", "border-gray-200", "rounded-md", "max-w-2xl", "space-y-4")
-        p { +"This is a template project for Kotlin web development with Ktor and Htmx." }
-        p {
-            +"""
-                This project is intended to be a starting point for a fast project setup with my updated and preferred tech stack.
-                Experimentation on this isolated project allows me to test new technologies as well as upgrades in a core project before adopting across all projects using this core tech stack.
-            """
+        classes = setOf("max-w-2xl")
+        jcCard {
+            p { +"This is a template project for Kotlin web development with Ktor and Htmx." }
+            p {
+                +"""
+                This project is intended to be a starting point for a fast 
+                project setup with my updated and preferred tech stack.
+                Experimentation on this isolated project allows me to test new 
+                technologies as well as upgrades in a core project before adopting 
+                across all projects using this core tech stack.
+                """
+            }
         }
     }
 }
