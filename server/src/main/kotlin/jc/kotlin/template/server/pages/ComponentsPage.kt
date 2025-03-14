@@ -1,5 +1,6 @@
 package jc.kotlin.template.server.pages
 
+import io.ktor.http.Parameters
 import jc.kotlin.template.server.components.ButtonColor
 import jc.kotlin.template.server.components.IconPosition
 import jc.kotlin.template.server.components.cardStyles
@@ -14,15 +15,23 @@ import jc.kotlin.template.server.components.jcIconButton
 import jc.kotlin.template.server.routes.Page
 import kotlinx.html.ButtonType
 import kotlinx.html.FlowContent
+import kotlinx.html.InputType
 import kotlinx.html.classes
+import kotlinx.html.dd
 import kotlinx.html.div
+import kotlinx.html.dl
+import kotlinx.html.dt
 import kotlinx.html.form
 import kotlinx.html.h1
 import kotlinx.html.h2
+import kotlinx.html.h3
+import kotlinx.html.hr
 import kotlinx.html.id
 import kotlinx.html.input
 import kotlinx.html.label
 import kotlinx.html.p
+import kotlinx.html.section
+import kotlinx.html.span
 
 data class Component(
     val name: String,
@@ -180,21 +189,41 @@ fun FlowContent.formComponent() {
             +"Form"
         }
         p {
-            +"This is an input... nothing crazy here... yet."
+            +"Sample form to showcase HTMX form submission and it's bells and whistles"
         }
         form {
             hxPost("/components/form/submit")
             hxTarget("#form-result")
             hxSwap("outerHTML")
 
-            classes = setOf("flex", "flex-col", "gap-3")
+            classes = setOf("flex", "flex-col", "gap-4")
 
-            label {
-                +"Input Label"
+            span {
+                label {
+                    +"First Input"
+                }
+                input {
+                    classes = inputStyles
+
+                    type = InputType.text
+                    name = "first_input"
+
+                    placeholder = "Placeholder"
+                }
             }
-            input {
-                classes = inputStyles
-                placeholder = "Placeholder"
+
+            span {
+                label {
+                    +"Second Input w/ Validations"
+                }
+                input {
+                    classes = inputStyles
+
+                    type = InputType.text
+                    name = "second_input"
+
+                    placeholder = "This one get's validated"
+                }
             }
 
             // TODO radio button
@@ -207,13 +236,38 @@ fun FlowContent.formComponent() {
 
             // TODO disable button until valid form
             // TODO loading spinner
-            jcButton {
-                type = ButtonType.submit
-                +"Submit"
+            span {
+                jcButton {
+                    type = ButtonType.submit
+                    +"Submit"
+                }
             }
         }
-        p {
+        div {
             id = "form-result"
+        }
+    }
+}
+
+fun FlowContent.formSubmission(parameters: Parameters) {
+    val firstInput = parameters["first_input"].toString()
+    val secondInput = parameters["second_input"].toString()
+
+    div {
+        id = "form-result"
+
+        hr("my-4")
+
+        section("flex flex-col gap-2") {
+            h3("text-lg") {
+                +"Form submitted!"
+            }
+            dl("grid grid-cols-2 gap-2") {
+                dt("font-bold") { +"First Input:" }
+                dd { +firstInput }
+                dt("font-bold") { +"Second Input:" }
+                dd { +secondInput }
+            }
         }
     }
 }
