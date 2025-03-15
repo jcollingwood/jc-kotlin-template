@@ -7,11 +7,17 @@ import jc.kotlin.template.server.components.cardStyles
 import jc.kotlin.template.server.components.hxGet
 import jc.kotlin.template.server.components.hxPost
 import jc.kotlin.template.server.components.hxSwap
+import jc.kotlin.template.server.components.hxSwapOob
+import jc.kotlin.template.server.components.hxSync
 import jc.kotlin.template.server.components.hxTarget
+import jc.kotlin.template.server.components.hxTrigger
+import jc.kotlin.template.server.components.iconButtonStyles
+import jc.kotlin.template.server.components.iconSpan
 import jc.kotlin.template.server.components.inputStyles
 import jc.kotlin.template.server.components.jcButton
 import jc.kotlin.template.server.components.jcCard
 import jc.kotlin.template.server.components.jcIconButton
+import jc.kotlin.template.server.components.required
 import jc.kotlin.template.server.routes.Page
 import kotlinx.html.ButtonType
 import kotlinx.html.FlowContent
@@ -150,6 +156,18 @@ fun FlowContent.buttonComponent() {
             ) {
                 +"Flat"
             }
+            jcButton(
+                iconButtonStyles
+            ) {
+                +"Loading Spinner"
+                iconSpan("progress_activity", setOf("animate-spin"))
+            }
+            jcButton(
+                extraClasses = setOf("animate-bounce")
+
+            ) {
+                +":)"
+            }
             div {
                 classes = setOf("flex", "flex-col", "gap-2")
                 p { +"Icon Buttons" }
@@ -198,7 +216,10 @@ fun FlowContent.formComponent() {
 
             classes = setOf("flex", "flex-col", "gap-4")
 
+            val formFieldStyles = setOf("flex", "flex-col", "gap-2")
+
             span {
+                classes = formFieldStyles
                 label {
                     +"First Input"
                 }
@@ -213,16 +234,27 @@ fun FlowContent.formComponent() {
             }
 
             span {
+                classes = formFieldStyles
                 label {
+                    required()
                     +"Second Input w/ Validations"
                 }
                 input {
+                    hxPost("/components/form/validate")
+                    hxTrigger("change")
+                    hxSwap()
+                    hxSync()
+
                     classes = inputStyles
 
                     type = InputType.text
                     name = "second_input"
+                    required = true
 
-                    placeholder = "This one get's validated"
+                    placeholder = "Must be between 3 and 10 characters"
+                }
+                p {
+                    id = "second_input_error"
                 }
             }
 
@@ -235,10 +267,15 @@ fun FlowContent.formComponent() {
             // TODO textarea
 
             // TODO disable button until valid form
-            // TODO loading spinner
             span {
-                jcButton {
+                classes = setOf("mt-4")
+                jcButton(iconButtonStyles + setOf("pr-10")) {
                     type = ButtonType.submit
+
+                    iconSpan(
+                        icon = "progress_activity",
+                        extraClasses = setOf("htmx-indicator", "animate-spin")
+                    )
                     +"Submit"
                 }
             }
@@ -253,23 +290,76 @@ fun FlowContent.formSubmission(parameters: Parameters) {
     val firstInput = parameters["first_input"].toString()
     val secondInput = parameters["second_input"].toString()
 
+    // simulating longer submission delay
+    Thread.sleep(2000)
+
+    val errorMap = validateForm(parameters)
+
     div {
         id = "form-result"
 
         hr("my-4")
 
-        section("flex flex-col gap-2") {
-            h3("text-lg") {
-                +"Form submitted!"
+        // show results if no errors
+        if (errorMap.values.all { it == null }) {
+            section("flex flex-col gap-2") {
+                h3("text-lg") {
+                    +"Form submitted!"
+                }
+                dl("grid grid-cols-2 gap-2") {
+                    dt("font-bold") { +"First Input:" }
+                    dd { +firstInput }
+                    dt("font-bold") { +"Second Input:" }
+                    dd { +secondInput }
+                }
             }
-            dl("grid grid-cols-2 gap-2") {
-                dt("font-bold") { +"First Input:" }
-                dd { +firstInput }
-                dt("font-bold") { +"Second Input:" }
-                dd { +secondInput }
+        } else {
+            // else show errors
+            p("text-red-600") {
+                +"Form has errors"
             }
+            showValidationErrors(errorMap)
         }
     }
+}
+
+fun validateForm(parameters: Parameters): Map<String, String?> {
+    val errorMap = mutableMapOf<String, String?>()
+
+    val secondInput = parameters["second_input"].toString()
+    errorMap["second_input"] = if (secondInput.isEmpty()) {
+        "This field is required"
+    } else if (secondInput.length < 3) {
+        "This field must be at least 3 characters"
+    } else if (secondInput.length > 10) {
+        "This field must be less than 10 characters"
+    } else {
+        null
+    }
+
+    return errorMap
+}
+
+fun FlowContent.showValidationErrors(errorMap: Map<String, String?>) {
+    errorMap.forEach { (key, value) ->
+        val formId = "${key}_error"
+        value?.let {
+            p {
+                hxSwapOob()
+                id = formId
+                classes = setOf("text-red-600", "text-sm")
+                +it
+            }
+        } ?: p {
+            hxSwapOob()
+            id = formId
+        }
+    }
+}
+
+fun FlowContent.formValidation(parameters: Parameters) {
+    val errorMap = validateForm(parameters)
+    showValidationErrors(errorMap)
 }
 
 fun FlowContent.cardComponent() {

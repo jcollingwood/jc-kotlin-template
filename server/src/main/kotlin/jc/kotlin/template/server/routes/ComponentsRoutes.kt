@@ -13,6 +13,7 @@ import jc.kotlin.template.server.pages.cardComponent
 import jc.kotlin.template.server.pages.componentsPage
 import jc.kotlin.template.server.pages.formComponent
 import jc.kotlin.template.server.pages.formSubmission
+import jc.kotlin.template.server.pages.formValidation
 import kotlinx.html.body
 
 fun Route.componentsRoutes() {
@@ -40,6 +41,17 @@ fun Route.componentsRoutes() {
                 call.respondHtml {
                     body {
                         formComponent()
+                    }
+                }
+            }
+            post("validate") {
+                getSession(call) ?: return@post
+
+                val formParameters = call.receiveParameters()
+
+                call.respondHtml {
+                    body {
+                        formValidation(formParameters)
                     }
                 }
             }

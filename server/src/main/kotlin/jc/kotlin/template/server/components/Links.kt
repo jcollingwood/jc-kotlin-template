@@ -7,6 +7,7 @@ import kotlinx.html.script
 fun FlowOrMetaDataOrPhrasingContent.stylesAndFonts() {
     // tailwind css stylesheet
     link(rel = "stylesheet", href = "/static/styles.css", type = "text/css")
+    link(rel = "stylesheet", href = "/static/jc_styles.css", type = "text/css")
 
     // google fonts + Inter font
     link(rel = "preconnect", href = "https://fonts.googleapis.com")

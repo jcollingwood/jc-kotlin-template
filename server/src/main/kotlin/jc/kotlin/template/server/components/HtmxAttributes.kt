@@ -25,3 +25,11 @@ fun HTMLTag.hxTarget(target: String = "#content") {
 fun HTMLTag.hxIndicator(target: String = "#content") {
     this.attributes["hx-indicator"] = target
 }
+
+fun HTMLTag.hxSwapOob() {
+    this.attributes["hx-swap-oob"] = "true"
+}
+
+fun HTMLTag.hxSync(on: String = "closest form:abort") {
+    this.attributes["hx-sync"] = on
+}

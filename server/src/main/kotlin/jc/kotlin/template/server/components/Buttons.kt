@@ -7,7 +7,7 @@ import kotlinx.html.button
 import kotlinx.html.classes
 import kotlinx.html.span
 
-val buttonStyles = setOf("border", "p-1", "rounded-md", "shadow-md")
+val buttonStyles = setOf("border", "py-1", "px-3", "rounded-md", "shadow-md")
 val iconButtonStyles = setOf("flex", "flex-row", "items-center", "justify-center", "gap-1")
 
 // default button color is grayscale with white base
@@ -25,9 +25,9 @@ enum class IconPosition {
     BEFORE, AFTER
 }
 
-fun FlowContent.iconSpan(icon: String) {
+fun FlowContent.iconSpan(icon: String, extraClasses: Set<String> = setOf()) {
     span {
-        classes = setOf("material-symbols-outlined")
+        classes = setOf("material-symbols-outlined") + extraClasses
         +icon
     }
 }
