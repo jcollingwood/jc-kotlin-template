@@ -1,19 +1,11 @@
 package jc.kotlin.template.server.routes
 
-import io.ktor.server.html.respondHtml
-import io.ktor.server.request.receiveParameters
-import io.ktor.server.routing.Route
-import io.ktor.server.routing.get
-import io.ktor.server.routing.post
-import io.ktor.server.routing.route
+import io.ktor.server.html.*
+import io.ktor.server.request.*
+import io.ktor.server.routing.*
 import jc.kotlin.template.server.auth.getSession
 import jc.kotlin.template.server.components.mainTemplate
-import jc.kotlin.template.server.pages.buttonComponent
-import jc.kotlin.template.server.pages.cardComponent
-import jc.kotlin.template.server.pages.componentsPage
-import jc.kotlin.template.server.pages.formComponent
-import jc.kotlin.template.server.pages.formSubmission
-import jc.kotlin.template.server.pages.formValidation
+import jc.kotlin.template.server.pages.components.*
 import kotlinx.html.body
 
 fun Route.componentsRoutes() {
@@ -47,11 +39,12 @@ fun Route.componentsRoutes() {
             post("validate") {
                 getSession(call) ?: return@post
 
+                val input = call.pathParameters["input"] ?: ""
                 val formParameters = call.receiveParameters()
 
                 call.respondHtml {
                     body {
-                        formValidation(formParameters)
+                        formValidation(input, formParameters)
                     }
                 }
             }

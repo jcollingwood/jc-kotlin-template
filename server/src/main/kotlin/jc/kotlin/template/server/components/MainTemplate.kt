@@ -1,15 +1,11 @@
 package jc.kotlin.template.server.components
 
-import jc.kotlin.template.server.pages.componentsPage
+import jc.kotlin.template.server.pages.components.componentsPage
 import jc.kotlin.template.server.pages.htmxPage
 import jc.kotlin.template.server.pages.newPage
 import jc.kotlin.template.server.pages.welcomePage
 import jc.kotlin.template.server.routes.Page
-import kotlinx.html.FlowContent
-import kotlinx.html.HTML
-import kotlinx.html.body
-import kotlinx.html.classes
-import kotlinx.html.main
+import kotlinx.html.*
 
 val navPages = setOf(welcomePage, htmxPage, componentsPage, newPage)
 
