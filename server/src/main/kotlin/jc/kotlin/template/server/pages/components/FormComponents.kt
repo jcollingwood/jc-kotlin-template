@@ -57,6 +57,14 @@ fun FlowContent.formSubmission(parameters: Parameters) {
     val secondInput = parameters["second_input"].toString()
     val firstRadioGroup = parameters["first_radio_group"].toString()
     val secondRadioGroup = parameters["second_radio_group"].toString()
+    val firstCheckboxOne = parameters["first_checkbox_one"].toString()
+    val firstCheckboxTwo = parameters["first_checkbox_two"].toString()
+    val firstCheckboxThree = parameters["first_checkbox_three"].toString()
+    val secondCheckboxYellow = parameters["second_checkbox_yellow"].toString()
+    val secondCheckboxBlue = parameters["second_checkbox_blue"].toString()
+    val secondCheckboxRed = parameters["second_checkbox_red"].toString()
+    val firstSelect = parameters["first_select"].toString()
+    val firstTextarea = parameters["first_textarea"].toString()
 
     // simulating longer submission delay
     Thread.sleep(2000)
@@ -83,6 +91,25 @@ fun FlowContent.formSubmission(parameters: Parameters) {
                     dd { +firstRadioGroup }
                     dt("font-bold") { +"Favorite Color:" }
                     dd { +secondRadioGroup }
+
+                    dt("font-bold") { +"Likes One:" }
+                    dd { +(if (firstCheckboxOne == "one") "yes" else "no") }
+                    dt("font-bold") { +"Likes Two:" }
+                    dd { +(if (firstCheckboxTwo == "two") "yes" else "no") }
+                    dt("font-bold") { +"Likes Three:" }
+                    dd { +(if (firstCheckboxThree == "three") "yes" else "no") }
+
+                    dt("font-bold") { +"Likes Yellow:" }
+                    dd { +(if (secondCheckboxYellow == "yellow") "yes" else "no") }
+                    dt("font-bold") { +"Likes Blue:" }
+                    dd { +(if (secondCheckboxBlue == "blue") "yes" else "no") }
+                    dt("font-bold") { +"Likes Red:" }
+                    dd { +(if (secondCheckboxRed == "red") "yes" else "no") }
+
+                    dt("font-bold") { +"First Select" }
+                    dd { +firstSelect }
+                    dt("font-bold") { +"First Textarea" }
+                    dd { +firstTextarea }
                 }
             }
             showValidationErrors(errorMap)
@@ -118,6 +145,13 @@ fun validateForm(parameters: Parameters): Map<String, String?> {
     }
     val secondRadioGroup = parameters["second_radio_group"]
     errorMap["second_radio_group"] = if (secondRadioGroup == null) {
+        "This field is required"
+    } else {
+        null
+    }
+
+    val firstSelect = parameters["first_select"]
+    errorMap["first_select"] = if (firstSelect == null) {
         "This field is required"
     } else {
         null
@@ -373,13 +407,209 @@ fun FlowContent.radioFormInputs() {
 }
 
 fun FlowContent.checkboxFormInputs() {
+    span {
+        classes = formFieldStyles
+        div {
+            label {
+                +"More than one favorite number?"
+            }
+            div {
+                classes = setOf("flex", "flex-col", "gap-3")
+                div {
+                    classes = setOf("flex", "flex-row", "gap-4")
+                    input {
+                        classes = setOf("cursor-pointer")
+                        type = InputType.checkBox
+                        name = "first_checkbox_one"
+                        id = "first_checkbox_one"
+                        value = "one"
+                    }
+                    label {
+                        classes = setOf("cursor-pointer", "block")
+                        attributes["for"] = "first_checkbox_one"
+                        +"One"
+                    }
+                }
+                div {
+                    classes = setOf("flex", "flex-row", "gap-4")
+                    input {
+                        classes = setOf("cursor-pointer")
+                        type = InputType.checkBox
+                        name = "first_checkbox_two"
+                        id = "first_checkbox_two"
+                        value = "two"
+                    }
+                    label {
+                        classes = setOf("cursor-pointer", "block")
+                        attributes["for"] = "first_checkbox_two"
+                        +"Two"
+                    }
+                }
+                div {
+                    classes = setOf("flex", "flex-row", "gap-4")
+                    input {
+                        classes = setOf("cursor-pointer")
+                        type = InputType.checkBox
+                        name = "first_checkbox_three"
+                        id = "first_checkbox_three"
+                        value = "three"
+                    }
+                    label {
+                        classes = setOf("cursor-pointer", "block")
+                        attributes["for"] = "first_checkbox_three"
+                        +"Three"
+                    }
+                }
+            }
+        }
 
+        div {
+            classes = formFieldStyles
+            label {
+                +"More than one favorite color?"
+            }
+            div {
+                classes = setOf("flex", "flex-col", "gap-1")
+                div {
+                    classes = setOf("grid", "grid-cols-3", "gap-3")
+
+                    val checkboxButtonStyles = setOf(
+                        "flex",
+                        "flex-row",
+                        "gap-3",
+                        "relative",
+                        "border",
+                        "w-full",
+                        "border-gray-400",
+                        "hover:border-gray-500",
+                        "rounded-md"
+                    )
+                    val checkboxInputStyles =
+                        setOf(
+                            "peer",
+                            "cursor-pointer",
+                            "absolute",
+                            "opacity-0",
+                            "w-full",
+                            "h-full",
+                            "rounded-md"
+                        )
+                    val checkboxLabelStyles =
+                        setOf(
+                            "cursor-pointer",
+                            "block",
+                            "p-4",
+                            "w-full",
+                            "text-center",
+                            "rounded-md",
+                            "shadow-md",
+                            "peer-focus:shadow-lg",
+                        )
+
+
+                    div {
+                        classes = checkboxButtonStyles
+                        input {
+                            classes = checkboxInputStyles
+                            type = InputType.checkBox
+                            name = "second_checkbox_yellow"
+                            id = "second_checkbox_yellow"
+                            value = "yellow"
+                        }
+                        label {
+                            classes =
+                                checkboxLabelStyles + setOf(
+                                    "peer-checked:bg-yellow-100",
+                                    "peer-checked:border-yellow-400"
+                                )
+                            attributes["for"] = "second_checkbox_yellow"
+                            +"Yellow"
+                        }
+                    }
+                    div {
+                        classes = checkboxButtonStyles
+                        input {
+                            classes = checkboxInputStyles
+                            type = InputType.checkBox
+                            name = "second_checkbox_red"
+                            id = "second_checkbox_red"
+                            value = "red"
+                        }
+                        label {
+                            classes =
+                                checkboxLabelStyles + setOf(
+                                    "peer-checked:bg-red-100",
+                                    "peer-checked:border-red-400"
+                                )
+                            attributes["for"] = "second_checkbox_red"
+                            +"Red"
+                        }
+                    }
+                    div {
+                        classes = checkboxButtonStyles
+                        input {
+                            classes = checkboxInputStyles
+                            type = InputType.checkBox
+                            name = "second_checkbox_blue"
+                            id = "second_checkbox_blue"
+                            value = "blue"
+                        }
+                        label {
+                            classes =
+                                checkboxLabelStyles + setOf(
+                                    "peer-checked:bg-blue-100",
+                                    "peer-checked:border-blue-400"
+                                )
+                            attributes["for"] = "second_checkbox_blue"
+                            +"Blue"
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 fun FlowContent.selectFormInputs() {
-
+    span {
+        classes = formFieldStyles
+        label {
+            required()
+            +"Select"
+        }
+        select {
+            classes = inputStyles
+            name = "first_select"
+            option {
+                value = "one"
+                +"One"
+            }
+            option {
+                value = "two"
+                +"Two"
+            }
+            option {
+                value = "three"
+                +"Three"
+            }
+        }
+        p {
+            id = "first_select_error"
+        }
+    }
 }
 
 fun FlowContent.textareaFormInputs() {
-
+    // textarea
+    span {
+        classes = formFieldStyles
+        label {
+            +"Textarea"
+        }
+        textArea {
+            classes = inputStyles
+            name = "first_textarea"
+            placeholder = "Placeholder"
+        }
+    }
 }

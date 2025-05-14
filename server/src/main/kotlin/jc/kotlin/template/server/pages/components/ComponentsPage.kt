@@ -15,11 +15,13 @@ fun FlowContent.componentsPage() {
     div {
         classes = setOf("flex", "flex-col", "w-full", "items-center", "mt-4", "gap-4")
         div {
-            classes = setOf("grid", "grid-cols-1", "sm:grid-cols-3", "gap-4", "items-center")
+            classes = setOf("grid", "grid-cols-1", "sm:grid-cols-5", "gap-4", "items-center")
             val componentButtons = listOf(
                 Component("Button", "/components/button"),
                 Component("Form", "/components/form"),
-                Component("Card", "/components/card")
+                Component("Card", "/components/card"),
+                Component("Modal", "/components/modal"),
+                Component("Peek", "/components/peek")
             )
             componentButtons.map { component ->
                 jcButton {

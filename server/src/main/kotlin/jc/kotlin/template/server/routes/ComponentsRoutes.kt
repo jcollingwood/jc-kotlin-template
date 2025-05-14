@@ -68,5 +68,43 @@ fun Route.componentsRoutes() {
                 }
             }
         }
+        route("modal") {
+            get {
+                getSession(call) ?: return@get
+                call.respondHtml {
+                    body {
+                        modalComponents()
+                    }
+                }
+            }
+            route("content") {
+                get("{id}") {
+                    getSession(call) ?: return@get
+                    call.respondHtml {
+                        body {
+                            modalContent(call.parameters["id"].toString())
+                        }
+                    }
+                }
+            }
+        }
+        route("peek") {
+            get {
+                getSession(call) ?: return@get
+                call.respondHtml {
+                    body {
+                        peekComponent()
+                    }
+                }
+            }
+            get("content") {
+                getSession(call) ?: return@get
+                call.respondHtml {
+                    body {
+                        peekContent("1")
+                    }
+                }
+            }
+        }
     }
 }
