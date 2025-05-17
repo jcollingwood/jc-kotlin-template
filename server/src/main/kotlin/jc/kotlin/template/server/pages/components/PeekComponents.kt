@@ -4,54 +4,18 @@ import jc.kotlin.template.server.components.*
 import kotlinx.html.*
 
 // JavaScript for controlling the peek visibility and animation
-//const val PEEK_JS = """
-//const peekContainer = document.getElementById('peek-container');
-//const peekPanel = document.getElementById('peek-panel');
-//const peekContent = document.getElementById('peek-content');
-//
-//function peekOpen() {
-//    if (!peekContainer || !peekPanel) return;
-//    peekContainer.classList.remove('hidden');
-//    // Use requestAnimationFrame to ensure the 'hidden' class removal is processed
-//    // before starting the transition by removing the translate class.
-//    requestAnimationFrame(() => {
-//         peekPanel.classList.remove('translate-x-full');
-//    });
-//}
-//
-//function peekClose() {
-//    if (!peekContainer || !peekPanel) return;
-//    peekPanel.classList.add('translate-x-full');
-//
-//    // Wait for the transition to finish before hiding the container and clearing content
-//    peekPanel.addEventListener('transitionend', () => {
-//        peekContainer.classList.add('hidden');
-//        if (peekContent) {
-//            peekContent.innerHTML = ''; // Clear content after closing
-//        }
-//    }, { once: true }); // Important: Use { once: true } to auto-remove the listener
-//}
-//
-//// Close peek if clicking on the background overlay
-///*if (peekContainer) {
-//    peekContainer.addEventListener('click', function(event) {
-//        if (event.target === peekContainer) {
-//            peekClose();
-//        }
-//    });
-//}*/
-//
-//"""
-
 const val PEEK_JS = """
 const peekContainer = document.getElementById("peek-container");
+const peekPanel = document.getElementById("peek-panel");
 const peekContent = document.getElementById("peek-content");
 
 function peekOpen() {
     peekContainer.classList.remove("hidden");
+    peekPanel.classList.remove("translate-x-full");
 }
 
 function peekClose() {
+    peekPanel.classList.add("translate-x-full");
     peekContainer.classList.add("hidden");
     peekContent.innerHTML = "";
 }
@@ -103,6 +67,7 @@ fun FlowContent.peekComponent() {
                     "inset-0",
                     "z-40", // High z-index, but potentially lower than a peek if needed
                     "bg-black",
+                    "transition-opacity",
                     "bg-opacity-50",
                     "overflow-hidden" // Prevent scrollbars on the overlay
                 )
@@ -114,16 +79,16 @@ fun FlowContent.peekComponent() {
                     classes = setOf(
                         "absolute",
                         "top-0",
-                        "left-0",
+                        "right-0",
                         "h-full",
                         "w-full", // Full width on small screens
-                        "sm:w-1/3", // Takes 1/3 of the width on larger screens
-                        "lg:w-1/4", // Takes 1/4 on even larger screens
+                        "sm:w-1/2", // Takes 1/3 of the width on larger screens
+                        "md:w-1/3", // Takes 1/4 on even larger screens
                         "bg-white",
                         "shadow-xl",
                         "overflow-y-auto", // Allow scrolling within the peek if content overflows
-                        "transform",
                         "transition-transform", // Enable CSS transitions
+                        "transform",
                         "duration-300", // Animation speed
                         "ease-in-out", // Animation timing function
                         "translate-x-full" // Initially positioned off-screen to the right
@@ -199,12 +164,6 @@ fun FlowContent.peekContent(id: String) {
             li { +"Detail 1" }
             li { +"Detail 2 about $id" }
             li { +"Another interesting fact." }
-        }
-        // Example of another button inside the loaded content
-        jcButton {
-            onClick = "alert('Action clicked inside peek!');"
-
-            +"Action inside Peek"
         }
     }
 }
