@@ -1,6 +1,5 @@
 package jc.kotlin.template.server.components
 
-import jc.kotlin.template.server.pages.components.jcLoadingDots
 import kotlinx.html.FlowContent
 import kotlinx.html.button
 import kotlinx.html.classes
@@ -11,27 +10,27 @@ import kotlinx.html.onClick
 import kotlinx.html.script
 import kotlinx.html.span
 import kotlinx.html.unsafe
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 enum class PeekSide {
     LEFT, RIGHT
 }
 
-fun FlowContent.peek(key: String, side: PeekSide = PeekSide.RIGHT) {
-    // --- Trigger Button ---
-    jcButton {
-        // HTMX attributes to load content
-        hxGet("/components/peek/content") // Example content route
-        hxTarget("#${key}-peek-content")
-        hxSwap("innerHTML")
-        // Indicator within the button while loading
-//                span("htmx-indicator") { jcLoadingDots() }
-
-        // JavaScript onClick to trigger the opening animation
-        onClick = "${key}peekOpen();"
-
-        +"Open $key Peek"
-    }
-
+/* known issue with multiple peeks on same page not triggering close on click outside
+ * this is due to overlapping peek containers on the same z-index, probably solution
+ * is to build common peek container layer into root layout and interact with common peek layer
+ */
+@OptIn(ExperimentalUuidApi::class)
+fun FlowContent.peek(
+    key: String = Uuid.random().toString().replace("-", ""),
+    side: PeekSide = PeekSide.RIGHT,
+    peekHeaderText: String = "Peek Header",
+    closeBtnText: String = "Close Peek",
+    trigger: FlowContent.(String) -> Unit,
+    content: FlowContent.() -> Unit
+) {
+    trigger("${key}peekOpen();")
     div {
         id = "${key}-peek-container"
 
@@ -61,7 +60,6 @@ fun FlowContent.peek(key: String, side: PeekSide = PeekSide.RIGHT) {
                 "h-[calc(100vh-3rem)]", // Full height minus some margin
                 "w-full", // Full width on small screens
                 "sm:w-1/2", // Takes 1/3 of the width on larger screens
-                "md:w-1/3", // Takes 1/4 on even larger screens
                 "bg-white",
                 "shadow-xl",
                 "overflow-y-auto", // Allow scrolling within the peek if content overflows
@@ -72,7 +70,7 @@ fun FlowContent.peek(key: String, side: PeekSide = PeekSide.RIGHT) {
                 "duration-300", // Animation speed
                 "ease-in-out", // Animation timing function
                 // Initially positioned off-screen to the right/left
-                if (side == PeekSide.RIGHT) "translate-x-full" else "-translate-x-full"
+//                if (side == PeekSide.RIGHT) "translate-x-full" else "-translate-x-full"
             )
 
             // --- Peek Content Area ---
@@ -84,7 +82,7 @@ fun FlowContent.peek(key: String, side: PeekSide = PeekSide.RIGHT) {
                     classes = setOf("flex", "justify-between", "items-center", "border-b", "pb-3")
                     h3 {
                         classes = setOf("text-lg", "font-semibold")
-                        +"Peek Header"
+                        +peekHeaderText
                     }
                     // Close Button
                     button {
@@ -101,33 +99,29 @@ fun FlowContent.peek(key: String, side: PeekSide = PeekSide.RIGHT) {
                     }
                 }
 
-                // Area where HTMX will load content
-                div {
-                    id = "${key}-peek-content"
-                    classes = setOf("flex-grow") // Allows this area to fill remaining space
-                    // Initial state / Loading indicator
-                    div(classes = "flex justify-center items-center h-full") {
-                        jcLoadingDots()
-                    }
-                }
+                content()
 
                 // Footer section (optional)
                 div {
-                    classes = setOf("border-t", "pt-3", "mt-auto") // mt-auto pushes footer to bottom
+                    classes = setOf(
+                        "flex", "items-center", "w-full", "border-t", "pt-3", "mt-auto",
+                        if (side == PeekSide.RIGHT) "justify-start" else "justify-end"
+                    ) // mt-auto pushes footer to bottom
                     jcButton {
                         onClick = "${key}peekClose();"
-                        +"Close Peek"
+                        +closeBtnText
                     }
                 }
             }
         }
     }
 
-    // Inject the JavaScript
+// Inject the JavaScript
     script {
         unsafe {
             raw(
-// JavaScript for controlling the peek visibility and animation
+                // JavaScript for controlling the peek visibility and animation
+                // TODO peek content element is still coupled to peek panel, need to decouple
                 """
 const ${key}peekContainer = document.getElementById("${key}-peek-container");
 const ${key}peekPanel = document.getElementById("${key}-peek-panel");
@@ -135,11 +129,11 @@ const ${key}peekContent = document.getElementById("${key}-peek-content");
 
 function ${key}peekOpen() {
     ${key}peekContainer.classList.remove("hidden");
-    ${key}peekPanel.classList.remove("translate-x-full");
+//    ${key}peekPanel.classList.remove("translate-x-full");
 }
 
 function ${key}peekClose() {
-    ${key}peekPanel.classList.add("translate-x-full");
+//    ${key}peekPanel.classList.add("translate-x-full");
     ${key}peekContainer.classList.add("hidden");
     ${key}peekContent.innerHTML = "";
 }

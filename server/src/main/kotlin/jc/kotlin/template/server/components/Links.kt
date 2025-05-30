@@ -5,6 +5,9 @@ import kotlinx.html.link
 import kotlinx.html.script
 
 fun FlowOrMetaDataOrPhrasingContent.stylesAndFonts() {
+    // favicon
+    link(rel = "icon", href = "/static/favicon.ico", type = "image/x-icon")
+
     // tailwind css stylesheet
     link(rel = "stylesheet", href = "/static/styles.css", type = "text/css")
     link(rel = "stylesheet", href = "/static/jc_styles.css", type = "text/css")

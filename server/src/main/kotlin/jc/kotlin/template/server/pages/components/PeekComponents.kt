@@ -3,30 +3,6 @@ package jc.kotlin.template.server.pages.components
 import jc.kotlin.template.server.components.*
 import kotlinx.html.*
 
-// JavaScript for controlling the peek visibility and animation
-const val PEEK_JS = """
-const peekContainer = document.getElementById("peek-container");
-const peekPanel = document.getElementById("peek-panel");
-const peekContent = document.getElementById("peek-content");
-
-function peekOpen() {
-    peekContainer.classList.remove("hidden");
-    peekPanel.classList.remove("translate-x-full");
-}
-
-function peekClose() {
-    peekPanel.classList.add("translate-x-full");
-    peekContainer.classList.add("hidden");
-    peekContent.innerHTML = "";
-}
-
-window.onclick = function(event) {
-    if(event.target == peekContainer) {
-        peekClose();
-    }
-}
-"""
-
 // Main function to render the peek component trigger and structure
 fun FlowContent.peekComponent() {
     div {
@@ -41,8 +17,81 @@ fun FlowContent.peekComponent() {
         div {
             classes = setOf("flex", "flex-col", "items-start", "gap-4") // items-start to keep button left-aligned
 
-            peek("right")
-            peek("left", PeekSide.LEFT)
+            peek(
+                key = "right",
+                peekHeaderText = "Right Peek Header",
+                trigger = { clickFun ->
+                    jcButton {
+                        // HTMX attributes to load content
+                        hxGet("/components/peek/content") // Example content route
+                        hxTarget("#right-peek-content")
+                        hxSwap("innerHTML")
+
+                        // JavaScript onClick to trigger the opening animation
+                        onClick = clickFun
+
+                        +"Open Right Peek"
+                    }
+                }
+            )
+            {
+                div {
+                    id = "right-peek-content"
+                    classes = setOf("flex-grow") // Allows this area to fill remaining space
+                    // Initial state / Loading indicator
+                    div(classes = "flex justify-center items-center h-full") {
+                        jcLoadingDots()
+                    }
+                }
+            }
+
+            peek(
+                key = "left",
+                side = PeekSide.LEFT,
+                peekHeaderText = "Left Peek Header",
+                trigger = { clickFun ->
+                    jcButton {
+                        // HTMX attributes to load content
+                        hxGet("/components/peek/content") // Example content route
+                        hxTarget("#left-peek-content")
+                        hxSwap("innerHTML")
+
+                        // JavaScript onClick to trigger the opening animation
+                        onClick = clickFun
+
+                        +"Open Left Peek"
+                    }
+                }
+            )
+            {
+                div {
+                    id = "left-peek-content"
+                    classes = setOf("flex-grow") // Allows this area to fill remaining space
+                    // Initial state / Loading indicator
+                    div(classes = "flex justify-center items-center h-full") {
+                        jcLoadingDots()
+                    }
+                }
+            }
+
+            peek(
+                key = "static",
+                peekHeaderText = "Static Peek Header",
+                closeBtnText = "Close-arooni",
+                trigger = { clickFun ->
+                    jcButton {
+                        onClick = clickFun
+                        +"Open Static Peek"
+                    }
+                }
+            ) {
+                div {
+                    p {
+                        +"This is static content that does not require HTMX to load."
+                    }
+                }
+            }
+
         }
     }
 }
