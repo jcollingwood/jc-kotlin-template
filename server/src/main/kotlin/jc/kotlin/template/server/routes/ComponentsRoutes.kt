@@ -1,15 +1,11 @@
 package jc.kotlin.template.server.routes
 
-import io.ktor.server.html.respondHtml
-import io.ktor.server.routing.Route
-import io.ktor.server.routing.get
-import io.ktor.server.routing.route
+import io.ktor.server.html.*
+import io.ktor.server.request.*
+import io.ktor.server.routing.*
 import jc.kotlin.template.server.auth.getSession
 import jc.kotlin.template.server.components.mainTemplate
-import jc.kotlin.template.server.pages.buttonComponent
-import jc.kotlin.template.server.pages.cardComponent
-import jc.kotlin.template.server.pages.componentsPage
-import jc.kotlin.template.server.pages.inputComponent
+import jc.kotlin.template.server.pages.components.*
 import kotlinx.html.body
 
 fun Route.componentsRoutes() {
@@ -31,11 +27,36 @@ fun Route.componentsRoutes() {
                 }
             }
         }
-        get("input") {
-            getSession(call) ?: return@get
-            call.respondHtml {
-                body {
-                    inputComponent()
+        route("form") {
+            get {
+                getSession(call) ?: return@get
+                call.respondHtml {
+                    body {
+                        formComponent()
+                    }
+                }
+            }
+            post("validate") {
+                getSession(call) ?: return@post
+
+                val input = call.pathParameters["input"] ?: ""
+                val formParameters = call.receiveParameters()
+
+                call.respondHtml {
+                    body {
+                        formValidation(input, formParameters)
+                    }
+                }
+            }
+            post("submit") {
+                getSession(call) ?: return@post
+
+                val formParameters = call.receiveParameters()
+
+                call.respondHtml {
+                    body {
+                        formSubmission(formParameters)
+                    }
                 }
             }
         }
@@ -44,6 +65,44 @@ fun Route.componentsRoutes() {
             call.respondHtml {
                 body {
                     cardComponent()
+                }
+            }
+        }
+        route("modal") {
+            get {
+                getSession(call) ?: return@get
+                call.respondHtml {
+                    body {
+                        modalComponents()
+                    }
+                }
+            }
+            route("content") {
+                get("{id}") {
+                    getSession(call) ?: return@get
+                    call.respondHtml {
+                        body {
+                            modalContent(call.parameters["id"].toString())
+                        }
+                    }
+                }
+            }
+        }
+        route("peek") {
+            get {
+                getSession(call) ?: return@get
+                call.respondHtml {
+                    body {
+                        peekComponent()
+                    }
+                }
+            }
+            get("content") {
+                getSession(call) ?: return@get
+                call.respondHtml {
+                    body {
+                        peekContent("1")
+                    }
                 }
             }
         }

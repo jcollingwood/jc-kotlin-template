@@ -25,9 +25,9 @@ enum class IconPosition {
     BEFORE, AFTER
 }
 
-fun FlowContent.iconSpan(icon: String) {
+fun FlowContent.iconSpan(icon: String, extraClasses: Set<String> = setOf()) {
     span {
-        classes = setOf("material-symbols-outlined")
+        classes = setOf("material-symbols-outlined") + extraClasses
         +icon
     }
 }
@@ -61,5 +61,27 @@ fun FlowOrInteractiveOrPhrasingContent.jcButton(
             if (iconPosition == IconPosition.AFTER) iconSpan(icon)
 
         }
+    }
+}
+
+fun FlowOrInteractiveOrPhrasingContent.jcIconButton(
+    icon: String, buttonColor: ButtonColor = ButtonColor(),
+    contents: BUTTON.() -> Unit
+) {
+    val styles = buttonStyles + setOf(
+        "!p-2",
+        "!rounded-full",
+        buttonColor.text,
+        buttonColor.hoverText,
+        buttonColor.color,
+        buttonColor.border,
+        buttonColor.hover,
+        buttonColor.active,
+        buttonColor.activeBorder
+    )
+    button {
+        classes = styles + iconButtonStyles
+        contents()
+        iconSpan(icon)
     }
 }

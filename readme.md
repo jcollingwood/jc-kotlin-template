@@ -13,7 +13,7 @@ project requiring a backend server.
 - [x] OAUTH integration
 - [x] MPA sample
 - [x] HTMX sample
-- [ ] Standard Components and Javascript samples
+- [x] Standard Components and Javascript samples
 - [ ] Database integration sample (SQLite)
 - [ ] Database integration sample (Postgres)
 - [ ] Unit tests sample
