@@ -25,8 +25,8 @@ enum class PeekSide {
 fun FlowContent.peek(
     key: String = Uuid.random().toString().replace("-", ""),
     side: PeekSide = PeekSide.RIGHT,
-    peekHeaderText: String = "Peek Header",
-    closeBtnText: String = "Close Peek",
+    peekHeaderText: String,
+    closeBtnText: String = "Close",
     trigger: FlowContent.(String) -> Unit,
     content: FlowContent.() -> Unit
 ) {
