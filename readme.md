@@ -18,7 +18,7 @@ project requiring a backend server.
 - [ ] Database integration sample (Postgres)
 - [ ] Unit tests sample
 - [ ] GH Actions sample
-- [ ] Docker sample
+- [x] Docker sample
 - [ ] Infrastructure sample
 - [ ] CI/CD sample
 - [ ] Data viz sample
@@ -61,5 +61,15 @@ To run the app, run the following command:
 
 ```bash
 ./gradlew run
+```
+
+## Build and Run with Docker
+
+```bash
+# to build local image for server
+docker build -t kotlin-template-server:latest -f server/Dockerfile .
+
+# to run local image with docker compose
+docker compose up [-d]
 ```
 
