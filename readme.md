@@ -28,6 +28,10 @@ project requiring a backend server.
 - [ktor](https://ktor.io/)
     - web framework for kotlin
     - leveraging http client, routing, sessions, and auth
+- [sqlite](https://sqlite.org/index.html)
+    - lightweight database for local storage
+- [postgresql](https://www.postgresql.org/)
+    - a "real" database ;)
 
 ## Frontend:
 

@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  web:
+    image: kotlin-template-server:latest
+    ports:
+      - "3333:3333"
+    environment:
+      - JC_TEMPLATE_GOOGLE_CLIENT_ID=${JC_TEMPLATE_GOOGLE_CLIENT_ID}
+      - JC_TEMPLATE_GOOGLE_CLIENT_SECRET=${JC_TEMPLATE_GOOGLE_CLIENT_SECRET}
+    #    depends_on:
+    #      db:
+    #        condition: service_healthy
+    networks:
+      - app-network
+    restart: unless-stopped
+
+#  db:
+#    image: postgres:15-alpine
+#    container_name: postgres-db
+#    environment:
+#      - POSTGRES_DB=appdb
+#      - POSTGRES_USER=appuser
+#      - POSTGRES_PASSWORD=apppass
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+#      - ./init-scripts:/docker-entrypoint-initdb.d
+#    networks:
+#      - app-network
+#    restart: unless-stopped
+#    healthcheck:
+#      test: [ "CMD-SHELL", "pg_isready -U appuser -d appdb" ]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
+#
+#  # Automated backup service
+#  backup:
+#    image: postgres:15-alpine
+#    container_name: postgres-backup
+#    environment:
+#      - PGPASSWORD=apppass
+#    volumes:
+#      - ./backups:/backups
+#      - ./backup-scripts:/scripts
+#    networks:
+#      - app-network
+#    depends_on:
+#      - db
+#    restart: unless-stopped
+#    # Run backup every day at 2 AM
+#    command: |
+#      sh -c '
+#        echo "0 2 * * * /scripts/backup.sh" | crontab -
+#        crond -f -l 2
+#      '
+
+networks:
+  app-network:
+    driver: bridge
+
+#volumes:
+#  postgres_data:
+#    driver: local
