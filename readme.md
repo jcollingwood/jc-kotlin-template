@@ -19,6 +19,7 @@ project requiring a backend server.
 - [ ] Unit tests sample
 - [ ] GH Actions sample
 - [x] Docker sample
+- [ ] Container registry sample
 - [ ] Infrastructure sample
 - [ ] CI/CD sample
 - [ ] Data viz sample

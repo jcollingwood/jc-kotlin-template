@@ -1,11 +1,12 @@
 
 services:
   server:
-    image: ghcr.io/jcollingwood/jc-kotlin-template/server:0.0.1
+    # override with local image if needed
+    # image: ghcr.io/jcollingwood/jc-kotlin-template/server:0.0.1
     ports:
-      - "1111:3333"
+      - 3333:3333
     env_file:
-      - .env
+      - local.env
     environment:
       - PORT=3333
     networks:

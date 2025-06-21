@@ -14,7 +14,7 @@ build
 */.log
 
 # local env
-local.env
+*.env
 
 # auto-generated static dir
 server/src/main/resources/static/styles.css
