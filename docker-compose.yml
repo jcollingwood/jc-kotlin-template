@@ -4,9 +4,8 @@ services:
     image: kotlin-template-server:latest
     ports:
       - "3333:3333"
-    environment:
-      - JC_TEMPLATE_GOOGLE_CLIENT_ID=${JC_TEMPLATE_GOOGLE_CLIENT_ID}
-      - JC_TEMPLATE_GOOGLE_CLIENT_SECRET=${JC_TEMPLATE_GOOGLE_CLIENT_SECRET}
+    env_file:
+      - local.env
     networks:
       - app-network
     restart: unless-stopped

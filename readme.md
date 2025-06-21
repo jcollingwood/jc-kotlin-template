@@ -51,6 +51,12 @@ Required environment variables:
 - `JC_TEMPLATE_GOOGLE_CLIENT_ID` - google client id of OAUTH google application
 - `JC_TEMPLATE_GOOGLE_CLIENT_SECRET` - google client secret of OAUTH google application
 
+Can generate local.env file with the following command:
+
+```bash 
+sh ./scripts/generate-local-env.sh
+```
+
 Optional environment variables:
 
 - `PORT`
