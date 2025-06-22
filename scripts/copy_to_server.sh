@@ -1,9 +1,13 @@
 #!/bin/bash
 
-USER=${SSH_USER}
-SERVER=${SSH_SERVER}
-PORT=${SSH_PORT:-22}
-DOMAIN=${JC_TEMPLATE_DOMAIN:-22}
+# prompt for these variables
+read -p "Enter SSH username: " USER
+read -p "Enter SSH server address: " SERVER
+read -p "Enter SSH port (default is 22): " PORT
+if [ -z "$PORT" ]; then
+  PORT=22  # Default SSH port
+fi
+read -p "Enter domain for the application: " DOMAIN
 
 if [ -z "$USER" ]; then
   echo "Error: SSH_USER environment variable is not set."
@@ -42,6 +46,6 @@ for resource in "${RESOURCES[@]}"; do
 done
 
 # copy resources to server
- echo "copying [${RESOURCES[@]/#/}] to $USER@$SERVER:$PORT"
+echo "copying [${RESOURCES[@]/#/}] to $USER@$SERVER:$PORT"
 scp -P "$PORT" -r "${RESOURCES[@]/#/}" "$USER@$SERVER:~/docker-apps/jc-kotlin-template/"
 

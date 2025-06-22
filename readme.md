@@ -60,6 +60,9 @@ sh ./scripts/generate-local-env.sh
 
 Optional environment variables:
 
+- `JC_TEMPLATE_DOMAIN`
+    - domain to run on, defaults to `localhost`
+    - note: ensure this domain value is reflected on OAUTH configured redirect urls
 - `PORT`
     - port to run on, defaults to 3333
     - note: ensure this port value is reflected on OAUTH configured redirect urls
@@ -73,10 +76,10 @@ To run the app, run the following command:
 ## Build and Run with Docker
 
 ```bash
-# to build local image for server
-docker build -t kotlin-template-server:latest -f server/Dockerfile .
+# to build local image for server 
+ docker buildx build --platform linux/amd64,linux/arm/v7 -t ghcr.io/jcollingwood/jc-kotlin-template/server:0.0.0 -f server/Dockerfile .
 
 # to run local image with docker compose
-docker compose up [-d]
+docker compose -f docker-compose.yml -f docker-compose-local.yml up [-d]
 ```
 
