@@ -1,7 +1,7 @@
 
 services:
   server:
-    image: ghcr.io/jcollingwood/jc-kotlin-template/server:0.0.1
+    image: ghcr.io/jcollingwood/jc-kotlin-template/server:0.0.2
     ports:
       - "1111:3333"
     env_file:
