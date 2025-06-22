@@ -3,6 +3,7 @@
 USER=${SSH_USER}
 SERVER=${SSH_SERVER}
 PORT=${SSH_PORT:-22}
+DOMAIN=${JC_TEMPLATE_DOMAIN:-22}
 
 if [ -z "$USER" ]; then
   echo "Error: SSH_USER environment variable is not set."
@@ -12,10 +13,18 @@ if [ -z "$SERVER" ]; then
   echo "Error: SSH_SERVER environment variable is not set."
   exit 1
 fi
+if [ -z "$DOMAIN" ]; then
+  echo "Error: DOMAIN environment variable is not set."
+  exit 1
+fi
 
 # prepare env file (currently re-using local env file, update with deployed env file differences as needed)
 ./scripts/get_local_env.sh
 cp local.env .env
+
+# make non-local changes to .env file
+# add dns domain to env file
+echo "JC_TEMPLATE_DOMAIN=$DOMAIN" >> .env
 
 # create list of resources to copy
 RESOURCES=(
