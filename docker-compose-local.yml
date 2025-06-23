@@ -2,12 +2,14 @@
 services:
   server:
     # override with local image if needed
+    image: jc-kotlin-template:local
     # image: ghcr.io/jcollingwood/jc-kotlin-template/server:0.0.1
     ports:
       - 3333:3333
     env_file:
       - local.env
     environment:
+      - JC_TEMPLATE_DOMAIN=http://localhost:3333
       - PORT=3333
     networks:
       - app-network

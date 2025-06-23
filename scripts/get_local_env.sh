@@ -9,5 +9,6 @@ GOOGLE_CLIENT_ID=$(gcloud secrets versions access latest --secret="GOOGLE_CLIENT
 GOOGLE_CLIENT_SECRET=$(gcloud secrets versions access latest --secret="GOOGLE_CLIENT_ID" --project="$PROJECT_NUMBER")
 
 # export to local.env file
+echo "JC_TEMPLATE_DOMAIN=http://localhost:3333" > local.env
 echo "JC_TEMPLATE_GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID" > local.env
 echo "JC_TEMPLATE_GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET" >> local.env

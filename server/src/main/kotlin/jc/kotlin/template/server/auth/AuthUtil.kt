@@ -1,10 +1,10 @@
 package jc.kotlin.template.server.auth
 
-import io.ktor.http.URLBuilder
-import io.ktor.server.application.ApplicationCall
-import io.ktor.server.request.uri
-import io.ktor.server.response.respondRedirect
-import io.ktor.server.sessions.sessions
+import io.ktor.http.*
+import io.ktor.server.application.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
+import io.ktor.server.sessions.*
 import jc.kotlin.template.server.config.DOMAIN
 import kotlinx.serialization.Serializable
 
@@ -16,6 +16,7 @@ const val OAUTH_KEY = "auth-oauth-google"
 // TODO understand cookie stuff better
 const val SESSION_COOKIE_KEY = "sesh"
 const val LOGIN_ROUTE = "/login"
+const val MANUAL_LOGIN_ROUTE = "/manual-login"
 const val LANDING_ROUTE = "/welcome"
 
 val ROOT_DOMAIN = DOMAIN
