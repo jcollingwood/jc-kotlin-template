@@ -4,7 +4,6 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.html.*
-import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
@@ -31,13 +30,6 @@ fun Application.authModule(core: CoreServices) {
         oauth(OAUTH_KEY) {
             // Configure oauth authentication
             urlProvider = { "${ROOT_DOMAIN}/callback" }
-//                {
-//                val log = KotlinLogging.logger {}
-//                val url = "${ROOT_DOMAIN}/callback"
-//                log.info("OAuth callback URL configured as: $url")
-//                log.info("ROOT_DOMAIN value: $ROOT_DOMAIN")
-//                url
-//            }
             client = core.httpClient
             providerLookup = {
                 OAuthServerSettings.OAuth2ServerSettings(
@@ -50,28 +42,13 @@ fun Application.authModule(core: CoreServices) {
                     defaultScopes = listOf("https://www.googleapis.com/auth/userinfo.profile"),
                     extraAuthParameters = listOf("access_type" to "offline"),
                     onStateCreated = { call, state ->
-                        val log = KotlinLogging.logger {}
-                        log.info("State created: $state")
                         //saves new state with redirect url value
                         call.request.queryParameters["redirectUrl"]?.let {
-                            log.info("Saving redirect for state $state: $it")
                             redirects[state] = it
-                            log.info("Stored redirect - State: $state, Redirect: $it, Total redirects: ${redirects.size}")
                         }
                     }
                 )
             }
-        }
-    }
-    intercept(ApplicationCallPipeline.Plugins) {
-        if (call.request.uri.contains("/callback")) {
-            val log = KotlinLogging.logger {}
-            log.info("Intercepting callback")
-            log.info("URI: ${call.request.uri}")
-            log.info("Method: ${call.request.httpMethod}")
-            log.info("Headers: ${call.request.headers.entries()}")
-            log.info("Query params: ${call.request.queryParameters.entries()}")
-            return@intercept
         }
     }
     authRouting()
@@ -102,23 +79,9 @@ fun Application.authRouting() {
                             classes = buttonStyles
                             +"Login with Google"
                         }
-                        a(MANUAL_LOGIN_ROUTE) {
-                            classes = buttonStyles
-                            +"Login with Google Also"
-                        }
                     }
                 }
             }
-        }
-        get(MANUAL_LOGIN_ROUTE) {
-            log.info("=== MANUAL LOGIN! ===")
-            val authUrl = "https://accounts.google.com/o/oauth2/auth?" +
-                    "client_id=$GOOGLE_CLIENT_ID" +
-                    "&scope=https://www.googleapis.com/auth/userinfo.profile" +
-                    "&response_type=code" +
-                    "&access_type=offline" +
-                    "&redirect_uri=${ROOT_DOMAIN}/callback"
-            call.respondRedirect(authUrl)
         }
 
         authenticate(OAUTH_KEY) {
@@ -127,10 +90,7 @@ fun Application.authRouting() {
             }
 
             get("/callback") {
-                log.info("=== CALLBACK! ===")
-                log.info("Callback received with parameters: ${call.request.queryParameters}")
                 val currentPrincipal: OAuthAccessTokenResponse.OAuth2? = call.authentication.principal()
-                log.info("OAuth principal: $currentPrincipal")
 
                 // redirects home if the url is not found before authorization
                 currentPrincipal?.let { principal ->
