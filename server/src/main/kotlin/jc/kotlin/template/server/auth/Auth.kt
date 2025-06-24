@@ -30,12 +30,14 @@ fun Application.authModule(core: CoreServices) {
     install(Authentication) {
         oauth(OAUTH_KEY) {
             // Configure oauth authentication
-            urlProvider = {
-                val log = KotlinLogging.logger {}
-                val url = "${ROOT_DOMAIN}/callback"
-                log.info("url: $url")
-                url
-            }
+            urlProvider = { "${ROOT_DOMAIN}/callback" }
+//                {
+//                val log = KotlinLogging.logger {}
+//                val url = "${ROOT_DOMAIN}/callback"
+//                log.info("OAuth callback URL configured as: $url")
+//                log.info("ROOT_DOMAIN value: $ROOT_DOMAIN")
+//                url
+//            }
             client = core.httpClient
             providerLookup = {
                 OAuthServerSettings.OAuth2ServerSettings(
@@ -48,9 +50,13 @@ fun Application.authModule(core: CoreServices) {
                     defaultScopes = listOf("https://www.googleapis.com/auth/userinfo.profile"),
                     extraAuthParameters = listOf("access_type" to "offline"),
                     onStateCreated = { call, state ->
+                        val log = KotlinLogging.logger {}
+                        log.info("State created: $state")
                         //saves new state with redirect url value
                         call.request.queryParameters["redirectUrl"]?.let {
+                            log.info("Saving redirect for state $state: $it")
                             redirects[state] = it
+                            log.info("Stored redirect - State: $state, Redirect: $it, Total redirects: ${redirects.size}")
                         }
                     }
                 )
