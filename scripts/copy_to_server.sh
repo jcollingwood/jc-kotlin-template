@@ -22,6 +22,9 @@ if [ -z "$DOMAIN" ]; then
   exit 1
 fi
 
+# variables
+PROJECT_DIR="~/docker-apps/jc-kotlin-template"
+
 # prepare env file (currently re-using local env file, update with deployed env file differences as needed)
 ./scripts/get_local_env.sh
 cp local.env .env
@@ -45,7 +48,14 @@ for resource in "${RESOURCES[@]}"; do
   fi
 done
 
+# create backups of existing files on the server
+echo "Creating backups of existing files on the server..."
+ssh -p "$PORT" "$USER@$SERVER" "mkdir -p $PROJECT_DIR/backup && \
+  cp $PROJECT_DIR/docker-compose.yml $PROJECT_DIR/backup/docker-compose.yml.bak && \
+  cp $PROJECT_DIR/.env $PROJECT_DIR/backup/.env.bak && \
+  cp $PROJECT_DIR/start.sh $PROJECT_DIR/backup/start.sh.bak"
+
 # copy resources to server
 echo "copying [${RESOURCES[@]/#/}] to $USER@$SERVER:$PORT"
-scp -P "$PORT" -r "${RESOURCES[@]/#/}" "$USER@$SERVER:~/docker-apps/jc-kotlin-template/"
+scp -P "$PORT" -r "${RESOURCES[@]/#/}" "$USER@$SERVER:$PROJECT_DIR/"
 
