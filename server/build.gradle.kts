@@ -26,6 +26,7 @@ dependencies {
     implementation("io.ktor:ktor-server-compression:$ktorVersion")
     implementation("io.ktor:ktor-server-auth:$ktorVersion")
     implementation("io.ktor:ktor-server-status-pages:$ktorVersion")
+    implementation("io.ktor:ktor-client-logging:$ktorVersion")
 
     // http client deps
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")

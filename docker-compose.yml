@@ -1,0 +1,17 @@
+
+services:
+  server:
+    image: ghcr.io/jcollingwood/jc-kotlin-template/server:0.0.5
+    ports:
+      - "1111:3333"
+    env_file:
+      - .env
+    environment:
+      - PORT=3333
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge

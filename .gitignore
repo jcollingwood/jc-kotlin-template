@@ -4,11 +4,17 @@
 */.kotlin
 .idea
 
+# open vim files
+*.swp
+
 # Ignore Gradle build output directory
 build
 
 # Ignore Gradle cache directory
 */.log
+
+# local env
+*.env
 
 # auto-generated static dir
 server/src/main/resources/static/styles.css

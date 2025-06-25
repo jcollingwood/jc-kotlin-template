@@ -18,7 +18,8 @@ project requiring a backend server.
 - [ ] Database integration sample (Postgres)
 - [ ] Unit tests sample
 - [ ] GH Actions sample
-- [ ] Docker sample
+- [x] Docker sample
+- [ ] Container registry sample
 - [ ] Infrastructure sample
 - [ ] CI/CD sample
 - [ ] Data viz sample
@@ -28,6 +29,10 @@ project requiring a backend server.
 - [ktor](https://ktor.io/)
     - web framework for kotlin
     - leveraging http client, routing, sessions, and auth
+- [sqlite](https://sqlite.org/index.html)
+    - lightweight database for local storage
+- [postgresql](https://www.postgresql.org/)
+    - a "real" database ;)
 
 ## Frontend:
 
@@ -47,8 +52,17 @@ Required environment variables:
 - `JC_TEMPLATE_GOOGLE_CLIENT_ID` - google client id of OAUTH google application
 - `JC_TEMPLATE_GOOGLE_CLIENT_SECRET` - google client secret of OAUTH google application
 
+Can generate local.env file with the following command:
+
+```bash 
+sh ./scripts/generate-local-env.sh
+```
+
 Optional environment variables:
 
+- `JC_TEMPLATE_DOMAIN`
+    - domain to run on, defaults to `localhost`
+    - note: ensure this domain value is reflected on OAUTH configured redirect urls
 - `PORT`
     - port to run on, defaults to 3333
     - note: ensure this port value is reflected on OAUTH configured redirect urls
@@ -57,5 +71,15 @@ To run the app, run the following command:
 
 ```bash
 ./gradlew run
+```
+
+## Build and Run with Docker
+
+```bash
+# to build local image for server 
+ docker buildx build --platform linux/amd64,linux/arm/v7 -t ghcr.io/jcollingwood/jc-kotlin-template/server:0.0.0 -f server/Dockerfile .
+
+# to run local image with docker compose
+docker compose -f docker-compose.yml -f docker-compose-local.yml up [-d]
 ```
 

@@ -1,32 +1,30 @@
 package jc.kotlin.template.server.auth
 
-import io.ktor.http.HttpMethod
-import io.ktor.server.application.Application
-import io.ktor.server.application.install
-import io.ktor.server.auth.Authentication
-import io.ktor.server.auth.OAuthAccessTokenResponse
-import io.ktor.server.auth.OAuthServerSettings
-import io.ktor.server.auth.authenticate
-import io.ktor.server.auth.oauth
-import io.ktor.server.auth.principal
-import io.ktor.server.html.respondHtml
-import io.ktor.server.response.respondRedirect
-import io.ktor.server.routing.get
-import io.ktor.server.routing.routing
-import io.ktor.server.sessions.Sessions
-import io.ktor.server.sessions.cookie
-import io.ktor.server.sessions.sessions
+import io.ktor.http.*
+import io.ktor.server.application.*
+import io.ktor.server.auth.*
+import io.ktor.server.html.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
+import io.ktor.server.sessions.*
 import jc.kotlin.template.server.components.appHead
+import jc.kotlin.template.server.components.buttonStyles
 import jc.kotlin.template.server.config.CoreServices
 import jc.kotlin.template.server.config.GOOGLE_CLIENT_ID
 import jc.kotlin.template.server.config.GOOGLE_CLIENT_SECRET
 import kotlinx.html.a
 import kotlinx.html.body
-import kotlinx.html.p
+import kotlinx.html.classes
+import kotlinx.html.main
+import mu.two.KotlinLogging
+import kotlin.collections.set
+
 
 fun Application.authModule(core: CoreServices) {
     install(Sessions) {
-        cookie<UserSession>(SESSION_COOKIE_KEY)
+        cookie<UserSession>(SESSION_COOKIE_KEY) {
+            cookie.secure = false
+        }
     }
     install(Authentication) {
         oauth(OAUTH_KEY) {
@@ -58,14 +56,29 @@ fun Application.authModule(core: CoreServices) {
 
 // auth login flow
 fun Application.authRouting() {
+    val log = KotlinLogging.logger {}
+
     /* services init */
     routing {
         get("/") {
+            log.info("Login Page")
             call.respondHtml {
                 appHead("Login")
                 body {
-                    p {
-                        a(LOGIN_ROUTE) { +"Login with Google" }
+                    main {
+                        classes = setOf(
+                            "font-inter",
+                            "flex",
+                            "flex-col",
+                            "h-full",
+                            "w-screen",
+                            "items-center",
+                            "p-6"
+                        )
+                        a(LOGIN_ROUTE) {
+                            classes = buttonStyles
+                            +"Login with Google"
+                        }
                     }
                 }
             }
@@ -77,7 +90,8 @@ fun Application.authRouting() {
             }
 
             get("/callback") {
-                val currentPrincipal: OAuthAccessTokenResponse.OAuth2? = call.principal()
+                val currentPrincipal: OAuthAccessTokenResponse.OAuth2? = call.authentication.principal()
+
                 // redirects home if the url is not found before authorization
                 currentPrincipal?.let { principal ->
                     principal.state?.let { state ->

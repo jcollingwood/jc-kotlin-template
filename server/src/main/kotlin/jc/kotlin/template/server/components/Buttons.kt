@@ -1,11 +1,6 @@
 package jc.kotlin.template.server.components
 
-import kotlinx.html.BUTTON
-import kotlinx.html.FlowContent
-import kotlinx.html.FlowOrInteractiveOrPhrasingContent
-import kotlinx.html.button
-import kotlinx.html.classes
-import kotlinx.html.span
+import kotlinx.html.*
 
 val buttonStyles = setOf("border", "py-1", "px-3", "rounded-md", "shadow-md")
 val iconButtonStyles = setOf("flex", "flex-row", "items-center", "justify-center", "gap-1")
