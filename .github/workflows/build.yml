@@ -42,9 +42,19 @@ jobs:
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       with:
         context: .
         file: ./server/Dockerfile
         platforms: linux/amd64,linux/arm/v7
         push: ${{ github.event_name == 'push' }}
         tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
+
+    - name: Update docker-compose.yml
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      run: |
+        sed -i "s|image: ghcr.io/jcollingwood/jc-kotlin-template/server:.*|image: ghcr.io/${{ github.repository }}:${{ github.sha }}|" docker-compose.yml
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git commit -am "Update docker-compose.yml with new image tag"
+        git push
