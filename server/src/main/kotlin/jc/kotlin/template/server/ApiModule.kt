@@ -6,6 +6,7 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.compression.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.serialization.Serializable
@@ -44,6 +45,10 @@ fun Application.apiModule() {
             get("/users/{userId}") {
                 val playerId = call.parameters["userId"]?.toInt() ?: error("Invalid user id")
                 call.respond(testUsers.find { it.id == playerId } ?: error("User not found"))
+            }
+            post("/users") {
+                val newUser = call.receive<UserDto>()
+                call.respond(newUser.copy(id = (testUsers.maxOfOrNull { it.id } ?: 0) + 1))
             }
         }
     }
