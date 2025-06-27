@@ -3,6 +3,7 @@ package jc.kotlin.template.server
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.plugins.calllogging.CallLogging
+import io.ktor.server.plugins.forwardedheaders.ForwardedHeaders
 import io.ktor.server.request.httpMethod
 import io.ktor.server.request.uri
 import jc.kotlin.template.server.auth.authModule
@@ -24,6 +25,7 @@ fun Application.appModule(core: CoreServices) {
             "$httpMethod ${call.request.uri} - $status"
         }
     }
+    install(ForwardedHeaders)
     errorHandler()
     configureDatabase()
     authModule(core)
