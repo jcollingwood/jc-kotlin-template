@@ -41,6 +41,8 @@ dependencies {
     implementation("io.ktor:ktor-server-html-builder:$ktorVersion")
 }
 
+
+
 node {
     // need to set download=true unless you want to use locally installed node
     download.set(true)
@@ -55,6 +57,6 @@ tasks.register<NpxTask>("tailwind") {
 }
 
 // runs tailwind task on build, regenerating styles.css
-tasks.named("classes") {
+tasks.named("processResources") {
     dependsOn("tailwind")
 }
