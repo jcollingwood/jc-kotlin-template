@@ -47,6 +47,7 @@ RESOURCES=(
   ".env"
   "start.sh"
   "stop.sh"
+  "restart.sh"
 )
 
 echo "Restoring files on the server..."

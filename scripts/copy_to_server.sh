@@ -66,6 +66,7 @@ RESOURCES=(
   ".env"
   "scripts/start.sh"
   "scripts/stop.sh"
+  "scripts/restart.sh"
 )
 
 # check is resources exist
