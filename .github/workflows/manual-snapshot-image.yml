@@ -1,0 +1,23 @@
+name: Manual Snapshot Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'The branch to build from'
+        required: true
+        default: 'main'
+
+jobs:
+  gradle-build:
+    uses: ./.github/workflows/reusable-gradle-build.yml
+    with:
+      ref: ${{ github.event.inputs.branch }}
+
+  docker-build-and-push:
+    needs: gradle-build
+    uses: ./.github/workflows/reusable-docker-build.yml
+    with:
+      ref: ${{ github.event.inputs.branch }}
+      push: true
+      tag: ghcr.io/${{ github.repository }}:snapshot-${{ github.event.inputs.branch }}-${{ github.sha }}

@@ -6,4 +6,4 @@ on:
 
 jobs:
   build:
-    uses: ./.github/workflows/reusable-build.yml
+    uses: ./.github/workflows/reusable-gradle-build.yml
