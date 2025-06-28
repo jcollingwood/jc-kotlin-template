@@ -1,0 +1,30 @@
+name: Cleanup Snapshot Images
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  delete-snapshot-image:
+    # Only run this job if the PR was merged
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete snapshot image from GHCR
+        uses: actions/delete-package-versions@v5
+        with:
+          # The name of the package (Docker image) in GHCR.
+          # This is typically your repository name, but may include a path if your images are published that way.
+          package-name: '${{ github.event.repository.name }}'
+          package-type: 'container'
+          # We want to delete all old versions of this snapshot tag
+          min-versions-to-keep: 0
+          # The secret token to authenticate with GHCR. 
+          # You may need to use a Personal Access Token (PAT) with `delete:packages` scope
+          # if the default GITHUB_TOKEN doesn't have sufficient permissions.
+          token: '${{ secrets.GITHUB_TOKEN }}'
+          # Find images where the tag matches the snapshot prefix and the merged branch name
+          tag-regex: '^snapshot-${{ github.event.pull_request.head.ref }}-'
+          # We want to delete the entire package version if it matches
+          delete-by-tags: true
