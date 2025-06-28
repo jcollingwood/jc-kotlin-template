@@ -30,3 +30,9 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build
+
+      - name: Upload server JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-jar
+          path: server/build/libs/server-all.jar
