@@ -1,13 +1,40 @@
 #!/bin/bash
 
 # prompt for these variables
-read -p "Enter SSH username: " USER
-read -p "Enter SSH server address: " SERVER
-read -p "Enter SSH port (default is 22): " PORT
-if [ -z "$PORT" ]; then
-  PORT=22  # Default SSH port
+# Use environment variables as defaults if they are set
+
+# Prompt for SSH username
+if [ -n "$SSH_USER" ]; then
+    read -p "Enter SSH username [default: $SSH_USER]: " input_user
+    USER=${input_user:-$SSH_USER}
+else
+    read -p "Enter SSH username: " USER
 fi
-read -p "Enter domain for the application: " DOMAIN
+
+# Prompt for SSH server address
+if [ -n "$SSH_SERVER" ]; then
+    read -p "Enter SSH server address [default: $SSH_SERVER]: " input_server
+    SERVER=${input_server:-$SSH_SERVER}
+else
+    read -p "Enter SSH server address: " SERVER
+fi
+
+# Prompt for SSH port
+if [ -n "$SSH_PORT" ]; then
+    read -p "Enter SSH port [default: $SSH_PORT]: " input_port
+    PORT=${input_port:-$SSH_PORT}
+else
+    read -p "Enter SSH port [default: 22]: " input_port
+    PORT=${input_port:-22}
+fi
+
+# Prompt for domain
+if [ -n "$JC_TEMPLATE_DOMAIN" ]; then
+    read -p "Enter domain for the application [default: $JC_TEMPLATE_DOMAIN]: " input_domain
+    DOMAIN=${input_domain:-$JC_TEMPLATE_DOMAIN}
+else
+    read -p "Enter domain for the application: " DOMAIN
+fi
 
 if [ -z "$USER" ]; then
   echo "Error: SSH_USER environment variable is not set."
@@ -38,6 +65,8 @@ RESOURCES=(
   "docker-compose.yml"
   ".env"
   "scripts/start.sh"
+  "scripts/stop.sh"
+  "scripts/restart.sh"
 )
 
 # check is resources exist
@@ -50,10 +79,12 @@ done
 
 # create backups of existing files on the server
 echo "Creating backups of existing files on the server..."
-ssh -p "$PORT" "$USER@$SERVER" "mkdir -p $PROJECT_DIR/backup && \
-  cp $PROJECT_DIR/docker-compose.yml $PROJECT_DIR/backup/docker-compose.yml.bak && \
-  cp $PROJECT_DIR/.env $PROJECT_DIR/backup/.env.bak && \
-  cp $PROJECT_DIR/start.sh $PROJECT_DIR/backup/start.sh.bak"
+backup_command="mkdir -p $PROJECT_DIR/backup"
+for resource in "${RESOURCES[@]}"; do
+  filename=$(basename "$resource")
+  backup_command+=" && cp $PROJECT_DIR/$filename $PROJECT_DIR/backup/${filename}.bak"
+done
+ssh -p "$PORT" "$USER@$SERVER" "$backup_command"
 
 # copy resources to server
 echo "copying [${RESOURCES[@]/#/}] to $USER@$SERVER:$PORT"
