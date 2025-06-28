@@ -24,7 +24,7 @@ jobs:
 
       - name: Update docker-compose.yml
         run: |
-          sed -i "s|image: ghcr.io/jcollingwood/jc-kotlin-template/server:.*|image: ghcr.io/${{ github.repository }}:${{ github.sha }}|" docker-compose.yml
+          sed -i "s|image: ghcr.io/${{ github.repository }}:.*|image: ghcr.io/${{ github.repository }}:${{ github.sha }}|" docker-compose.yml
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git commit -am "Update docker-compose.yml with new image tag"
