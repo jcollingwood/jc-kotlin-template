@@ -25,6 +25,7 @@ fun Application.appModule(core: CoreServices) {
             })"
         }
     }
+    // Install the X-Forwarded-For header plugin to handle reverse proxy setups
     install(XForwardedHeaders)
     errorHandler()
     configureDatabase()
