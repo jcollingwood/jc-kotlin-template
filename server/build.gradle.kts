@@ -55,6 +55,6 @@ tasks.register<NpxTask>("tailwind") {
 }
 
 // runs tailwind task on build, regenerating styles.css
-tasks.named("classes") {
+tasks.named("processResources") {
     dependsOn("tailwind")
 }
