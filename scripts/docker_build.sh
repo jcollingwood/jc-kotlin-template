@@ -7,7 +7,6 @@ if [ -z "$1" ]; then
   read -p "Enter version: " version
 fi
 
-version=${1:-$curr_version}
 docker buildx build --platform linux/arm/v7,linux/amd64 -t ghcr.io/jcollingwood/jc-kotlin-template/server:$version -f server/Dockerfile .
 
 if [ $? -ne 0 ]; then

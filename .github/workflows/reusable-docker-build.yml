@@ -1,0 +1,52 @@
+
+name: Reusable Docker Build
+
+on:
+  workflow_call:
+    inputs:
+      push:
+        description: 'Whether to push the Docker image'
+        required: true
+        type: boolean
+      tag:
+        description: 'The Docker image tag'
+        required: true
+        type: string
+      ref:
+        description: 'The Git ref (branch, tag, or SHA) to checkout'
+        required: false
+        type: string
+        default: ''
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Log in to GitHub Container Registry
+        if: ${{ inputs.push }}
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./server/Dockerfile
+          platforms: linux/amd64,linux/arm/v7
+          push: ${{ inputs.push }}
+          tags: ${{ inputs.tag }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
