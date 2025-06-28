@@ -25,7 +25,7 @@ fun Application.appModule(core: CoreServices) {
             })"
         }
     }
-    install(ForwardedHeaders)
+    install(XForwardedHeaders)
     errorHandler()
     configureDatabase()
     authModule(core)

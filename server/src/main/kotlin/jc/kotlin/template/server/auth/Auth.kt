@@ -23,7 +23,7 @@ import kotlin.collections.set
 fun Application.authModule(core: CoreServices) {
     install(Sessions) {
         cookie<UserSession>(SESSION_COOKIE_KEY) {
-            cookie.secure = false
+            cookie.secure = true
         }
     }
     install(Authentication) {
