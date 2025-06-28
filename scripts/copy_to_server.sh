@@ -3,7 +3,6 @@
 # prompt for these variables
 # Use environment variables as defaults if they are set
 
-echo $SSH_USER
 # Prompt for SSH username
 if [ -n "$SSH_USER" ]; then
     read -p "Enter SSH username [default: $SSH_USER]: " input_user
@@ -81,7 +80,8 @@ done
 echo "Creating backups of existing files on the server..."
 backup_command="mkdir -p $PROJECT_DIR/backup"
 for resource in "${RESOURCES[@]}"; do
-  backup_command+=" && cp $PROJECT_DIR/$resource $PROJECT_DIR/backup/${resource}.bak"
+  filename=$(basename "$resource")
+  backup_command+=" && cp $PROJECT_DIR/$filename $PROJECT_DIR/backup/${filename}.bak"
 done
 ssh -p "$PORT" "$USER@$SERVER" "$backup_command"
 
