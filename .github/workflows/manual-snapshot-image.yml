@@ -21,3 +21,10 @@ jobs:
       ref: ${{ github.event.inputs.branch }}
       push: true
       tag: ghcr.io/${{ github.repository }}:snapshot-${{ github.event.inputs.branch }}-${{ github.sha }}
+
+  echo-tag:
+    needs: docker-build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo Docker Tag
+        run: echo "Docker image tag: ghcr.io/${{ github.repository }}:snapshot-${{ github.event.inputs.branch }}-${{ github.sha }}"
