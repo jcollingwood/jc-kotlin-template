@@ -17,10 +17,10 @@ project requiring a backend server.
 - [ ] Database integration sample (SQLite)
 - [ ] Database integration sample (Postgres)
 - [ ] Unit tests sample
-- [ ] GH Actions sample
+- [x] GH Actions sample
 - [x] Docker sample
-- [ ] Container registry sample
-- [ ] Infrastructure sample
+- [x] Container registry sample
+- [x] Infrastructure sample
 - [ ] CI/CD sample
 - [ ] Data viz sample
 
