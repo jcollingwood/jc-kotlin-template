@@ -9,33 +9,33 @@ on:
         default: 'main'
 
 jobs:
+  get-sha:
+    runs-on: ubuntu-latest
+    outputs:
+      sha: ${{ steps.get_sha.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.branch }}
+      - id: get_sha
+        run: echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+
   gradle-build:
     uses: ./.github/workflows/reusable-gradle-build.yml
     with:
       ref: ${{ github.event.inputs.branch }}
 
   docker-build-and-push:
-    needs: gradle-build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.inputs.branch }}
-      - name: Docker Build and Push
-        uses: ./.github/workflows/reusable-docker-build.yml
-        with:
-          ref: ${{ github.event.inputs.branch }}
-          push: true
-          tag: ghcr.io/${{ github.repository }}:snapshot-${{ github.event.inputs.branch }}-${{ github.sha }}
+    needs: [gradle-build, get-sha]
+    uses: ./.github/workflows/reusable-docker-build.yml
+    with:
+      ref: ${{ github.event.inputs.branch }}
+      push: true
+      tag: ghcr.io/${{ github.repository }}:snapshot-${{ github.event.inputs.branch }}-${{ needs.get-sha.outputs.sha }}
 
   echo-tag:
-    needs: docker-build-and-push
+    needs: [docker-build-and-push, get-sha]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.inputs.branch }}
       - name: Echo Docker Tag
-        run: echo "Docker image tag: ghcr.io/${{ github.repository }}:snapshot-${{ github.event.inputs.branch }}-${{ github.sha }}"
+        run: echo "Docker image tag: ghcr.io/${{ github.repository }}:snapshot-${{ github.event.inputs.branch }}-${{ needs.get-sha.outputs.sha }}"
