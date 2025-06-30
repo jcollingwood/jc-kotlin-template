@@ -9,33 +9,16 @@ on:
         default: 'main'
 
 jobs:
-  get-sha:
-    runs-on: ubuntu-latest
-    outputs:
-      sha: ${{ steps.get_sha.outputs.sha }}
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.inputs.branch }}
-      - id: get_sha
-        run: echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
-
   gradle-build:
     uses: ./.github/workflows/reusable-gradle-build.yml
     with:
       ref: ${{ github.event.inputs.branch }}
 
   docker-build-and-push:
-    needs: [gradle-build, get-sha]
+    needs: gradle-build
     uses: ./.github/workflows/reusable-docker-build.yml
     with:
       ref: ${{ github.event.inputs.branch }}
       push: true
-      tag: ghcr.io/${{ github.repository }}:snapshot-${{ github.event.inputs.branch }}-${{ needs.get-sha.outputs.sha }}
+      tag: ghcr.io/${{ github.repository }}:snapshot-${{ github.event.inputs.branch }}-${{ github.sha }}
 
-  echo-tag:
-    needs: [docker-build-and-push, get-sha]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Echo Docker Tag
-        run: echo "Docker image tag: ghcr.io/${{ github.repository }}:snapshot-${{ github.event.inputs.branch }}-${{ needs.get-sha.outputs.sha }}"
