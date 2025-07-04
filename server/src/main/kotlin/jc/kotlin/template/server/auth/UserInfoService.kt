@@ -1,13 +1,12 @@
 package jc.kotlin.template.server.auth
 
-import io.ktor.client.request.get
-import io.ktor.client.request.headers
-import io.ktor.client.statement.bodyAsText
-import io.ktor.http.HttpHeaders
-import io.ktor.http.HttpStatusCode
-import io.ktor.server.application.ApplicationCall
-import io.ktor.server.response.respondRedirect
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
+import io.ktor.server.application.*
+import io.ktor.server.response.*
 import jc.kotlin.template.server.config.CoreServices
+import jc.kotlin.template.server.session.SessionService
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -25,25 +24,33 @@ data class UserInfo(
 )
 
 class UserInfoService(
-    private val core: CoreServices
+    private val core: CoreServices,
+    private val sessionService: SessionService
 ) {
     companion object {
         val log = KotlinLogging.logger {}
     }
 
-    fun getUserInfo(call: ApplicationCall, token: String): UserInfo {
-        return core.jsonParser.decodeFromString<UserInfo>(lookupUser(call, token))
+    fun getUserInfo(call: ApplicationCall, accessToken: String): UserInfo {
+        return core.jsonParser.decodeFromString<UserInfo>(lookupUser(call, accessToken))
     }
 
-    fun getUserInfo(call: ApplicationCall, userSession: UserSession): UserInfo {
-        return core.jsonParser.decodeFromString<UserInfo>(lookupUser(call, userSession.accessTokenHash ?: ""))
+    fun getUserInfoFromSession(call: ApplicationCall, session: SessionCookie): UserInfo {
+        return runBlocking {
+            // TODO handle null
+            val accessToken: String = sessionService.getSessionAccessToken(session.sessionToken) ?: ""
+            return@runBlocking getUserInfo(
+                call,
+                accessToken
+            )
+        }
     }
 
-    fun lookupUser(call: ApplicationCall, token: String): String {
+    private fun lookupUser(call: ApplicationCall, accessToken: String): String {
         return runBlocking {
             val response = core.httpClient.get("https://www.googleapis.com/oauth2/v2/userinfo") {
                 headers {
-                    append(HttpHeaders.Authorization, "Bearer $token")
+                    append(HttpHeaders.Authorization, "Bearer $accessToken")
                 }
             }
 

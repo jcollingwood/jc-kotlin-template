@@ -12,6 +12,7 @@ import jc.kotlin.template.server.components.buttonStyles
 import jc.kotlin.template.server.config.CoreServices
 import jc.kotlin.template.server.config.GOOGLE_CLIENT_ID
 import jc.kotlin.template.server.config.GOOGLE_CLIENT_SECRET
+import jc.kotlin.template.server.session.SessionService
 import kotlinx.html.a
 import kotlinx.html.body
 import kotlinx.html.classes
@@ -20,10 +21,9 @@ import mu.two.KotlinLogging
 import kotlin.collections.set
 import kotlin.time.Duration.Companion.hours
 
-
-fun Application.authModule(core: CoreServices, userInfoService: UserInfoService) {
+fun Application.authModule(core: CoreServices, userInfoService: UserInfoService, sessionService: SessionService) {
     install(Sessions) {
-        cookie<UserSession>(SESSION_COOKIE_KEY) {
+        cookie<SessionCookie>(SESSION_COOKIE_KEY) {
             cookie.secure = true
             cookie.httpOnly = true
             cookie.maxAge = 2.hours
@@ -56,11 +56,11 @@ fun Application.authModule(core: CoreServices, userInfoService: UserInfoService)
             }
         }
     }
-    authRouting(userInfoService = userInfoService)
+    authRouting(userInfoService = userInfoService, sessionService = sessionService)
 }
 
 // auth login flow
-fun Application.authRouting(userInfoService: UserInfoService) {
+fun Application.authRouting(userInfoService: UserInfoService, sessionService: SessionService) {
     val log = KotlinLogging.logger {}
 
     /* services init */
@@ -100,9 +100,14 @@ fun Application.authRouting(userInfoService: UserInfoService) {
                 // redirects home if the url is not found before authorization
                 currentPrincipal?.let { principal ->
                     principal.state?.let { state ->
+                        // get user info with access token and save session
                         val userInfo = userInfoService.getUserInfo(call, principal.accessToken)
-                        val userSession = UserSession(state, principal.accessToken)
-                        call.sessions.set(SESSION_COOKIE_KEY, userSession)
+                        val session = sessionService.createSession(
+                            userId = userInfo.id,
+                            accessToken = principal.accessToken,
+                            refreshToken = principal.refreshToken,
+                        )
+                        call.sessions.set(SESSION_COOKIE_KEY, session)
                         redirects[state]?.let { redirect ->
                             call.respondRedirect(redirect)
                             return@get

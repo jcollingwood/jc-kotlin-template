@@ -9,9 +9,10 @@ import jc.kotlin.template.server.auth.authModule
 import jc.kotlin.template.server.config.CoreServices
 import jc.kotlin.template.server.config.errorHandler
 import jc.kotlin.template.server.routes.appRoutes
+import jc.kotlin.template.server.session.SessionService
 import org.slf4j.event.Level
 
-fun Application.appModule(core: CoreServices, userInfoService: UserInfoService) {
+fun Application.appModule(core: CoreServices, userInfoService: UserInfoService, sessionService: SessionService) {
     install(CallLogging) {
         level = Level.INFO
         filter { call ->
@@ -30,6 +31,6 @@ fun Application.appModule(core: CoreServices, userInfoService: UserInfoService) 
     install(XForwardedHeaders)
     errorHandler()
     configureDatabase()
-    authModule(core, userInfoService)
-    appRoutes(core, userInfoService)
+    authModule(core = core, userInfoService = userInfoService, sessionService = sessionService)
+    appRoutes(core = core, userInfoService = userInfoService, sessionService = sessionService)
 }
