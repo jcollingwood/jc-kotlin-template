@@ -8,8 +8,7 @@ import jc.kotlin.template.server.config.CoreServices
 
 data class Page(val path: String, val title: String)
 
-fun Application.appRoutes(core: CoreServices) {
-    val userInfoService = UserInfoService(core)
+fun Application.appRoutes(core: CoreServices, userInfoService: UserInfoService) {
     routing {
         staticResources("/static", "static")
 

@@ -31,15 +31,19 @@ class UserInfoService(
         val log = KotlinLogging.logger {}
     }
 
-    fun getUserInfo(call: ApplicationCall, userSession: UserSession): UserInfo {
-        return core.jsonParser.decodeFromString<UserInfo>(lookupUser(call, userSession))
+    fun getUserInfo(call: ApplicationCall, token: String): UserInfo {
+        return core.jsonParser.decodeFromString<UserInfo>(lookupUser(call, token))
     }
 
-    fun lookupUser(call: ApplicationCall, c: UserSession): String {
+    fun getUserInfo(call: ApplicationCall, userSession: UserSession): UserInfo {
+        return core.jsonParser.decodeFromString<UserInfo>(lookupUser(call, userSession.accessTokenHash ?: ""))
+    }
+
+    fun lookupUser(call: ApplicationCall, token: String): String {
         return runBlocking {
             val response = core.httpClient.get("https://www.googleapis.com/oauth2/v2/userinfo") {
                 headers {
-                    append(HttpHeaders.Authorization, "Bearer ${c.token}")
+                    append(HttpHeaders.Authorization, "Bearer $token")
                 }
             }
 

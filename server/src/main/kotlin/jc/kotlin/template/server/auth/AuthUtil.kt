@@ -8,8 +8,17 @@ import io.ktor.server.sessions.*
 import jc.kotlin.template.server.config.DOMAIN
 import kotlinx.serialization.Serializable
 
+//@Serializable
+//data class UserSession(val state: String, val token: String)
+
 @Serializable
-data class UserSession(val state: String, val token: String)
+data class UserSession(
+    val userId: String,
+    val email: String,
+    val accessTokenHash: String? = null, // Store hash, not actual token
+    val refreshTokenHash: String? = null,
+    val expiresAt: Long,
+)
 
 const val OAUTH_KEY = "auth-oauth-google"
 

@@ -18,12 +18,17 @@ import kotlinx.html.classes
 import kotlinx.html.main
 import mu.two.KotlinLogging
 import kotlin.collections.set
+import kotlin.time.Duration.Companion.hours
 
 
-fun Application.authModule(core: CoreServices) {
+fun Application.authModule(core: CoreServices, userInfoService: UserInfoService) {
     install(Sessions) {
         cookie<UserSession>(SESSION_COOKIE_KEY) {
             cookie.secure = true
+            cookie.httpOnly = true
+            cookie.maxAge = 2.hours
+            cookie.sameSite = SameSite.Strict
+            cookie.encoding = CookieEncoding.BASE64_ENCODING
         }
     }
     install(Authentication) {
@@ -51,11 +56,11 @@ fun Application.authModule(core: CoreServices) {
             }
         }
     }
-    authRouting()
+    authRouting(userInfoService = userInfoService)
 }
 
 // auth login flow
-fun Application.authRouting() {
+fun Application.authRouting(userInfoService: UserInfoService) {
     val log = KotlinLogging.logger {}
 
     /* services init */
@@ -95,6 +100,7 @@ fun Application.authRouting() {
                 // redirects home if the url is not found before authorization
                 currentPrincipal?.let { principal ->
                     principal.state?.let { state ->
+                        val userInfo = userInfoService.getUserInfo(call, principal.accessToken)
                         val userSession = UserSession(state, principal.accessToken)
                         call.sessions.set(SESSION_COOKIE_KEY, userSession)
                         redirects[state]?.let { redirect ->
