@@ -4,6 +4,7 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import jc.kotlin.template.server.auth.UserInfoService
 import jc.kotlin.template.server.config.CoreServices
+import jc.kotlin.template.server.config.Database
 import jc.kotlin.template.server.config.PORT
 import jc.kotlin.template.server.session.MapUserSessionRepository
 import jc.kotlin.template.server.session.SessionService
@@ -16,5 +17,7 @@ fun main() {
 
         appModule(core = coreServices, userInfoService = userInfoService, sessionService = sessionService)
         apiModule()
-    }.start(wait = true)
+    }
+        .start(wait = true)
+        .addShutdownHook { Database.close() }
 }

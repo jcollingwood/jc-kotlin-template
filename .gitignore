@@ -16,5 +16,8 @@ build
 # local env
 *.env
 
+# local database files
+*.db
+
 # auto-generated static dir
 server/src/main/resources/static/styles.css

@@ -7,10 +7,7 @@ CREATE TABLE user_sessions (
     token_expires_at TIMESTAMP NOT NULL,
     session_expires_at TIMESTAMP NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
-    last_accessed_at TIMESTAMP DEFAULT NOW(),
-    ip_address INET,
-    user_agent TEXT,
-    is_active BOOLEAN DEFAULT TRUE
+    last_accessed_at TIMESTAMP DEFAULT NOW()
 );
 
 CREATE INDEX idx_user_sessions_token ON user_sessions(session_token);

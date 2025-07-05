@@ -28,5 +28,6 @@ data class CoreServices(
             json()
         }
     },
-    val jsonParser: Json = Json { ignoreUnknownKeys = true }
+    val jsonParser: Json = Json { ignoreUnknownKeys = true },
+    val database: Database = Database
 )

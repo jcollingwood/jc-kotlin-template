@@ -24,22 +24,3 @@ val ROOT_DOMAIN = DOMAIN
 
 // map of redirects
 val redirects = mutableMapOf<String, String>()
-
-/*
- * gets the session from the cookie - redirects to login if there is no session
- */
-//suspend fun getSession(
-//    call: ApplicationCall
-//): UserSession? {
-//    val userSession: UserSession? = call.sessions.get(SESSION_COOKIE_KEY) as UserSession?
-//    //if there is no session, redirect to login
-//    if (userSession == null) {
-//        val redirectUrl = URLBuilder(ROOT_DOMAIN + LOGIN_ROUTE).run {
-//            parameters.append("redirectUrl", call.request.uri)
-//            build()
-//        }
-//        call.respondRedirect(redirectUrl)
-//        return null
-//    }
-//    return userSession
-//}
