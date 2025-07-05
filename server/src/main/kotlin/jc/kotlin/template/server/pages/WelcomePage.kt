@@ -1,5 +1,6 @@
 package jc.kotlin.template.server.pages
 
+import jc.kotlin.template.server.auth.SessionCookie
 import jc.kotlin.template.server.auth.UserInfo
 import jc.kotlin.template.server.components.jcCard
 import jc.kotlin.template.server.routes.Page
@@ -7,10 +8,13 @@ import kotlinx.html.*
 
 val welcomePage = Page("/welcome", "Welcome")
 
-fun FlowContent.welcomePage(userInfo: UserInfo) {
+fun FlowContent.welcomePage(userInfo: UserInfo, sessionCookie: SessionCookie) {
+    // figure out expiresAt long to get expiration duration in minutes
+    val expireMillis = sessionCookie.expiresAt - System.currentTimeMillis()
+
     h1(classes = "text-2xl") { +"Welcome" }
-    p { +"You are logged in as ${userInfo.name} (id ${userInfo.id})" }
-    p { +"Session expires in ${userInfo.id}" }
+    p { +"You are logged in as ${userInfo.name}" }
+    p { +"Session expires in ~${expireMillis / 1000 / 60 / 60} hours" }
     div {
         classes = setOf("max-w-2xl")
         jcCard {

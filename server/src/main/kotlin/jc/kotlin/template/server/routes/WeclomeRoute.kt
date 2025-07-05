@@ -15,7 +15,7 @@ fun Route.welcomeRoute(userInfoService: UserInfoService) {
 
             call.respondHtml {
                 mainTemplate(welcomePage) {
-                    welcomePage(userInfo)
+                    welcomePage(userInfo, session)
                 }
             }
         }
