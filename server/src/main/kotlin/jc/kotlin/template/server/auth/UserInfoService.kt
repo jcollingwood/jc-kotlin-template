@@ -31,8 +31,14 @@ class UserInfoService(
         val log = KotlinLogging.logger {}
     }
 
-    fun getUserInfo(call: ApplicationCall, accessToken: String): UserInfo {
-        return core.jsonParser.decodeFromString<UserInfo>(lookupUser(call, accessToken))
+    suspend fun createUserSession(call: ApplicationCall, accessToken: String, refreshToken: String?): SessionCookie {
+        val userInfo = getUserInfo(call, accessToken)
+        val session = sessionService.createSession(
+            userId = userInfo.id,
+            accessToken = accessToken,
+            refreshToken = refreshToken,
+        )
+        return session
     }
 
     fun getUserInfoFromSession(call: ApplicationCall, session: SessionCookie): UserInfo {
@@ -44,6 +50,10 @@ class UserInfoService(
                 accessToken
             )
         }
+    }
+
+    private fun getUserInfo(call: ApplicationCall, accessToken: String): UserInfo {
+        return core.jsonParser.decodeFromString<UserInfo>(lookupUser(call, accessToken))
     }
 
     private fun lookupUser(call: ApplicationCall, accessToken: String): String {

@@ -31,6 +31,14 @@ fun Application.appModule(core: CoreServices, userInfoService: UserInfoService, 
     install(XForwardedHeaders)
     errorHandler()
     configureDatabase()
-    authModule(core = core, userInfoService = userInfoService, sessionService = sessionService)
-    appRoutes(core = core, userInfoService = userInfoService, sessionService = sessionService)
+    authModule(
+        core = core,
+        userInfoService = userInfoService,
+        sessionService = sessionService
+    )
+    appRoutes(
+        core = core,
+        userInfoService = userInfoService,
+        sessionService = sessionService
+    )
 }

@@ -15,7 +15,7 @@ fun Application.appRoutes(core: CoreServices, userInfoService: UserInfoService, 
         staticResources("/static", "static")
 
         route("/") {
-            // validate session for all routes under /app
+            // validate session for all routes under this route
             install(SessionValidationPlugin) {
                 this.sessionService = sessionService
                 redirectOnFailure = true

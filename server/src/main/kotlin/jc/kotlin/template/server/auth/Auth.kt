@@ -27,7 +27,6 @@ fun Application.authModule(core: CoreServices, userInfoService: UserInfoService,
             cookie.secure = true
             cookie.httpOnly = true
             cookie.maxAge = 2.hours
-//            cookie.sameSite = SameSite.Strict
             cookie.encoding = CookieEncoding.BASE64_ENCODING
         }
     }
@@ -100,13 +99,8 @@ fun Application.authRouting(userInfoService: UserInfoService, sessionService: Se
                 // redirects home if the url is not found before authorization
                 currentPrincipal?.let { principal ->
                     principal.state?.let { state ->
-                        // get user info with access token and save session
-                        val userInfo = userInfoService.getUserInfo(call, principal.accessToken)
-                        val session = sessionService.createSession(
-                            userId = userInfo.id,
-                            accessToken = principal.accessToken,
-                            refreshToken = principal.refreshToken,
-                        )
+                        val session =
+                            userInfoService.createUserSession(call, principal.accessToken, principal.refreshToken)
                         call.sessions.set(SESSION_COOKIE_KEY, session)
                         redirects[state]?.let { redirect ->
                             call.respondRedirect(redirect)

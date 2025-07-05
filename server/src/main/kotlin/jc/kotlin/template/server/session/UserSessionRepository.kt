@@ -1,11 +1,13 @@
 package jc.kotlin.template.server.session
 
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @Serializable
 data class UserSessionEntity @OptIn(ExperimentalUuidApi::class) constructor(
+    @Contextual
     val id: Uuid,
     val userId: String,
     val sessionToken: String,
