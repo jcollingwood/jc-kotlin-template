@@ -27,7 +27,7 @@ fun Application.authModule(core: CoreServices, userInfoService: UserInfoService,
             cookie.secure = true
             cookie.httpOnly = true
             cookie.maxAge = 2.hours
-            cookie.sameSite = SameSite.Strict
+//            cookie.sameSite = SameSite.Strict
             cookie.encoding = CookieEncoding.BASE64_ENCODING
         }
     }
@@ -65,7 +65,7 @@ fun Application.authRouting(userInfoService: UserInfoService, sessionService: Se
 
     /* services init */
     routing {
-        get("/") {
+        get {
             log.info("Login Page")
             call.respondHtml {
                 appHead("Login")

@@ -14,15 +14,19 @@ fun Application.appRoutes(core: CoreServices, userInfoService: UserInfoService, 
     routing {
         staticResources("/static", "static")
 
-        install(SessionValidationPlugin) {
-            this.sessionService = sessionService
-            redirectOnFailure = true
-            requireValidToken = true
+        route("/") {
+            // validate session for all routes under /app
+            install(SessionValidationPlugin) {
+                this.sessionService = sessionService
+                redirectOnFailure = true
+                requireValidToken = true
+            }
+
+            welcomeRoute(userInfoService)
+            htmxRoutes()
+            componentsRoutes()
+            newRoutes()
         }
-        welcomeRoute(userInfoService)
-        htmxRoutes()
-        componentsRoutes()
-        newRoutes()
     }
 }
 
