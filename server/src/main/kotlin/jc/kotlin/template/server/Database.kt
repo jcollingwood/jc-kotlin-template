@@ -1,6 +1,6 @@
 package jc.kotlin.template.server
 
-import io.ktor.server.application.Application
+import io.ktor.server.application.*
 import jc.kotlin.template.server.config.CoreServices
 import mu.two.KotlinLogging
 
@@ -10,7 +10,7 @@ fun Application.configureDatabase(core: CoreServices) {
         // log flyway migrations
         conn.prepareStatement(
             """
-              SELECT version, description, installed_on, state
+              SELECT version, description, installed_on, success
               FROM flyway_schema_history
               ORDER BY installed_on DESC; 
        """.trimIndent()
@@ -21,8 +21,8 @@ fun Application.configureDatabase(core: CoreServices) {
                     val version = result.getString("version")
                     val description = result.getString("description")
                     val installedOn = result.getTimestamp("installed_on")
-                    val state = result.getString("state")
-                    log.info("Flyway migration: $version - $description on $installedOn with state $state")
+                    val isSuccess = result.getBoolean("success")
+                    log.info("Flyway migration: $version - $description on $installedOn with state ${if (isSuccess) "SUCCESS" else "FAILED"}")
                 }
             }
     }
