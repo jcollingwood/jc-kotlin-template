@@ -8,5 +8,7 @@ services:
       - PORT=1111
     network_mode: host
     restart: unless-stopped
+    volumes:
+      - ./db/template_db.db:/app/db/template_db.db
 
 
