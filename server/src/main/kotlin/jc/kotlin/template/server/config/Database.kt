@@ -3,7 +3,7 @@ package jc.kotlin.template.server.config
 import com.zaxxer.hikari.HikariDataSource
 
 object Database { // singleton object for database connection management
-    private val dataSource: HikariDataSource
+    val dataSource: HikariDataSource
 
     init {
         val config = HikariDataSource().apply {

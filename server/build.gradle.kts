@@ -47,6 +47,8 @@ dependencies {
     implementation("org.postgresql:postgresql:42.7.7")
     // For SQLite
     implementation("org.xerial:sqlite-jdbc:3.50.2.0")
+    // Add Flyway for runtime migrations
+    implementation("org.flywaydb:flyway-core:11.10.1")
 }
 
 node {
