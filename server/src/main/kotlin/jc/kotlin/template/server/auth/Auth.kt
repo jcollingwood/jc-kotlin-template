@@ -65,7 +65,6 @@ fun Application.authRouting(userInfoService: UserInfoService, sessionService: Se
     /* services init */
     routing {
         get {
-            log.info("Login Page")
             call.respondHtml {
                 appHead("Login")
                 body {

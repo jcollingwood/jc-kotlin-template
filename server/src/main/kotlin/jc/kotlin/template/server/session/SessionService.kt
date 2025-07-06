@@ -3,10 +3,7 @@ package jc.kotlin.template.server.session
 import jc.kotlin.template.server.auth.SessionCookie
 import java.util.*
 import kotlin.time.Duration.Companion.hours
-import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
-@OptIn(ExperimentalUuidApi::class)
 class SessionService(private val userSessionRepo: UserSessionRepository) {
     suspend fun createSession(
         userId: String,
@@ -19,7 +16,6 @@ class SessionService(private val userSessionRepo: UserSessionRepository) {
 
         userSessionRepo.createSession(
             UserSessionEntity(
-                id = Uuid.random(),
                 userId = userId,
                 sessionToken = sessionToken,
                 accessTokenEncrypted = accessToken, // TODO: Encrypt this

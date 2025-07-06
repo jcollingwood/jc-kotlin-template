@@ -14,7 +14,7 @@ import org.slf4j.event.Level
 
 fun Application.appModule(core: CoreServices, userInfoService: UserInfoService, sessionService: SessionService) {
     install(CallLogging) {
-        level = Level.INFO
+        level = Level.DEBUG
         filter { call ->
             // ignore static resources and preflight requests
             !call.request.uri.startsWith("/static/") && call.request.httpMethod.value != "OPTIONS"
@@ -30,7 +30,7 @@ fun Application.appModule(core: CoreServices, userInfoService: UserInfoService, 
     // Install the X-Forwarded-For header plugin to handle reverse proxy setups
     install(XForwardedHeaders)
     errorHandler()
-    configureDatabase()
+    configureDatabase(core)
     authModule(
         core = core,
         userInfoService = userInfoService,

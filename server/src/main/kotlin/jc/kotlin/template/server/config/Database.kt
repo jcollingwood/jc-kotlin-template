@@ -17,12 +17,22 @@ object Database { // singleton object for database connection management
                 "postgres" -> "org.postgresql.Driver"
                 else -> throw IllegalArgumentException("Unsupported DB_TYPE: $DB_TYPE")
             }
-            maximumPoolSize = 10
-            isAutoCommit = false
+            maximumPoolSize = when (DB_TYPE) {
+                "sqlite" -> 1 // SQLite is single-threaded
+                "postgres" -> 10 // Adjust based on your needs
+                else -> throw IllegalArgumentException("Unsupported DB_TYPE: $DB_TYPE")
+            }
+            isAutoCommit = true
         }
         dataSource = HikariDataSource(config)
     }
 
-    fun getConnection() = dataSource.connection
+    private fun getConnection() = dataSource.connection
+    fun <T> useConnection(block: (java.sql.Connection) -> T): T {
+        return getConnection().use { connection ->
+            block(connection)
+        }
+    }
+
     fun close() = dataSource.close()
 }

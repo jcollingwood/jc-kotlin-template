@@ -2,16 +2,12 @@ package jc.kotlin.template.server.session
 
 import jc.kotlin.template.server.config.CoreServices
 import jc.kotlin.template.server.config.DB_TYPE
-import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
-import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
+import mu.two.KotlinLogging
 
 @Serializable
-data class UserSessionEntity @OptIn(ExperimentalUuidApi::class) constructor(
-    @Contextual
-    val id: Uuid,
-    @Serial
+data class UserSessionEntity(
+    val id: Int = 0, // Default to 0 for new entities
     val userId: String,
     val sessionToken: String,
     val accessTokenEncrypted: String,
@@ -24,9 +20,8 @@ data class UserSessionEntity @OptIn(ExperimentalUuidApi::class) constructor(
 
 interface UserSessionRepository {
     suspend fun getSession(sessionToken: String): UserSessionEntity?
-    suspend fun createSession(entity: UserSessionEntity): UserSessionEntity
-    suspend fun updateSession(entity: UserSessionEntity): UserSessionEntity
-    suspend fun updateSessionLastAccessedAt(sessionToken: String, lastAccessedAt: Long): UserSessionEntity
+    suspend fun createSession(entity: UserSessionEntity)
+    suspend fun updateSessionLastAccessedAt(sessionToken: String, lastAccessedAt: Long)
     suspend fun deleteSession(sessionToken: String): Boolean
     suspend fun deleteExpiredSessions(currentTime: Long): Int
 }
@@ -35,97 +30,128 @@ fun sessionRepositoryFactory(
     core: CoreServices
 ): UserSessionRepository {
     return when (DB_TYPE) {
-        "memorymap" -> MapUserSessionRepository()
-        "sqlite" -> DbUserSessionRepository(core)
-        "postgres" -> DbUserSessionRepository(core)
+        "sqlite" -> SQLiteUserSessionRepository(core)
+//        "postgres" -> DbUserSessionRepository(core)
         else -> throw IllegalArgumentException("Unsupported DB_TYPE: $DB_TYPE")
     }
 }
 
-@OptIn(ExperimentalUuidApi::class)
-class DbUserSessionRepository(
+class SQLiteUserSessionRepository(
     private val core: CoreServices
 ) : UserSessionRepository {
+    val log = KotlinLogging.logger {}
 
     override suspend fun getSession(sessionToken: String): UserSessionEntity? {
-        return core.database.getConnection().prepareStatement(
-            """
-            SELECT * FROM user_sessions WHERE session_token = $sessionToken
+        return core.database.useConnection { conn ->
+            conn.prepareStatement("SELECT * FROM user_sessions WHERE session_token = ?;")
+                .use { stmt ->
+                    stmt.setString(1, sessionToken)
+                    val result = stmt.executeQuery()
+                    if (result.next()) mapResultToUserSessionEntity(result)
+                    else null
+                }
+        }
+    }
+
+    override suspend fun createSession(entity: UserSessionEntity) {
+        log.info("Saving session for token: ${entity.userId} | ${entity.sessionToken}")
+        return core.database.useConnection { conn ->
+            conn.prepareStatement(
+                """
+            INSERT INTO user_sessions (
+                user_id, 
+                session_token, 
+                access_token_encrypted, 
+                refresh_token_encrypted, 
+                token_expires_at, 
+                session_expires_at, 
+                created_at, 
+                last_accessed_at
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?);
         """.trimIndent()
+            )
+                .use { stmt ->
+                    stmt.setString(1, entity.userId)
+                    stmt.setString(2, entity.sessionToken)
+                    stmt.setString(3, entity.accessTokenEncrypted)
+                    stmt.setString(4, entity.refreshTokenEncrypted)
+                    stmt.setLong(5, entity.tokenExpiresAt)
+                    stmt.setLong(6, entity.sessionExpiresAt)
+                    stmt.setLong(7, entity.createdAt)
+                    stmt.setLong(8, entity.lastAccessedAt)
+
+                    val result = stmt.executeUpdate()
+                    if (result != 1) {
+                        throw IllegalStateException("Failed to create session for user: ${entity.userId}")
+                    }
+                }
+        }
+    }
+
+    override suspend fun updateSessionLastAccessedAt(sessionToken: String, lastAccessedAt: Long) {
+        return core.database.useConnection { conn ->
+            conn.prepareStatement(
+                """
+            UPDATE user_sessions
+            SET last_accessed_at = ?
+            WHERE session_token = ?;
+        """.trimIndent()
+            )
+                .use { stmt ->
+                    stmt.setLong(1, lastAccessedAt)
+                    stmt.setString(2, sessionToken)
+
+                    val result = stmt.executeUpdate()
+                    if (result != 1) throw NoSuchElementException("Session not found")
+                }
+        }
+    }
+
+    override suspend fun deleteSession(sessionToken: String): Boolean {
+        return core.database.useConnection { conn ->
+            conn.prepareStatement(
+                """
+            DELETE FROM user_sessions
+            WHERE session_token = ?;
+        """.trimIndent()
+            )
+                .use { stmt ->
+                    stmt.setString(1, sessionToken)
+                    val result = stmt.executeUpdate()
+                    if (result != 1) throw NoSuchElementException("Session not found") // If a row was deleted, this will return true
+                    else true
+                }
+        }
+    }
+
+    override suspend fun deleteExpiredSessions(currentTime: Long): Int {
+        return core.database.useConnection { conn ->
+            conn.prepareStatement(
+                """
+            DELETE FROM user_sessions
+            WHERE session_expires_at < ?;
+        """.trimIndent()
+            )
+                .use { stmt ->
+                    stmt.setLong(1, currentTime)
+                    val result = stmt.executeUpdate()
+                    result
+                }
+        }
+    }
+
+    private fun mapResultToUserSessionEntity(result: java.sql.ResultSet): UserSessionEntity {
+        return UserSessionEntity(
+            id = result.getInt("id"),
+            userId = result.getString("user_id"),
+            sessionToken = result.getString("session_token"),
+            accessTokenEncrypted = result.getString("access_token_encrypted"),
+            refreshTokenEncrypted = result.getString("refresh_token_encrypted"),
+            tokenExpiresAt = result.getLong("token_expires_at"),
+            sessionExpiresAt = result.getLong("session_expires_at"),
+            createdAt = result.getLong("created_at"),
+            lastAccessedAt = result.getLong("last_accessed_at")
         )
-            .use { stmt ->
-                val result = stmt.executeQuery()
-                if (result.next()) {
-                    UserSessionEntity(
-                        id = Uuid.fromByteArray(result.getString("id").encodeToByteArray()),
-                        userId = result.getString("user_id"),
-                        sessionToken = result.getString("session_token"),
-                        accessTokenEncrypted = result.getString("access_token_encrypted"),
-                        refreshTokenEncrypted = result.getString("refresh_token_encrypted"),
-                        tokenExpiresAt = result.getLong("token_expires_at"),
-                        sessionExpiresAt = result.getLong("session_expires_at"),
-                        createdAt = result.getLong("created_at"),
-                        lastAccessedAt = result.getLong("last_accessed_at")
-                    )
-                } else null
-            }
-    }
-
-    override suspend fun createSession(entity: UserSessionEntity): UserSessionEntity {
-        return core.userSessionDao.createSession(entity)
-    }
-
-    override suspend fun updateSession(entity: UserSessionEntity): UserSessionEntity {
-        return core.userSessionDao.updateSession(entity)
-    }
-
-    @OptIn(ExperimentalUuidApi::class)
-    override suspend fun updateSessionLastAccessedAt(sessionToken: String, lastAccessedAt: Long): UserSessionEntity {
-        return core.userSessionDao.updateSessionLastAccessedAt(sessionToken, lastAccessedAt)
-    }
-
-    override suspend fun deleteSession(sessionToken: String): Boolean {
-        return core.userSessionDao.deleteSession(sessionToken)
-    }
-
-    override suspend fun deleteExpiredSessions(currentTime: Long): Int {
-        return core.userSessionDao.deleteExpiredSessions(currentTime)
-    }
-}
-
-// for testing using in memory map in place of db
-class MapUserSessionRepository : UserSessionRepository {
-    private val sessions = mutableMapOf<String, UserSessionEntity>()
-
-    override suspend fun getSession(sessionToken: String): UserSessionEntity? {
-        return sessions[sessionToken]
-    }
-
-    override suspend fun createSession(entity: UserSessionEntity): UserSessionEntity {
-        sessions[entity.sessionToken] = entity
-        return entity
-    }
-
-    override suspend fun updateSession(entity: UserSessionEntity): UserSessionEntity {
-        sessions[entity.sessionToken] = entity
-        return entity
-    }
-
-    @OptIn(ExperimentalUuidApi::class)
-    override suspend fun updateSessionLastAccessedAt(sessionToken: String, lastAccessedAt: Long): UserSessionEntity {
-        val session = sessions[sessionToken] ?: throw NoSuchElementException("Session not found")
-        val updatedSession = session.copy(lastAccessedAt = lastAccessedAt)
-        sessions[sessionToken] = updatedSession
-        return updatedSession
-    }
-
-    override suspend fun deleteSession(sessionToken: String): Boolean {
-        return sessions.remove(sessionToken) != null
-    }
-
-    override suspend fun deleteExpiredSessions(currentTime: Long): Int {
-        val expiredSessions = sessions.values.filter { it.sessionExpiresAt < currentTime }
-        expiredSessions.forEach { deleteSession(it.sessionToken) }
-        return expiredSessions.size
     }
 }

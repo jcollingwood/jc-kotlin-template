@@ -1,5 +1,5 @@
 CREATE TABLE user_sessions (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id SERIAL PRIMARY KEY,
     user_id VARCHAR(255) NOT NULL,
     session_token VARCHAR(255) UNIQUE NOT NULL,
     access_token_encrypted TEXT NOT NULL,

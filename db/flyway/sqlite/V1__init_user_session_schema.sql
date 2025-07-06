@@ -1,5 +1,5 @@
 CREATE TABLE user_sessions (
-    id TEXT PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id TEXT NOT NULL,
     session_token TEXT UNIQUE NOT NULL,
     access_token_encrypted TEXT NOT NULL,

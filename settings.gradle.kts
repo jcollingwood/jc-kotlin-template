@@ -1,2 +1,2 @@
 rootProject.name = "jc-kotlin-template"
-include("server")
+include("server", "db")

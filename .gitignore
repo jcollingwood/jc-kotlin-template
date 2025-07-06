@@ -18,6 +18,8 @@ build
 
 # local database files
 *.db
+*.db-shm
+*.db-wal
 
 # auto-generated static dir
 server/src/main/resources/static/styles.css
