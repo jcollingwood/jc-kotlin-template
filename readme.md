@@ -14,7 +14,7 @@ project requiring a backend server.
 - [x] MPA sample
 - [x] HTMX sample
 - [x] Standard Components and Javascript samples
-- [ ] Database integration sample (SQLite)
+- [x] Database integration sample (SQLite)
 - [ ] Database integration sample (Postgres)
 - [ ] Unit tests sample
 - [x] GH Actions sample
@@ -70,6 +70,10 @@ Optional environment variables:
 To run the app, run the following command:
 
 ```bash
+# if running with sqlite db
+./scripts/sqlite_flyway_migrate_local.sh
+
+# to run server
 ./gradlew run
 ```
 
