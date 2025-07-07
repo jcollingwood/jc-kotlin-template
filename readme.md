@@ -14,7 +14,7 @@ project requiring a backend server.
 - [x] MPA sample
 - [x] HTMX sample
 - [x] Standard Components and Javascript samples
-- [ ] Database integration sample (SQLite)
+- [x] Database integration sample (SQLite)
 - [ ] Database integration sample (Postgres)
 - [ ] Unit tests sample
 - [x] GH Actions sample
@@ -33,6 +33,9 @@ project requiring a backend server.
     - lightweight database for local storage
 - [postgresql](https://www.postgresql.org/)
     - a "real" database ;)
+- [flyway](https://flywaydb.org/)
+    - used to manage database migrations for both sqlite and postgres
+    - build into server startup to run migrations against data source
 
 ## Frontend:
 
@@ -66,10 +69,21 @@ Optional environment variables:
 - `PORT`
     - port to run on, defaults to 3333
     - note: ensure this port value is reflected on OAUTH configured redirect urls
+- `JC_TEMPLATE_DB_TYPE`
+    - database type to use, defaults to `sqlite`
+    - valid values are `sqlite` or `postgres`
+- `SQLITE_CONN_URL`
+    - connection url for sqlite database
+    - if not set, sqlite will default to `jdbc:sqlite:./db/template_db.db`
+- `JC_TEMPLATE_PSQL_CONN_URL`
+    - TODO not finished
+    - connection url for sqlite or postgres database
+    - if not set, will default to `jdbc:postgresql://localhost:5432/template_db`
 
 To run the app, run the following command:
 
 ```bash
+# to run server
 ./gradlew run
 ```
 

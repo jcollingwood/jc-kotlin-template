@@ -3,7 +3,6 @@ package jc.kotlin.template.server.routes
 import io.ktor.server.html.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
-import jc.kotlin.template.server.auth.getSession
 import jc.kotlin.template.server.components.mainTemplate
 import jc.kotlin.template.server.pages.components.*
 import kotlinx.html.body
@@ -11,8 +10,6 @@ import kotlinx.html.body
 fun Route.componentsRoutes() {
     route(componentsPage.path) {
         get {
-            getSession(call) ?: return@get
-
             call.respondHtml {
                 mainTemplate(componentsPage) {
                     componentsPage()
@@ -20,7 +17,6 @@ fun Route.componentsRoutes() {
             }
         }
         get("button") {
-            getSession(call) ?: return@get
             call.respondHtml {
                 body {
                     buttonComponent()
@@ -29,7 +25,6 @@ fun Route.componentsRoutes() {
         }
         route("form") {
             get {
-                getSession(call) ?: return@get
                 call.respondHtml {
                     body {
                         formComponent()
@@ -37,8 +32,6 @@ fun Route.componentsRoutes() {
                 }
             }
             post("validate") {
-                getSession(call) ?: return@post
-
                 val input = call.pathParameters["input"] ?: ""
                 val formParameters = call.receiveParameters()
 
@@ -49,8 +42,6 @@ fun Route.componentsRoutes() {
                 }
             }
             post("submit") {
-                getSession(call) ?: return@post
-
                 val formParameters = call.receiveParameters()
 
                 call.respondHtml {
@@ -61,7 +52,6 @@ fun Route.componentsRoutes() {
             }
         }
         get("card") {
-            getSession(call) ?: return@get
             call.respondHtml {
                 body {
                     cardComponent()
@@ -70,7 +60,6 @@ fun Route.componentsRoutes() {
         }
         route("modal") {
             get {
-                getSession(call) ?: return@get
                 call.respondHtml {
                     body {
                         modalComponents()
@@ -79,7 +68,6 @@ fun Route.componentsRoutes() {
             }
             route("content") {
                 get("{id}") {
-                    getSession(call) ?: return@get
                     call.respondHtml {
                         body {
                             modalContent(call.parameters["id"].toString())
@@ -90,7 +78,6 @@ fun Route.componentsRoutes() {
         }
         route("peek") {
             get {
-                getSession(call) ?: return@get
                 call.respondHtml {
                     body {
                         peekComponent()
@@ -98,7 +85,6 @@ fun Route.componentsRoutes() {
                 }
             }
             get("content") {
-                getSession(call) ?: return@get
                 call.respondHtml {
                     body {
                         peekContent("1")

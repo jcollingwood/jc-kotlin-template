@@ -1,4 +1,3 @@
-
 services:
   server:
     # override with local image if needed

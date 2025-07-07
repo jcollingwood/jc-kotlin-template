@@ -39,6 +39,16 @@ dependencies {
 
     // html/css dsl
     implementation("io.ktor:ktor-server-html-builder:$ktorVersion")
+
+    // database deps
+    // db connection and pooling
+    implementation("com.zaxxer:HikariCP:6.3.0")
+    // For PostgreSQL
+    implementation("org.postgresql:postgresql:42.7.7")
+    // For SQLite
+    implementation("org.xerial:sqlite-jdbc:3.50.2.0")
+    // Add Flyway for runtime migrations
+    implementation("org.flywaydb:flyway-core:11.10.1")
 }
 
 node {

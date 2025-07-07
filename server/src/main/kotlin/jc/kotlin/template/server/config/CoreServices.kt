@@ -20,18 +20,14 @@ data class CoreServices(
             connectTimeoutMillis = 10000
             socketTimeoutMillis = 10000
         }
-//        install(HttpRequestRetry) {
-//            retryOnServerErrors(maxRetries = 3)
-//            retryIf(maxRetries = 3) { _, res -> !res.status.isSuccess() }
-//            exponentialDelay()
-//        }
         install(Logging) {
             logger = Logger.DEFAULT
-            level = LogLevel.INFO
+            level = LogLevel.NONE
         }
         install(ContentNegotiation) {
             json()
         }
     },
-    val jsonParser: Json = Json { ignoreUnknownKeys = true }
+    val jsonParser: Json = Json { ignoreUnknownKeys = true },
+    val database: Database = Database
 )

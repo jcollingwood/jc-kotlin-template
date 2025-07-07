@@ -4,15 +4,17 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.calllogging.*
 import io.ktor.server.plugins.forwardedheaders.*
 import io.ktor.server.request.*
+import jc.kotlin.template.server.auth.UserInfoService
 import jc.kotlin.template.server.auth.authModule
 import jc.kotlin.template.server.config.CoreServices
 import jc.kotlin.template.server.config.errorHandler
 import jc.kotlin.template.server.routes.appRoutes
+import jc.kotlin.template.server.session.SessionService
 import org.slf4j.event.Level
 
-fun Application.appModule(core: CoreServices) {
+fun Application.appModule(core: CoreServices, userInfoService: UserInfoService, sessionService: SessionService) {
     install(CallLogging) {
-        level = Level.INFO
+        level = Level.DEBUG
         filter { call ->
             // ignore static resources and preflight requests
             !call.request.uri.startsWith("/static/") && call.request.httpMethod.value != "OPTIONS"
@@ -28,7 +30,15 @@ fun Application.appModule(core: CoreServices) {
     // Install the X-Forwarded-For header plugin to handle reverse proxy setups
     install(XForwardedHeaders)
     errorHandler()
-    configureDatabase()
-    authModule(core)
-    appRoutes(core)
+    configureDatabase(core)
+    authModule(
+        core = core,
+        userInfoService = userInfoService,
+        sessionService = sessionService
+    )
+    appRoutes(
+        core = core,
+        userInfoService = userInfoService,
+        sessionService = sessionService
+    )
 }
