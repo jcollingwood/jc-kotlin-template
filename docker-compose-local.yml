@@ -1,8 +1,7 @@
-
 services:
   server:
     # override with local image if needed
-    image: jc-kotlin-template:local
+    # image: jc-kotlin-template:local
     # image: ghcr.io/jcollingwood/jc-kotlin-template/server:0.0.1
     ports:
       - 3333:3333

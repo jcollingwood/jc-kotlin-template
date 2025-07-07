@@ -13,7 +13,7 @@ fun Application.configureDatabase(core: CoreServices) {
     val flyway = Flyway.configure()
         .dataSource(dbConfig)
         // Adjust locations as needed for your environment
-        .locations("filesystem:db/flyway/sqlite")
+        .locations("classpath:db/sqlite/migrations")
         .load()
     val migrationResult = flyway.migrate()
     log.info { "Flyway migration complete: ${migrationResult.migrations.size} migrations applied." }
