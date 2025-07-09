@@ -19,7 +19,7 @@ services:
       - GOOGLE_APPLICATION_CREDENTIALS=/google/credentials.json
     volumes:
       - sqlite_data:/db
-      - ./scripts:/scripts
+      - ./deployment/sqlite_docker_backup.sh:/scripts/sqlite_docker_backup.sh
       - ~/.jc-template-project-service-account-key.json:/google/credentials.json:ro
     # backs up sqlite db data daily
     command: >
