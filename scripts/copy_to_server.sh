@@ -64,9 +64,7 @@ echo "JC_TEMPLATE_DOMAIN=$DOMAIN" >> .env
 RESOURCES=(
   "docker-compose.yml"
   ".env"
-  "scripts/start.sh"
-  "scripts/stop.sh"
-  "scripts/restart.sh"
+  "scripts/deployment"
 )
 
 # check is resources exist
