@@ -10,24 +10,6 @@ services:
     volumes:
       - sqlite_data:/app/db/
 
-  # backs up sqlite db data hourly
-  sqlite-db-backup:
-    image: google/cloud-sdk:latest
-    container_name: sqlite-db-backup
-    environment:
-      - GCP_BUCKET_NAME=jc-template-project-db-backup
-      - GOOGLE_APPLICATION_CREDENTIALS=/google/credentials.json
-    volumes:
-      - sqlite_data:/db
-      - ./deployment/sqlite_docker_backup.sh:/scripts/sqlite_docker_backup.sh
-      - ~/.jc-template-project-service-account-key.json:/google/credentials.json:ro
-    # backs up sqlite db data daily
-    command: >
-      sh -c "apt-get update && apt-get install -y cron && 
-      gcloud auth activate-service-account --key-file=/google/credentials.json &&
-      echo '0 * * * * /scripts/sqlite_docker_backup.sh' | crontab - && 
-      cron -f"
-
 volumes:
   sqlite_data:
     driver: local

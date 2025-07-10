@@ -10,7 +10,3 @@ services:
     environment:
       - JC_TEMPLATE_DOMAIN=http://localhost:3333
       - PORT=3333
-
-  sqlite-db-backup:
-    volumes:
-      - ./scripts/deployment/sqlite_docker_backup.sh:/scripts/sqlite_docker_backup.sh

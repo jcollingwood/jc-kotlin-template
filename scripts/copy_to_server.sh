@@ -63,8 +63,12 @@ echo "JC_TEMPLATE_DOMAIN=$DOMAIN" >> .env
 # create list of resources to copy
 RESOURCES=(
   "docker-compose.yml"
+  "docker-compose.sqlite-backup.yml"
   ".env"
-  "scripts/deployment"
+  "scripts/deployment/start.sh"
+  "scripts/deployment/stop.sh"
+  "scripts/deployment/restart.sh"
+  "scripts/deployment/sqlite_backup.sh"
 )
 
 # check is resources exist
