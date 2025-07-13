@@ -1,0 +1,14 @@
+services:
+  # backs up sqlite db data daily
+  temp:
+    image: alpine:latest
+    container_name: alpine-sqlite-backup
+    command: cp /db/template_db.db /tmp/
+    volumes:
+      - sqlite_data:/db
+      # a localdirectory to copy the sqlite db to
+      - ./tmp:/tmp
+
+volumes:
+  sqlite_data:
+    driver: local

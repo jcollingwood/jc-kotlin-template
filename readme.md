@@ -94,6 +94,6 @@ To run the app, run the following command:
  docker buildx build --platform linux/amd64,linux/arm/v7 -t ghcr.io/jcollingwood/jc-kotlin-template/server:0.0.0 -f server/Dockerfile .
 
 # to run local image with docker compose
-docker compose -f docker-compose.yml -f docker-compose-local.yml up [-d]
+docker compose -f docker-compose.yml -f docker-compose.local.yml up [-d]
 ```
 

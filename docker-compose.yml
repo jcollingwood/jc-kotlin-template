@@ -1,6 +1,6 @@
 services:
   server:
-    image: ghcr.io/jcollingwood/jc-kotlin-template:8319c1d93c6b7679f024c507a3b95d7c6b8005ab
+    image: ghcr.io/jcollingwood/jc-kotlin-template:b0539694b2a4193bdddc4247fc62db39a8cd2e1d
     env_file:
       - .env
     environment:
@@ -13,3 +13,5 @@ services:
 volumes:
   sqlite_data:
     driver: local
+
+

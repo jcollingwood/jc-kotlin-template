@@ -10,5 +10,3 @@ services:
     environment:
       - JC_TEMPLATE_DOMAIN=http://localhost:3333
       - PORT=3333
-    restart: unless-stopped
-
