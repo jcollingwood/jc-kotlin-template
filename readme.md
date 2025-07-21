@@ -22,6 +22,7 @@ project requiring a backend server.
 - [x] Container registry sample
 - [x] Infrastructure sample
 - [ ] CI/CD sample
+- [ ] Data cleanup/pruning sample
 - [ ] Data viz sample
 
 ## Backend Server:
@@ -83,6 +84,8 @@ Optional environment variables:
 To run the app, run the following command:
 
 ```bash
+# if you have a .env file you can load it with the following command
+export $(cat .env | xargs)
 # to run server
 ./gradlew run
 ```

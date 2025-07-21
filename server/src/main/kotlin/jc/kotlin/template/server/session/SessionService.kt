@@ -1,6 +1,8 @@
 package jc.kotlin.template.server.session
 
 import jc.kotlin.template.server.auth.SessionCookie
+import jc.kotlin.template.server.utility.decrypt
+import jc.kotlin.template.server.utility.encrypt
 import java.util.*
 import kotlin.time.Duration.Companion.hours
 
@@ -18,8 +20,8 @@ class SessionService(private val userSessionRepo: UserSessionRepository) {
             UserSessionEntity(
                 userId = userId,
                 sessionToken = sessionToken,
-                accessTokenEncrypted = accessToken, // TODO: Encrypt this
-                refreshTokenEncrypted = refreshToken, // TODO: Encrypt this
+                accessTokenEncrypted = accessToken.encrypt(),
+                refreshTokenEncrypted = refreshToken?.encrypt(),
                 tokenExpiresAt = tokenExpiry,
                 sessionExpiresAt = sessionExpiry,
                 createdAt = System.currentTimeMillis(),
@@ -46,7 +48,7 @@ class SessionService(private val userSessionRepo: UserSessionRepository) {
             lastAccessedAt = System.currentTimeMillis()
         )
 
-        return entity.accessTokenEncrypted // TODO: Decrypt this
+        return entity.accessTokenEncrypted.decrypt()
     }
 
     suspend fun validateSession(sessionToken: String): SessionCookie? {
