@@ -69,4 +69,9 @@ class SessionService(private val userSessionRepo: UserSessionRepository) {
             expiresAt = entity.sessionExpiresAt
         )
     }
+
+    suspend fun pruneExpiredSessions() {
+        val currentTime = System.currentTimeMillis()
+        userSessionRepo.deleteExpiredSessions(currentTime)
+    }
 }

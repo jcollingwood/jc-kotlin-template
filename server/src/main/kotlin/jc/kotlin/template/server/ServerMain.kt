@@ -21,3 +21,4 @@ fun main() {
         .start(wait = true)
         .addShutdownHook { Database.close() }
 }
+
