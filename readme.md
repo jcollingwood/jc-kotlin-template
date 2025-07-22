@@ -22,7 +22,9 @@ project requiring a backend server.
 - [x] Container registry sample
 - [x] Infrastructure sample
 - [ ] CI/CD sample
-- [ ] Data cleanup/pruning sample
+- [x] Data cleanup/pruning sample
+- [ ] User data and permissions sample
+- [ ] Admin management sample
 - [ ] Data viz sample
 
 ## Backend Server:
