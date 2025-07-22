@@ -7,6 +7,7 @@ import io.ktor.server.request.*
 import jc.kotlin.template.server.auth.UserInfoService
 import jc.kotlin.template.server.auth.authModule
 import jc.kotlin.template.server.config.CoreServices
+import jc.kotlin.template.server.config.configureSessionPruning
 import jc.kotlin.template.server.config.errorHandler
 import jc.kotlin.template.server.routes.appRoutes
 import jc.kotlin.template.server.session.SessionService
@@ -31,6 +32,7 @@ fun Application.appModule(core: CoreServices, userInfoService: UserInfoService, 
     install(XForwardedHeaders)
     errorHandler()
     configureDatabase(core)
+    configureSessionPruning(sessionService)
     authModule(
         core = core,
         userInfoService = userInfoService,
