@@ -11,5 +11,5 @@ fi
 OUTPUT_ENV=".env"
 . ./scripts/get_env_base.sh "$OUTPUT_ENV"
 
-echo "JC_TEMPLATE_DOMAIN=$DOMAIN" >> .env
+echo "JC_TEMPLATE_DOMAIN=$DOMAIN" >> "$OUTPUT_ENV"
 echo "export JC_TEMPLATE_SQLITE_CONN_URL=\"jdbc:sqlite:./db/template_db.db\"" >> "$OUTPUT_ENV"
