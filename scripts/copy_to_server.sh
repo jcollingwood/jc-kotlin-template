@@ -53,12 +53,7 @@ fi
 PROJECT_DIR="~/docker-apps/jc-kotlin-template"
 
 # prepare env file (currently re-using local env file, update with deployed env file differences as needed)
-./scripts/get_local_env.sh
-cp local.env .env
-
-# make non-local changes to .env file
-# add dns domain to env file
-echo "JC_TEMPLATE_DOMAIN=$DOMAIN" >> .env
+./scripts/get_deployment_env.sh "$DOMAIN"
 
 # create list of resources to copy
 RESOURCES=(

@@ -3,6 +3,7 @@ services:
     image: postgres:17.5-alpine
     container_name: psql
     restart: unless-stopped
+    user: "1000:1000"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -11,15 +12,6 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
       - ./db/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
-
-  flyway:
-    image: flyway/flyway:latest
-    container_name: flyway
-    command: -url=jdbc:postgresql://db/postgres -user=postgres -password=postgres -connectRetries=60 migrate
-    volumes:
-      - ./db/flyway/sql:/flyway/sql
-    depends_on:
-      - db
 
   pgadmin:
     container_name: pgadmin4_container
