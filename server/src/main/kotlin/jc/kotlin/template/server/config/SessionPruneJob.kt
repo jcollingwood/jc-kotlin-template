@@ -15,10 +15,9 @@ fun Application.configureSessionPruning(sessionService: SessionService) {
                 log.info("starting session pruning job...")
                 sessionService.pruneExpiredSessions()
                 log.info("completed session pruning job...")
-                delay(1.hours) // Run daily
+                delay(PRUNE_DURATION_HOURS.hours) // Run daily
             } catch (e: Exception) {
                 log.error("Error during data pruning", e)
-                delay(1.hours) // Retry after 1 hour on error
             }
         }
     }

@@ -1,6 +1,7 @@
 package jc.kotlin.template.server.config
 
 val PORT = System.getenv("PORT")?.toInt() ?: 3333
+val PRUNE_DURATION_HOURS = System.getenv("PRUNE_DURATION_HOURS")?.toInt() ?: 1
 val DOMAIN = System.getenv("JC_TEMPLATE_DOMAIN") ?: "http://localhost:$PORT"
 val CRYPTO_SECRET_KEY = System.getenv("JC_TEMPLATE_CRYPTO_SECRET_KEY") ?: "supersecretkey12" // 16 chars for AES-128
 
