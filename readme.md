@@ -27,6 +27,8 @@ project requiring a backend server.
 - [ ] Admin management sample
 - [ ] Data viz sample
 
+- [x] Dependencies updated (2025-07-23)
+
 ## Backend Server:
 
 - [ktor](https://ktor.io/)
