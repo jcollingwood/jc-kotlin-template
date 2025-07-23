@@ -1,13 +1,13 @@
 import com.github.gradle.node.npm.task.NpxTask
 
-val ktorVersion = "3.1.0"
+val ktorVersion = "3.2.2"
 
 plugins {
     id("jc.kotlin.template.kotlin-application-conventions")
-    id("io.ktor.plugin") version "3.1.0"
+    id("io.ktor.plugin") version "3.2.2"
     // node required for tailwind task
     id("com.github.node-gradle.node") version "7.1.0"
-    kotlin("plugin.serialization") version "2.1.10"
+    kotlin("plugin.serialization") version "2.2.0"
 }
 
 application {
@@ -46,15 +46,15 @@ dependencies {
     // For PostgreSQL
     implementation("org.postgresql:postgresql:42.7.7")
     // For SQLite
-    implementation("org.xerial:sqlite-jdbc:3.50.2.0")
+    implementation("org.xerial:sqlite-jdbc:3.50.3.0")
     // Add Flyway for runtime migrations
-    implementation("org.flywaydb:flyway-core:11.10.1")
+    implementation("org.flywaydb:flyway-core:11.10.3")
 }
 
 node {
     // need to set download=true unless you want to use locally installed node
     download.set(true)
-    version.set("23.6.1")
+    version.set("22.17.1")
 }
 
 // tailwind task crawls source kt files and generates styles.css with necessary css classes

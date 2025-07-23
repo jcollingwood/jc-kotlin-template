@@ -1,5 +1,6 @@
 package jc.kotlin.template.server.auth
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -17,8 +18,6 @@ import kotlinx.html.a
 import kotlinx.html.body
 import kotlinx.html.classes
 import kotlinx.html.main
-import mu.two.KotlinLogging
-import kotlin.collections.set
 import kotlin.time.Duration.Companion.hours
 
 fun Application.authModule(core: CoreServices, userInfoService: UserInfoService, sessionService: SessionService) {
