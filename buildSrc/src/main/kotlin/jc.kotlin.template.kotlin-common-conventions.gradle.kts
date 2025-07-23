@@ -11,19 +11,21 @@ repositories {
 dependencies {
     constraints {
         // Define dependency versions as constraints
-        implementation("org.apache.commons:commons-text:1.9")
+        implementation("org.apache.commons:commons-text:1.13.1")
     }
 
     // Align versions of all Kotlin components
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
 
     // logging
-    implementation("io.github.microutils:kotlin-logging-jvm:4.0.0-beta-2")
-    implementation("ch.qos.logback:logback-classic:1.5.11")
+    val loggingDep = "io.github.oshai:kotlin-logging-jvm:7.0.7"
+    val logbackDep = "ch.qos.logback:logback-classic:1.5.18"
+    implementation(loggingDep)
+    implementation(logbackDep)
 
     testImplementation(kotlin("test"))
-    testImplementation("io.github.microutils:kotlin-logging-jvm:4.0.0-beta-2")
-    testImplementation("ch.qos.logback:logback-classic:1.5.11")
+    testImplementation(loggingDep)
+    testImplementation(logbackDep)
 }
 
 tasks.test {

@@ -1,13 +1,13 @@
 import com.github.gradle.node.npm.task.NpxTask
 
-val ktorVersion = "3.1.0"
+val ktorVersion = "3.2.2"
 
 plugins {
     id("jc.kotlin.template.kotlin-application-conventions")
-    id("io.ktor.plugin") version "3.1.0"
+    id("io.ktor.plugin") version "3.2.2"
     // node required for tailwind task
     id("com.github.node-gradle.node") version "7.1.0"
-    kotlin("plugin.serialization") version "2.1.10"
+    kotlin("plugin.serialization") version "2.2.0"
 }
 
 application {

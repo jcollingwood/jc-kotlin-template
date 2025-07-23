@@ -1,9 +1,9 @@
 package jc.kotlin.template.server.session
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import jc.kotlin.template.server.config.CoreServices
 import jc.kotlin.template.server.config.DB_TYPE
 import kotlinx.serialization.Serializable
-import mu.two.KotlinLogging
 
 @Serializable
 data class UserSessionEntity(

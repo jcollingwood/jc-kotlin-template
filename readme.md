@@ -66,6 +66,8 @@ sh ./scripts/generate-local-env.sh
 
 Optional environment variables:
 
+- `PRUNE_DURATION_HOURS`
+    - frequency of data pruning background process (default is hourly)
 - `JC_TEMPLATE_DOMAIN`
     - domain to run on, defaults to `localhost`
     - note: ensure this domain value is reflected on OAUTH configured redirect urls

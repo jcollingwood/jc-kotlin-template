@@ -1,8 +1,8 @@
 package jc.kotlin.template.server
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.server.application.*
 import jc.kotlin.template.server.config.CoreServices
-import mu.two.KotlinLogging
 import org.flywaydb.core.Flyway
 
 fun Application.configureDatabase(core: CoreServices) {

@@ -1,5 +1,6 @@
 package jc.kotlin.template.server.auth
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -10,7 +11,6 @@ import jc.kotlin.template.server.session.SessionService
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import mu.two.KotlinLogging
 
 @Serializable
 data class UserInfo(
@@ -65,7 +65,7 @@ class UserInfoService(
             }
 
             if (response.status != HttpStatusCode.OK) {
-                log.debug("failed to retrieve user info. status: ${response.status}")
+                log.debug { "failed to retrieve user info. status: ${response.status}" }
                 call.respondRedirect(ROOT_DOMAIN + LOGIN_ROUTE)
             }
 
