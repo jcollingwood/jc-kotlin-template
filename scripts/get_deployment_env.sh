@@ -13,7 +13,7 @@ OUTPUT_ENV=".env"
 
 cat >> "$OUTPUT_ENV" << EOL
 JC_TEMPLATE_DOMAIN=$DOMAIN
-JC_TEMPLATE_SQLITE_CONN_URL=\"jdbc:sqlite:./db/template_db.db\"
+JC_TEMPLATE_SQLITE_CONN_URL="jdbc:sqlite:./db/template_db.db"
 PRUNE_DURATION_HOURS=12
 EOL
 
