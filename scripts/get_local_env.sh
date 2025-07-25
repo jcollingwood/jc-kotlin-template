@@ -5,5 +5,5 @@ OUTPUT_ENV="local.env"
 
 cat >> "$OUTPUT_ENV" << EOL
 JC_TEMPLATE_DOMAIN=http://localhost:3333
-JC_TEMPLATE_SQLITE_CONN_URL=\"jdbc:sqlite:../db/template_db.db\"
+JC_TEMPLATE_SQLITE_CONN_URL="jdbc:sqlite:../db/template_db.db"
 EOL

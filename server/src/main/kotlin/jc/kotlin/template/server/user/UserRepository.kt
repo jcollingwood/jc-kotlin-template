@@ -8,7 +8,12 @@ import kotlinx.serialization.Serializable
 data class UserEntity(
     val id: String,
     val name: String,
-    val email: String
+    val email: String,
+    val picture: String? = null,
+    val isAdmin: Boolean = false,
+    val isActive: Boolean = false,
+    val createdAt: Long = System.currentTimeMillis(),
+    val updatedAt: Long = System.currentTimeMillis()
 )
 
 interface UserRepository {
@@ -46,14 +51,24 @@ class SQLiteUserRepository(
                INSERT INTO users (
                     id, 
                     name, 
-                    email
+                    email,
+                    picture,
+                    is_admin,
+                    is_active,
+                    created_at,
+                    updated_at
                 ) 
-                VALUES (?, ?, ?);
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?);
                 """.trimIndent()
             ).use { stmt ->
                 stmt.setString(1, user.id)
                 stmt.setString(2, user.name)
                 stmt.setString(3, user.email)
+                stmt.setString(4, user.picture)
+                stmt.setBoolean(5, user.isAdmin)
+                stmt.setBoolean(6, user.isActive)
+                stmt.setLong(7, user.createdAt)
+                stmt.setLong(8, user.updatedAt)
                 stmt.executeUpdate()
             }
         }
@@ -73,7 +88,12 @@ class SQLiteUserRepository(
         return UserEntity(
             id = resultSet.getString("id"),
             name = resultSet.getString("name"),
-            email = resultSet.getString("email")
+            email = resultSet.getString("email"),
+            picture = resultSet.getString("picture"),
+            isAdmin = resultSet.getBoolean("is_admin"),
+            isActive = resultSet.getBoolean("is_active"),
+            createdAt = resultSet.getLong("created_at"),
+            updatedAt = resultSet.getLong("updated_at")
         )
     }
 }
