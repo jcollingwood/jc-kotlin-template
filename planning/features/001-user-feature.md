@@ -25,7 +25,7 @@ personalized experience.*
 - [x] Create a new user record upon first session authentication
 - [x] Associate subsequent logins with the existing user record
 - [x] Display user details in the UI
-- [ ] Imporved Login/Logout functionality
+- [ ] Improved Login/Logout functionality
 - [ ] Create an admin page for user management
 
 ## 4. Technical Notes & Considerations

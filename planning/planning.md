@@ -6,6 +6,7 @@
 
 ## To Do
 
+- [ ] [Redo Design Language and Components](./features/015-redo-design-language-and-components.md)
 - [ ] [Database integration sample (Postgres)](./features/010-postgres-database-integration.md)
 - [ ] [Unit tests sample](./features/011-unit-tests-sample.md)
 - [ ] [CI/CD sample](./features/012-cicd-sample.md)
