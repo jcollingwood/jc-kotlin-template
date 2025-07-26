@@ -5,8 +5,8 @@ import kotlinx.html.FlowContent
 import kotlinx.html.h1
 import kotlinx.html.p
 
-val newPage = Page("/new", "New Page")
-fun FlowContent.newPage() {
-    h1(classes = "text-2xl") { +"New Page" }
-    p { +"This is a new page" }
+val adminPage = Page("/admin", "Admin Page")
+fun FlowContent.adminPage() {
+    h1(classes = "text-2xl") { +"Admin Page" }
+    p { +"TODO add admin-y things" }
 }

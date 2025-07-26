@@ -11,11 +11,11 @@ fun Route.welcomeRoute(userInfoService: UserInfoService) {
     route(welcomePage.path) {
         get {
             val session = call.attributes[SESSION_DATA]
-            val userInfo = userInfoService.getUserInfoFromSession(call, session)
+            val user = userInfoService.getUserEntityFromSession(session)
 
             call.respondHtml {
                 mainTemplate(welcomePage) {
-                    welcomePage(userInfo, session)
+                    welcomePage(user, session)
                 }
             }
         }

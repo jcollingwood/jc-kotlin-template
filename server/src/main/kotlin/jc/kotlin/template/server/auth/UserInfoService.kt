@@ -8,6 +8,7 @@ import io.ktor.server.application.*
 import io.ktor.server.response.*
 import jc.kotlin.template.server.config.CoreServices
 import jc.kotlin.template.server.session.SessionService
+import jc.kotlin.template.server.user.UserEntity
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -34,21 +35,16 @@ class UserInfoService(
     suspend fun createUserSession(call: ApplicationCall, accessToken: String, refreshToken: String?): SessionCookie {
         val userInfo = getUserInfo(call, accessToken)
         val session = sessionService.createSession(
-            userId = userInfo.id,
+            userInfo = userInfo,
             accessToken = accessToken,
             refreshToken = refreshToken,
         )
         return session
     }
 
-    fun getUserInfoFromSession(call: ApplicationCall, session: SessionCookie): UserInfo {
+    fun getUserEntityFromSession(session: SessionCookie): UserEntity {
         return runBlocking {
-            // TODO handle null
-            val accessToken: String = sessionService.getSessionAccessToken(session.sessionToken) ?: ""
-            return@runBlocking getUserInfo(
-                call,
-                accessToken
-            )
+            return@runBlocking sessionService.getSessionUser(session)
         }
     }
 

@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 data class UserEntity(
     val id: String,
     val name: String,
-    val email: String,
+    val email: String? = null,
     val picture: String? = null,
     val isAdmin: Boolean = false,
     val isActive: Boolean = false,

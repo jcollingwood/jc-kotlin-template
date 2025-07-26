@@ -1,7 +1,7 @@
 -- Users table - core user information
 CREATE TABLE users (
     id TEXT PRIMARY KEY,
-    email TEXT UNIQUE NOT NULL,
+    email TEXT,
     name TEXT NOT NULL,
     picture TEXT,
     is_active BOOLEAN DEFAULT true,

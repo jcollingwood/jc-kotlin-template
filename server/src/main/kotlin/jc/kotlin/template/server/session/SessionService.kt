@@ -23,11 +23,11 @@ class SessionService(
         val tokenExpiry = System.currentTimeMillis() + 1.hours.inWholeMilliseconds
 
         // ignoring any kind of transaction management for simplicity
-        userRepo.createUser(
+        // create new user is matching one does not exist
+        userRepo.getUserById(userInfo.id) ?: userRepo.createUser(
             UserEntity(
                 id = userInfo.id,
                 name = userInfo.name,
-                email = userInfo.name, // TODO
                 picture = userInfo.picture,
                 isAdmin = false,
                 isActive = true,
@@ -54,6 +54,11 @@ class SessionService(
             userId = userInfo.id,
             expiresAt = sessionExpiry
         )
+    }
+
+    suspend fun getSessionUser(session: SessionCookie): UserEntity {
+        return userRepo.getUserById(session.userId)
+            ?: throw IllegalStateException("User not found for session: ${session.sessionToken}")
     }
 
     suspend fun getSessionAccessToken(sessionToken: String): String? {
