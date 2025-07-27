@@ -1,6 +1,6 @@
 # Feature: Redo Design Language and Components
 
-- **Status:** To Do
+- **Status:** In Progress
 - **Author:** Gemini
 - **Date:** 2025-07-25
 

@@ -1,6 +1,6 @@
 # Feature: User Authentication and Management
 
-- **Status:** In Progress
+- **Status:** Done
 - **Author:** joel
 - **Date:** 2025-07-25
 
@@ -25,8 +25,8 @@ personalized experience.*
 - [x] Create a new user record upon first session authentication
 - [x] Associate subsequent logins with the existing user record
 - [x] Display user details in the UI
-- [ ] Improved Login/Logout functionality
-- [ ] Create an admin page for user management
+- [x] Improved Login/Logout functionality
+- [x] Create an admin page for user management (stubbed)
 
 ## 4. Technical Notes & Considerations
 

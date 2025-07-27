@@ -5,13 +5,16 @@ import io.ktor.server.routing.*
 import jc.kotlin.template.server.components.mainTemplate
 import jc.kotlin.template.server.pages.genericHtmxSection
 import jc.kotlin.template.server.pages.htmxPage
+import jc.kotlin.template.server.session.SessionService
+import jc.kotlin.template.server.session.getUser
 import kotlinx.html.body
 
-fun Route.htmxRoutes() {
+fun Route.htmxRoutes(sessionService: SessionService) {
     route(htmxPage.path) {
         get {
+            val user = getUser(call, sessionService)
             call.respondHtml {
-                mainTemplate(htmxPage) {
+                mainTemplate(user, htmxPage) {
                     htmxPage()
                 }
             }

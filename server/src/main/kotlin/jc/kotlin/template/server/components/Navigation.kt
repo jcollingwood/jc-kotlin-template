@@ -30,5 +30,9 @@ fun FlowContent.navigation(currentPage: Page, navPages: Set<Page>) {
                 +it.title
             }
         }
+        a("/logout") {
+            classes = defaultClasses
+            +"Logout"
+        }
     }
 }

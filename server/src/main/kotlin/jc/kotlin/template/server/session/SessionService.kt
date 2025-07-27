@@ -1,5 +1,7 @@
 package jc.kotlin.template.server.session
 
+import io.ktor.server.routing.*
+import jc.kotlin.template.server.auth.SESSION_DATA
 import jc.kotlin.template.server.auth.SessionCookie
 import jc.kotlin.template.server.auth.UserInfo
 import jc.kotlin.template.server.user.UserEntity
@@ -8,6 +10,11 @@ import jc.kotlin.template.server.utility.decrypt
 import jc.kotlin.template.server.utility.encrypt
 import java.util.*
 import kotlin.time.Duration.Companion.hours
+
+suspend fun getUser(call: RoutingCall, sessionService: SessionService): UserEntity {
+    val session = call.attributes[SESSION_DATA]
+    return sessionService.getSessionUser(session)
+}
 
 class SessionService(
     private val userRepo: UserRepository,

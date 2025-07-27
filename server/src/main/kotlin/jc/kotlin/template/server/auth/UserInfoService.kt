@@ -8,7 +8,6 @@ import io.ktor.server.application.*
 import io.ktor.server.response.*
 import jc.kotlin.template.server.config.CoreServices
 import jc.kotlin.template.server.session.SessionService
-import jc.kotlin.template.server.user.UserEntity
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -40,12 +39,6 @@ class UserInfoService(
             refreshToken = refreshToken,
         )
         return session
-    }
-
-    fun getUserEntityFromSession(session: SessionCookie): UserEntity {
-        return runBlocking {
-            return@runBlocking sessionService.getSessionUser(session)
-        }
     }
 
     private fun getUserInfo(call: ApplicationCall, accessToken: String): UserInfo {
