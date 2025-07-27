@@ -6,28 +6,9 @@ The idea is that this will serve as my central catch-all project sample where I 
 samples and references, and this project can be cloned and modified to give a fully functional starting point for a new
 project requiring a backend server.
 
-## TODOs
+## Planning
 
-- [x] create new project from template
-- [x] basic project structure
-- [x] OAUTH integration
-- [x] MPA sample
-- [x] HTMX sample
-- [x] Standard Components and Javascript samples
-- [x] Database integration sample (SQLite)
-- [ ] Database integration sample (Postgres)
-- [ ] Unit tests sample
-- [x] GH Actions sample
-- [x] Docker sample
-- [x] Container registry sample
-- [x] Infrastructure sample
-- [ ] CI/CD sample
-- [x] Data cleanup/pruning sample
-- [ ] User data and permissions sample
-- [ ] Admin management sample
-- [ ] Data viz sample
-
-- [x] Dependencies updated (2025-07-23)
+- [project planning notes](planning/planning.md)
 
 ## Backend Server:
 

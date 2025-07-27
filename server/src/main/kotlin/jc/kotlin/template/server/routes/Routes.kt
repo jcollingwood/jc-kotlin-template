@@ -2,6 +2,7 @@ package jc.kotlin.template.server.routes
 
 import io.ktor.server.application.*
 import io.ktor.server.http.content.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import jc.kotlin.template.server.auth.UserInfoService
 import jc.kotlin.template.server.config.CoreServices
@@ -22,10 +23,14 @@ fun Application.appRoutes(core: CoreServices, userInfoService: UserInfoService, 
                 requireValidToken = true
             }
 
-            welcomeRoute(userInfoService)
-            htmxRoutes()
-            componentsRoutes()
-            newRoutes()
+            welcomeRoute(sessionService)
+            htmxRoutes(sessionService)
+            componentsRoutes(sessionService)
+            adminRoutes(sessionService)
+            get("/logout") {
+                call.respondRedirect("/")
+                return@get
+            }
         }
     }
 }

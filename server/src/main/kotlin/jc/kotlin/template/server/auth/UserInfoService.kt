@@ -34,22 +34,11 @@ class UserInfoService(
     suspend fun createUserSession(call: ApplicationCall, accessToken: String, refreshToken: String?): SessionCookie {
         val userInfo = getUserInfo(call, accessToken)
         val session = sessionService.createSession(
-            userId = userInfo.id,
+            userInfo = userInfo,
             accessToken = accessToken,
             refreshToken = refreshToken,
         )
         return session
-    }
-
-    fun getUserInfoFromSession(call: ApplicationCall, session: SessionCookie): UserInfo {
-        return runBlocking {
-            // TODO handle null
-            val accessToken: String = sessionService.getSessionAccessToken(session.sessionToken) ?: ""
-            return@runBlocking getUserInfo(
-                call,
-                accessToken
-            )
-        }
     }
 
     private fun getUserInfo(call: ApplicationCall, accessToken: String): UserInfo {

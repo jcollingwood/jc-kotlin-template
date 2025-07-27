@@ -1,14 +1,27 @@
 package jc.kotlin.template.server.session
 
+import io.ktor.server.routing.*
+import jc.kotlin.template.server.auth.SESSION_DATA
 import jc.kotlin.template.server.auth.SessionCookie
+import jc.kotlin.template.server.auth.UserInfo
+import jc.kotlin.template.server.user.UserEntity
+import jc.kotlin.template.server.user.UserRepository
 import jc.kotlin.template.server.utility.decrypt
 import jc.kotlin.template.server.utility.encrypt
 import java.util.*
 import kotlin.time.Duration.Companion.hours
 
-class SessionService(private val userSessionRepo: UserSessionRepository) {
+suspend fun getUser(call: RoutingCall, sessionService: SessionService): UserEntity {
+    val session = call.attributes[SESSION_DATA]
+    return sessionService.getSessionUser(session)
+}
+
+class SessionService(
+    private val userRepo: UserRepository,
+    private val userSessionRepo: UserSessionRepository
+) {
     suspend fun createSession(
-        userId: String,
+        userInfo: UserInfo,
         accessToken: String,
         refreshToken: String?,
     ): SessionCookie {
@@ -16,9 +29,23 @@ class SessionService(private val userSessionRepo: UserSessionRepository) {
         val sessionExpiry = System.currentTimeMillis() + 24.hours.inWholeMilliseconds
         val tokenExpiry = System.currentTimeMillis() + 1.hours.inWholeMilliseconds
 
+        // ignoring any kind of transaction management for simplicity
+        // create new user is matching one does not exist
+        userRepo.getUserById(userInfo.id) ?: userRepo.createUser(
+            UserEntity(
+                id = userInfo.id,
+                name = userInfo.name,
+                picture = userInfo.picture,
+                isAdmin = false,
+                isActive = true,
+                createdAt = System.currentTimeMillis(),
+                updatedAt = System.currentTimeMillis()
+            )
+        )
+
         userSessionRepo.createSession(
             UserSessionEntity(
-                userId = userId,
+                userId = userInfo.id,
                 sessionToken = sessionToken,
                 accessTokenEncrypted = accessToken.encrypt(),
                 refreshTokenEncrypted = refreshToken?.encrypt(),
@@ -31,9 +58,14 @@ class SessionService(private val userSessionRepo: UserSessionRepository) {
 
         return SessionCookie(
             sessionToken = sessionToken,
-            userId = userId,
+            userId = userInfo.id,
             expiresAt = sessionExpiry
         )
+    }
+
+    suspend fun getSessionUser(session: SessionCookie): UserEntity {
+        return userRepo.getUserById(session.userId)
+            ?: throw IllegalStateException("User not found for session: ${session.sessionToken}")
     }
 
     suspend fun getSessionAccessToken(sessionToken: String): String? {
