@@ -4,6 +4,7 @@ import io.ktor.server.routing.*
 import jc.kotlin.template.server.auth.SESSION_DATA
 import jc.kotlin.template.server.auth.SessionCookie
 import jc.kotlin.template.server.auth.UserInfo
+import jc.kotlin.template.server.config.DEFAULT_ADMINS
 import jc.kotlin.template.server.user.UserEntity
 import jc.kotlin.template.server.user.UserRepository
 import jc.kotlin.template.server.utility.decrypt
@@ -36,7 +37,7 @@ class SessionService(
                 id = userInfo.id,
                 name = userInfo.name,
                 picture = userInfo.picture,
-                isAdmin = false,
+                isAdmin = isAdmin(userInfo),
                 isActive = true,
                 createdAt = System.currentTimeMillis(),
                 updatedAt = System.currentTimeMillis()
@@ -61,6 +62,10 @@ class SessionService(
             userId = userInfo.id,
             expiresAt = sessionExpiry
         )
+    }
+
+    private fun isAdmin(userInfo: UserInfo): Boolean {
+        return DEFAULT_ADMINS.contains(userInfo.id)
     }
 
     suspend fun getSessionUser(session: SessionCookie): UserEntity {
