@@ -1,0 +1,253 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Header with creative line work
+header {
+    position: relative;
+    padding: 4rem 0 6rem;
+    overflow: hidden;
+}
+*/
+
+.header-line {
+    position: absolute;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #e8b4ff22, transparent);
+    top: 2rem;
+    left: 0;
+    right: 0;
+    animation: shimmer 4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+}
+
+/* Main content sections with creative spacing */
+.section {
+    margin-bottom: 8rem;
+    position: relative;
+}
+
+.section-number {
+    position: absolute;
+    left: -4rem;
+    top: 0;
+    font-size: 0.875rem;
+    color: #444;
+    font-weight: 300;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+    color: #f0f0f0;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 2px 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+.divider-line {
+    width: 1px;
+    height: 200px;
+    background: linear-gradient(to bottom, transparent, #e8b4ff33, transparent);
+    justify-self: center;
+}
+
+.content-block {
+    position: relative;
+}
+
+.content-block p {
+    color: #bbb;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+}
+
+/* Creative cards without borders */
+.card {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #a8e6cf44, transparent);
+}
+
+.card:hover {
+    background: rgba(255, 255, 255, 0.04);
+    transform: translateY(-2px);
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.card-text {
+    color: #999;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+/* Accent elements */
+.accent-dot {
+    width: 4px;
+    height: 4px;
+    background: #ffd3a5;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 1rem;
+    opacity: 0.7;
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+}
+
+.feature-item {
+    padding: 1rem 0;
+    position: relative;
+    color: #ccc;
+    font-weight: 300;
+}
+
+.feature-item::before {
+    content: '';
+    position: absolute;
+    left: -1.5rem;
+    top: 1.5rem;
+    width: 6px;
+    height: 1px;
+    background: #e8b4ff;
+    opacity: 0.6;
+}
+
+/* Footer with creative line work */
+footer {
+    margin-top: 8rem;
+    padding: 4rem 0;
+    position: relative;
+}
+
+.footer-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    overflow: hidden;
+}
+
+.footer-line {
+    position: absolute;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(168, 230, 207, 0.2), transparent);
+}
+
+.footer-line:nth-child(1) {
+    top: 20px;
+    animation: float 6s ease-in-out infinite;
+}
+
+.footer-line:nth-child(2) {
+    top: 40px;
+    animation: float 8s ease-in-out infinite reverse;
+}
+
+.footer-line:nth-child(3) {
+    top: 60px;
+    animation: float 7s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateX(-20px); opacity: 0.2; }
+    50% { transform: translateX(20px); opacity: 0.6; }
+}
+
+.footer-content {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    font-weight: 300;
+    padding-top: 2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .divider-line {
+        display: none;
+    }
+
+    .nav-list {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .section-number {
+        position: static;
+        margin-bottom: 1rem;
+    }
+}
+
+/* Subtle hover interactions */
+.interactive:hover {
+    color: #ffd3a5;
+    transition: color 0.3s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+::-webkit-scrollbar-track {
+    background: #111;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 1px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #444;
+}

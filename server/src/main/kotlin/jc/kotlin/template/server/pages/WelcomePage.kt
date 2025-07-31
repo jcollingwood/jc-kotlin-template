@@ -12,7 +12,7 @@ fun FlowContent.welcomePage(userEntity: UserEntity, sessionCookie: SessionCookie
     // figure out expiresAt long to get expiration duration in minutes
     val expireMillis = sessionCookie.expiresAt - System.currentTimeMillis()
 
-    h1(classes = "text-2xl") { +"Welcome" }
+    h1(classes = "header") { +"Welcome" }
     img(src = userEntity.picture, alt = "User Picture", classes = "rounded-full w-16 h-16")
     p { +"You are logged in as ${userEntity.name}" }
     p { +"Your user ${if (userEntity.isAdmin) "is" else "is not"} an admin" }

@@ -13,18 +13,24 @@ val navPages = setOf(welcomePage, htmxPage, componentsPage, adminPage)
 fun HTML.mainTemplate(user: UserEntity, page: Page, content: FlowContent.() -> Unit) {
     appHead(page.title)
     body {
+        classes = setOf(
+            "font-inter",
+            "bg-zinc-950",
+            "text-gray-100",
+            "leading-relaxed",
+            "overflow-x-hidden"
+        )
+        navigation(page, filterNavPages(user, navPages))
         main {
             classes = setOf(
-                "font-inter",
+                "max-w-1200px",
                 "flex",
                 "flex-col",
                 "h-full",
                 "w-screen",
                 "items-center",
-                "px-4",
-                "pb-6"
+                "p-2rem",
             )
-            navigation(page, filterNavPages(user, navPages))
             content()
         }
     }
