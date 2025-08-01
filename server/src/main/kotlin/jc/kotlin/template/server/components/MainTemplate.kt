@@ -18,7 +18,8 @@ fun HTML.mainTemplate(user: UserEntity, page: Page, content: FlowContent.() -> U
             "bg-zinc-950",
             "text-gray-100",
             "leading-relaxed",
-            "overflow-x-hidden"
+            "overflow-x-hidden",
+            "pt-[77px]"
         )
         navigation(page, filterNavPages(user, navPages))
         main {
