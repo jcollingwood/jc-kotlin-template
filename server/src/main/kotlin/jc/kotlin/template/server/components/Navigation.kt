@@ -1,6 +1,7 @@
 package jc.kotlin.template.server.components
 
 import jc.kotlin.template.server.routes.Page
+import jc.kotlin.template.server.utility.Color
 import kotlinx.html.*
 
 // TODO nav not responsive at all yet
@@ -43,16 +44,7 @@ fun FlowContent.navigation(currentPage: Page, navPages: Set<Page>) {
                     "group"
                 )
                 +"Template Project"
-                div {
-                    classes = setOf(
-                        "absolute",
-                        "-bottom-0.5",
-                        "left-0",
-                        "w-5",
-                        "h-px",
-                        "bg-mint"
-                    )
-                }
+                titleAccent()
             }
 
             nav {
@@ -72,15 +64,10 @@ fun FlowContent.navigation(currentPage: Page, navPages: Set<Page>) {
                         "group"
                     )
                     val afterNavLiStyles = setOf(
-                        "absolute",
-                        "-bottom-2",
-                        "left-0",
-                        "w-0",
-                        "h-px",
-                        "bg-peach",
                         "transition-all",
                         "duration-300",
-                        "group-hover:w-full"
+                        "group-hover:w-full",
+                        "group-hover:to-peach"
                     )
 
                     navPages.map {
@@ -88,7 +75,12 @@ fun FlowContent.navigation(currentPage: Page, navPages: Set<Page>) {
                             a(href = it.path) {
                                 classes = navLiStyles
                                 +it.title
-                                div(afterNavLiStyles.joinToString(" "))
+                                titleAccent(
+                                    AccentProps(
+                                        accentColor = Color.Peach,
+                                        classes = afterNavLiStyles
+                                    )
+                                )
 
                                 if (currentPage == it) {
                                     div {
@@ -109,7 +101,12 @@ fun FlowContent.navigation(currentPage: Page, navPages: Set<Page>) {
                         a("/logout") {
                             classes = navLiStyles
                             +"Logout"
-                            div(afterNavLiStyles.joinToString(" "))
+                            titleAccent(
+                                AccentProps(
+                                    accentColor = Color.Peach,
+                                    classes = afterNavLiStyles
+                                )
+                            )
                         }
                     }
                 }
