@@ -56,9 +56,9 @@ fun FlowContent.jcCard(
     content: FlowContent.() -> Unit
 ) {
     val accentClass = when (cardProps.accentColor) {
-        Color.Peach -> "bg-peach/[0.27]"
-        Color.Mint -> "bg-mint/[0.27]"
-        Color.Purple -> "bg-purple/[0.27]"
+        Color.Peach -> "via-peach/[0.27]"
+        Color.Mint -> "via-mint/[0.27]"
+        Color.Purple -> "via-purple/[0.27]"
     }
 
     div {
