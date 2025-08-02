@@ -1,5 +1,6 @@
 package jc.kotlin.template.server.components
 
+import jc.kotlin.template.server.utility.Color
 import kotlinx.html.FlowContent
 import kotlinx.html.classes
 import kotlinx.html.div
@@ -37,22 +38,32 @@ val darkCardStyles = setOf(
 //    background: linear-gradient(to bottom, transparent, #ffd3a5, transparent);
 val cardBeforeStyles = setOf(
     "absolute",
-    "top-2rem",
+    "top-2",
     "left-0",
-    "bottom-2rem",
-    "w-2px",
+    "bottom-2",
+    "w-[2px]",
     "bg-gradient-to-b",
     "from-transparent",
-    "via-gray-200/[0.27]",
     "to-transparent"
 )
 
+data class CardProps(
+    val accentColor: Color = Color.Peach
+)
+
 fun FlowContent.jcCard(
+    cardProps: CardProps = CardProps(),
     content: FlowContent.() -> Unit
 ) {
+    val accentClass = when (cardProps.accentColor) {
+        Color.Peach -> "bg-peach/[0.27]"
+        Color.Mint -> "bg-mint/[0.27]"
+        Color.Purple -> "bg-purple/[0.27]"
+    }
+
     div {
         classes = darkCardStyles
-        div(cardBeforeStyles.joinToString(" "))
+        div((cardBeforeStyles + setOf(accentClass)).joinToString(" "))
         content()
     }
 }
