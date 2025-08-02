@@ -27,13 +27,21 @@ val darkCardStyles = setOf(
     "hover:backdrop-blur-md"
 )
 
+//    .card-accent::after {
+//    content: '';
+//    position: absolute;
+//    left: 0;
+//    top: 2rem;
+//    bottom: 2rem;
+//    width: 2px;
+//    background: linear-gradient(to bottom, transparent, #ffd3a5, transparent);
 val cardBeforeStyles = setOf(
     "absolute",
-    "top-0",
+    "top-2rem",
     "left-0",
-    "right-0",
-    "h-px",
-    "bg-gradient-to-r",
+    "bottom-2rem",
+    "w-2px",
+    "bg-gradient-to-b",
     "from-transparent",
     "via-gray-200/[0.27]",
     "to-transparent"
