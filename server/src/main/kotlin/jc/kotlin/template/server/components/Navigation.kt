@@ -5,6 +5,10 @@ import kotlinx.html.*
 
 // TODO nav not responsive at all yet
 fun FlowContent.navigation(currentPage: Page, navPages: Set<Page>) {
+    script {
+        src = "/static/jc_nav.js"
+    }
+
     header {
         classes = setOf(
             "fixed",
@@ -117,6 +121,101 @@ fun FlowContent.navigation(currentPage: Page, navPages: Set<Page>) {
                 onClick = "toggleMobileNav()"
                 +"☰"
             }
+        }
+    }
+
+    // Mobile Navigation
+    div {
+        classes = setOf(
+            "fixed",
+            "top-0",
+            "-right-full",
+            "w-full",
+            "h-screen",
+            "bg-black/[0.98]",
+            "backdrop-blur-xl",
+            "z-[1000]",
+            "transition-all",
+            "duration-[400ms]",
+            "ease-out",
+            "flex",
+            "flex-col",
+            "justify-center",
+            "items-center",
+            "mobile-nav"
+        )
+        id = "mobileNav"
+
+        button {
+            classes = setOf(
+                "absolute",
+                "top-8",
+                "right-8",
+                "bg-transparent",
+                "border-none",
+                "text-zinc-300",
+                "text-3xl",
+                "cursor-pointer"
+            )
+            onClick = "toggleMobileNav()"
+            +"×"
+        }
+
+        ul {
+            classes = setOf("list-none", "text-center")
+
+            navPages.map {
+                li {
+
+                    classes = setOf("mb-8", "relative")
+
+                    a(href = it.path) {
+                        val navLinkClass = setOf(
+                            "no-underline",
+                            "text-2xl",
+                            "font-light",
+                            "transition-colors",
+                            "duration-300",
+                            "hover:text-mint"
+                        )
+                        if (currentPage == it) {
+                            classes = navLinkClass + setOf("text-mint")
+                            div(
+                                setOf(
+                                    "before:absolute",
+                                    "before:-left-4",
+                                    "before:top-1/2",
+                                    "before:-translate-y-1/2",
+                                    "before:w-1",
+                                    "before:h-1",
+                                    "before:bg-mint",
+                                    "before:rounded-full"
+                                ).joinToString(" ")
+                            ) {}
+                        } else {
+                            classes = navLinkClass + setOf("text-zine-300")
+                        }
+
+                        +it.title
+                    }
+                }
+            }
+            li {
+                classes = setOf("mb-8")
+                a(href = "/logout") {
+                    classes = setOf(
+                        "text-zinc-300",
+                        "no-underline",
+                        "text-2xl",
+                        "font-light",
+                        "transition-colors",
+                        "duration-300",
+                        "hover:text-mint"
+                    )
+                    +"Logout"
+                }
+            }
+
         }
     }
 
