@@ -1,19 +1,17 @@
 package jc.kotlin.template.server.components
 
 import jc.kotlin.template.server.utility.Color
-import kotlinx.html.FlowContent
-import kotlinx.html.classes
-import kotlinx.html.div
+import kotlinx.html.*
 
-val cardStyles = setOf(
-    "w-full",
-    "p-4",
-    "border",
-    "border-gray-200",
-    "rounded-md",
-    "shadow-md",
-    "items-center"
-)
+//val cardStyles = setOf(
+//    "w-full",
+//    "p-4",
+//    "border",
+//    "border-gray-200",
+//    "rounded-md",
+//    "shadow-md",
+//    "items-center"
+//)
 
 val darkCardStyles = setOf(
     "bg-white/[0.02]",
@@ -28,14 +26,6 @@ val darkCardStyles = setOf(
     "hover:backdrop-blur-md"
 )
 
-//    .card-accent::after {
-//    content: '';
-//    position: absolute;
-//    left: 0;
-//    top: 2rem;
-//    bottom: 2rem;
-//    width: 2px;
-//    background: linear-gradient(to bottom, transparent, #ffd3a5, transparent);
 val cardBeforeStyles = setOf(
     "absolute",
     "top-2",
@@ -48,22 +38,43 @@ val cardBeforeStyles = setOf(
 )
 
 data class CardProps(
+    val id: String? = null,
+    val classes: Set<String> = setOf(),
     val accentColor: Color = Color.Peach
 )
 
 fun FlowContent.jcCard(
-    cardProps: CardProps = CardProps(),
+    props: CardProps = CardProps(),
     content: FlowContent.() -> Unit
 ) {
-    val accentClass = when (cardProps.accentColor) {
+    val accentClass = when (props.accentColor) {
         Color.Peach -> "via-peach/[0.27]"
         Color.Mint -> "via-mint/[0.27]"
         Color.Purple -> "via-purple/[0.27]"
     }
 
     div {
-        classes = darkCardStyles
+        props.id?.let { id = it }
+        classes = darkCardStyles + props.classes
         div((cardBeforeStyles + setOf(accentClass)).joinToString(" "))
         content()
     }
+}
+
+fun DIV.asCard(
+    props: CardProps = CardProps(),
+): DIV {
+    classes = darkCardStyles + props.classes
+
+    div(
+        (cardBeforeStyles + setOf(
+            when (props.accentColor) {
+                Color.Peach -> "via-peach/[0.27]"
+                Color.Mint -> "via-mint/[0.27]"
+                Color.Purple -> "via-purple/[0.27]"
+            }
+        )).joinToString(" ")
+    )
+
+    return this
 }

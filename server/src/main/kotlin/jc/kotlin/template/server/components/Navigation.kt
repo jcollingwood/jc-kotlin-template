@@ -21,7 +21,9 @@ fun FlowContent.navigation(currentPage: Page, navPages: Set<Page>) {
             "backdrop-blur-xl",
             "z-50",
             "border-b",
-            "border-zinc-800"
+            "border-zinc-800",
+            "shadow-md",
+            "shadow-zinc-800/50"
         )
 
         div {

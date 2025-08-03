@@ -30,7 +30,7 @@ fun HTML.mainTemplate(user: UserEntity, page: Page, content: FlowContent.() -> U
                 "h-full",
                 "w-screen",
                 "items-center",
-                "p-2rem",
+                "p-[2rem]",
             )
             content()
         }
