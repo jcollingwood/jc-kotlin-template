@@ -16,7 +16,6 @@ import kotlinx.html.*
 val darkCardStyles = setOf(
     "bg-white/[0.02]",
     "p-8",
-    "mb-8",
     "relative",
     "backdrop-blur-sm",
     "transition-all",
@@ -64,6 +63,7 @@ fun FlowContent.jcCard(
 fun DIV.asCard(
     props: CardProps = CardProps(),
 ): DIV {
+    props.id?.let { id = it }
     classes = darkCardStyles + props.classes
 
     div(

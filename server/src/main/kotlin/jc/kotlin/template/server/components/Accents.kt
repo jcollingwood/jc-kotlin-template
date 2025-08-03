@@ -7,13 +7,13 @@ import kotlinx.html.div
 
 data class AccentProps(
     val classes: Set<String> = setOf(),
-    val accentColor: Color = Color.Mint
+    val color: Color = Color.Mint
 )
 
 fun FlowContent.titleAccent(
-    accentProps: AccentProps = AccentProps()
+    props: AccentProps = AccentProps()
 ) {
-    val accentBgClass = when (accentProps.accentColor) {
+    val accentBgClass = when (props.color) {
         Color.Peach -> "from-peach"
         Color.Mint -> "from-mint"
         Color.Purple -> "from-purple"
@@ -28,6 +28,28 @@ fun FlowContent.titleAccent(
             "bg-gradient-to-r",
             accentBgClass,
             "to-transparent"
-        ) + accentProps.classes
+        ) + props.classes
     }
+}
+
+fun FlowContent.indicatorDot(
+    props: AccentProps = AccentProps()
+) {
+    val accentBgClass = when (props.color) {
+        Color.Peach -> "before:bg-peach"
+        Color.Mint -> "before:bg-mint"
+        Color.Purple -> "before:bg-purple"
+    }
+    div(
+        setOf(
+            "before:absolute",
+            "before:-left-4",
+            "before:top-1/2",
+            "before:-translate-y-1/2",
+            "before:w-1",
+            "before:h-1",
+            accentBgClass,
+            "before:rounded-full"
+        ).joinToString(" ")
+    ) {}
 }

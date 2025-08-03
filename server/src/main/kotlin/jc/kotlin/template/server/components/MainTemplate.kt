@@ -19,9 +19,10 @@ fun HTML.mainTemplate(user: UserEntity, page: Page, content: FlowContent.() -> U
             "text-gray-100",
             "leading-relaxed",
             "overflow-x-hidden",
+            // height of the header
             "pt-[77px]"
         )
-        navigation(page, filterNavPages(user, navPages))
+        navigation(currentPage = page, navPages = filterNavPages(user, navPages))
         main {
             classes = setOf(
                 "max-w-1200px",

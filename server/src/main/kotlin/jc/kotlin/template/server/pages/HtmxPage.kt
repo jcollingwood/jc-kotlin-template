@@ -29,6 +29,7 @@ fun FlowContent.htmxPage() {
         }
 
         div {
+            asCard()
             id = "htmx-section-2"
             hxGet("/htmx/section/2")
             hxSwap("outerHTML")
