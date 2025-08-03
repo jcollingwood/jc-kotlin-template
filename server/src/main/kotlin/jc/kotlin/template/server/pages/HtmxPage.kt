@@ -2,6 +2,7 @@ package jc.kotlin.template.server.pages
 
 import jc.kotlin.template.server.components.*
 import jc.kotlin.template.server.routes.Page
+import jc.kotlin.template.server.utility.Color
 import kotlinx.html.*
 import java.time.Instant
 import java.time.ZoneOffset
@@ -17,8 +18,12 @@ fun FlowContent.htmxPage() {
     div {
         classes = setOf("max-w-3xl", "mt-4", "grid", "grid-cols-1", "sm:grid-cols-3", "gap-4")
 
-        jcCard(props = CardProps(id = "htmx-section-1")) {
-//            id = "htmx-section-1"
+        section {
+            id = "htmx-section-1"
+
+            asCard()
+            cardAccent()
+
             h2 {
                 classes = setOf("text-xl")
                 +"HTMX Section 1"
@@ -28,12 +33,19 @@ fun FlowContent.htmxPage() {
             }
         }
 
-        div {
-            asCard()
+        section {
+            val cardProps = CardProps(
+                accentColor = Color.Mint
+            )
+
             id = "htmx-section-2"
             hxGet("/htmx/section/2")
             hxSwap("outerHTML")
             hxTrigger("load delay:1000ms")
+
+            asCard(props = cardProps)
+            cardAccent(props = cardProps)
+
             h2 {
                 classes = setOf("text-xl")
                 +"HTMX Section 2"
@@ -43,45 +55,45 @@ fun FlowContent.htmxPage() {
             }
         }
 
-        jcCard() {
-            section {
-                id = "htmx-section-3"
-                h2 {
-                    classes = setOf("text-xl")
-                    +"HTMX Section 3"
-                }
-                p {
-                    +"This section will reload when you click the button"
-                }
-                jcButton {
-                    hxGet("/htmx/section/3")
-                    hxSwap("outerHTML")
-                    hxTrigger("click")
-                    hxTarget("#htmx-section-3")
+        section {
+            id = "htmx-section-3"
+            asCard()
+            cardAccent()
+            h2 {
+                classes = setOf("text-xl")
+                +"HTMX Section 3"
+            }
+            p {
+                +"This section will reload when you click the button"
+            }
+            jcButton {
+                hxGet("/htmx/section/3")
+                hxSwap("outerHTML")
+                hxTrigger("click")
+                hxTarget("#htmx-section-3")
 
-                    +"Reload myself"
-                }
+                +"Reload myself"
             }
         }
 
-        jcCard() {
-            section {
-                id = "htmx-section-4"
-                h2 {
-                    classes = setOf("text-xl")
-                    +"HTMX Section 4"
-                }
-                p {
-                    +"This section will replace section 1 when you click the button"
-                }
-                jcButton {
-                    hxGet("/htmx/section/1")
-                    hxSwap("outerHTML")
-                    hxTrigger("click")
-                    hxTarget("#htmx-section-1")
+        section {
+            id = "htmx-section-4"
+            asCard()
+            cardAccent()
+            h2 {
+                classes = setOf("text-xl")
+                +"HTMX Section 4"
+            }
+            p {
+                +"This section will replace section 1 when you click the button"
+            }
+            jcButton {
+                hxGet("/htmx/section/1")
+                hxSwap("outerHTML")
+                hxTrigger("click")
+                hxTarget("#htmx-section-1")
 
-                    +"Reload Section 1"
-                }
+                +"Reload Section 1"
             }
         }
 
@@ -90,140 +102,145 @@ fun FlowContent.htmxPage() {
             hxTarget("#htmx-section-5")
             hxTrigger("every 1800ms")
             hxSwap("outerHTML")
-            jcCard() {
-                section {
-                    id = "htmx-section-5"
-                    h2 {
-                        classes = setOf("text-xl")
-                        +"HTMX Section 5"
-                    }
-                    p {
-                        +"This section replaces itself every 2 seconds"
+            section {
+                id = "htmx-section-5"
+                asCard()
+                cardAccent()
+                h2 {
+                    classes = setOf("text-xl")
+                    +"HTMX Section 5"
+                }
+                p {
+                    +"This section replaces itself every 2 seconds"
+                }
+            }
+        }
+
+        section {
+            id = "htmx-section-6"
+            classes = setOf("hover:bg-gray-100")
+            hxGet("/htmx/section/6")
+            hxSwap("outerHTML")
+            hxTrigger("mouseenter delay:500ms")
+            hxTarget("#htmx-section-6")
+
+            asCard()
+            cardAccent()
+
+            h2 {
+                classes = setOf("text-xl")
+                +"HTMX Section 6"
+            }
+            p {
+                +"This section will be replaced on hover"
+            }
+            p {
+                +"Hover Over Me!"
+            }
+        }
+
+        section {
+            id = "htmx-section-7"
+            asCard()
+            cardAccent()
+            h2 {
+                classes = setOf("text-xl")
+                +"HTMX Section 7"
+            }
+            p {
+                +"This section showcases native loading indicator support and a delayed load after retrieval"
+            }
+            p {
+                id = "loading-indicator"
+                classes = setOf("htmx-indicator")
+                +"Loading... (set 2s delay on server)"
+            }
+            jcButton {
+                hxGet("/htmx/section/7?ms_delay=2000")
+                hxSwap("outerHTML swap:1500ms")
+                hxTrigger("click")
+                hxTarget("#htmx-section-7")
+                hxIndicator("#loading-indicator")
+
+                +"Reload with delay"
+            }
+        }
+
+        section {
+            id = "htmx-section-8"
+            asCard()
+            cardAccent()
+            h2 {
+                classes = setOf("text-xl")
+                +"HTMX Section 8"
+            }
+            p {
+                +"This section shows how HTMX content is able to leverage parameter input"
+            }
+            val colors = setOf("red", "green", "blue", "yellow")
+            span {
+                classes = setOf("grid", "grid-cols-2", "gap-2")
+                colors.map {
+                    jcButton(extraClasses = setOf("capitalize")) {
+                        hxGet("/htmx/section/8?color=${it}")
+                        hxSwap("outerHTML")
+                        hxTrigger("click")
+                        hxTarget("#htmx-section-8")
+
+                        +it
                     }
                 }
             }
         }
 
-        jcCard() {
-            section {
-                id = "htmx-section-6"
-                classes = setOf("hover:bg-gray-100")
-                hxGet("/htmx/section/6")
+        section {
+            id = "htmx-section-9"
+            asCard()
+            cardAccent()
+            h2 {
+                classes = setOf("text-xl")
+                +"HTMX Section 9"
+            }
+            p {
+                +"This section shows how to use input triggers"
+            }
+            input {
+                hxGet("/htmx/section/9")
                 hxSwap("outerHTML")
-                hxTrigger("mouseenter delay:500ms")
-                hxTarget("#htmx-section-6")
-                h2 {
-                    classes = setOf("text-xl")
-                    +"HTMX Section 6"
-                }
-                p {
-                    +"This section will be replaced on hover"
-                }
-                p {
-                    +"Hover Over Me!"
-                }
-            }
-        }
+                hxTrigger("keyup delay:2s")
+                hxTarget("#htmx-section-9")
 
-        jcCard() {
-            section {
-                id = "htmx-section-7"
-                h2 {
-                    classes = setOf("text-xl")
-                    +"HTMX Section 7"
-                }
-                p {
-                    +"This section showcases native loading indicator support and a delayed load after retrieval"
-                }
-                p {
-                    id = "loading-indicator"
-                    classes = setOf("htmx-indicator")
-                    +"Loading... (set 2s delay on server)"
-                }
-                jcButton {
-                    hxGet("/htmx/section/7?ms_delay=2000")
-                    hxSwap("outerHTML swap:1500ms")
-                    hxTrigger("click")
-                    hxTarget("#htmx-section-7")
-                    hxIndicator("#loading-indicator")
+                classes = inputStyles
 
-                    +"Reload with delay"
-                }
-            }
-        }
-
-        jcCard() {
-            section {
-                id = "htmx-section-8"
-                h2 {
-                    classes = setOf("text-xl")
-                    +"HTMX Section 8"
-                }
-                p {
-                    +"This section shows how HTMX content is able to leverage parameter input"
-                }
-                val colors = setOf("red", "green", "blue", "yellow")
-                span {
-                    classes = setOf("grid", "grid-cols-2", "gap-2")
-                    colors.map {
-                        jcButton(extraClasses = setOf("capitalize")) {
-                            hxGet("/htmx/section/8?color=${it}")
-                            hxSwap("outerHTML")
-                            hxTrigger("click")
-                            hxTarget("#htmx-section-8")
-
-                            +it
-                        }
-                    }
-                }
-            }
-        }
-
-        jcCard() {
-            section {
-                id = "htmx-section-9"
-                h2 {
-                    classes = setOf("text-xl")
-                    +"HTMX Section 9"
-                }
-                p {
-                    +"This section shows how to use input triggers"
-                }
-                input {
-                    hxGet("/htmx/section/9")
-                    hxSwap("outerHTML")
-                    hxTrigger("keyup delay:2s")
-                    hxTarget("#htmx-section-9")
-
-                    classes = inputStyles
-
-                    placeholder = "Typing anything"
-                }
+                placeholder = "Typing anything"
             }
         }
     }
 }
 
 fun FlowContent.genericHtmxSection(sectionNum: Int, color: String? = null) {
-    jcCard() {
-        section {
-            id = "htmx-section-$sectionNum"
+    section {
+        id = "htmx-section-$sectionNum"
 
-            val bgs = setOf("bg-red-100", "bg-green-100", "bg-blue-100", "bg-yellow-100")
-            val background = if (color == "red") "bg-red-100"
-            else if (color == "green") "bg-green-100"
-            else if (color == "blue") "bg-blue-100"
-            else if (color == "yellow") "bg-yellow-100"
-            else bgs.random()
+        val cardProps = CardProps(
+            accentColor = when (color) {
+                "red" -> Color.Peach
+                "green" -> Color.Mint
+                "blue" -> Color.Purple
+                "yellow" -> Color.Peach
+                else -> Color.Peach // default color
+            }
+        )
 
-            classes = setOf(background)
-            h2 {
-                classes = setOf("text-xl")
-                +"HTMX Section $sectionNum"
-            }
-            p {
-                +"HTMX Loaded Section ${getCurrentTime()} "
-            }
+        asCard(props = cardProps)
+        cardAccent(props = cardProps)
+
+        h2 {
+            classes = setOf("text-xl")
+            +"HTMX Section $sectionNum"
+        }
+        p {
+            +"HTMX Loaded Section ${getCurrentTime()} "
         }
     }
 }

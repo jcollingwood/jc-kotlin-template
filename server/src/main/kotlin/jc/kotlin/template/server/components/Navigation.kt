@@ -4,7 +4,6 @@ import jc.kotlin.template.server.routes.Page
 import jc.kotlin.template.server.utility.Color
 import kotlinx.html.*
 
-// TODO nav not responsive at all yet
 fun FlowContent.navigation(currentPage: Page, navPages: Set<Page>) {
     script {
         src = "/static/jc_nav.js"

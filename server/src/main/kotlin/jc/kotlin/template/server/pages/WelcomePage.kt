@@ -2,7 +2,8 @@ package jc.kotlin.template.server.pages
 
 import jc.kotlin.template.server.auth.SessionCookie
 import jc.kotlin.template.server.components.CardProps
-import jc.kotlin.template.server.components.jcCard
+import jc.kotlin.template.server.components.asCard
+import jc.kotlin.template.server.components.cardAccent
 import jc.kotlin.template.server.components.titleAccent
 import jc.kotlin.template.server.routes.Page
 import jc.kotlin.template.server.user.UserEntity
@@ -22,9 +23,15 @@ fun FlowContent.welcomePage(userEntity: UserEntity, sessionCookie: SessionCookie
             titleAccent()
             +"Welcome"
         }
-        jcCard(props = CardProps(accentColor = Color.Purple)) {
+        section {
+            val cardProps = CardProps(
+                accentColor = Color.Purple,
+                classes = setOf("flex", "flex-col", "gap-4")
+            )
+            asCard(props = cardProps)
+            cardAccent(props = cardProps)
             div {
-                classes = setOf("flex", "items-center", "gap-4")
+                classes = setOf("flex", "flex-col", "sm:flex-row", "items-center", "gap-4")
                 div {
                     img(src = userEntity.picture, alt = "User Picture", classes = "rounded-full w-24 h-24")
                 }
@@ -37,12 +44,13 @@ fun FlowContent.welcomePage(userEntity: UserEntity, sessionCookie: SessionCookie
             }
         }
 
-        jcCard(
-            props = CardProps(
-                classes = setOf("flex", "flex-col", "gap-3"),
-                accentColor = Color.Mint
+        section {
+            val cardProps = CardProps(
+                accentColor = Color.Mint,
+                classes = setOf("flex", "flex-col", "gap-3")
             )
-        ) {
+            asCard(props = cardProps)
+            cardAccent(props = cardProps)
             p { +"This is a template project for Kotlin web development with Ktor and Htmx." }
             p {
                 +"""

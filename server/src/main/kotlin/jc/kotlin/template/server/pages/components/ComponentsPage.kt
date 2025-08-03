@@ -32,14 +32,14 @@ fun FlowContent.componentsPage() {
                 }
             }
         }
-        jcCard {
-            section {
-                id = "component-area"
-                classes = setOf("!w-1/2", "p-4", "py-4")
-                p {
-                    classes = setOf("text-center")
-                    +"Select a component to test"
-                }
+        section {
+            id = "component-area"
+            classes = setOf("!w-1/2", "p-4", "py-4")
+            asCard()
+            cardAccent()
+            p {
+                classes = setOf("text-center")
+                +"Select a component to test"
             }
         }
     }

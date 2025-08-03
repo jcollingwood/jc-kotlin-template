@@ -1,17 +1,10 @@
 package jc.kotlin.template.server.components
 
 import jc.kotlin.template.server.utility.Color
-import kotlinx.html.*
-
-//val cardStyles = setOf(
-//    "w-full",
-//    "p-4",
-//    "border",
-//    "border-gray-200",
-//    "rounded-md",
-//    "shadow-md",
-//    "items-center"
-//)
+import kotlinx.html.CommonAttributeGroupFacade
+import kotlinx.html.FlowContent
+import kotlinx.html.classes
+import kotlinx.html.div
 
 val darkCardStyles = setOf(
     "bg-white/[0.02]",
@@ -37,14 +30,12 @@ val cardBeforeStyles = setOf(
 )
 
 data class CardProps(
-    val id: String? = null,
     val classes: Set<String> = setOf(),
     val accentColor: Color = Color.Peach
 )
 
-fun FlowContent.jcCard(
+fun FlowContent.cardAccent(
     props: CardProps = CardProps(),
-    content: FlowContent.() -> Unit
 ) {
     val accentClass = when (props.accentColor) {
         Color.Peach -> "via-peach/[0.27]"
@@ -52,29 +43,12 @@ fun FlowContent.jcCard(
         Color.Purple -> "via-purple/[0.27]"
     }
 
-    div {
-        props.id?.let { id = it }
-        classes = darkCardStyles + props.classes
-        div((cardBeforeStyles + setOf(accentClass)).joinToString(" "))
-        content()
-    }
+    div((cardBeforeStyles + setOf(accentClass)).joinToString(" "))
 }
 
-fun DIV.asCard(
+fun <T : CommonAttributeGroupFacade> T.asCard(
     props: CardProps = CardProps(),
-): DIV {
-    props.id?.let { id = it }
-    classes = darkCardStyles + props.classes
-
-    div(
-        (cardBeforeStyles + setOf(
-            when (props.accentColor) {
-                Color.Peach -> "via-peach/[0.27]"
-                Color.Mint -> "via-mint/[0.27]"
-                Color.Purple -> "via-purple/[0.27]"
-            }
-        )).joinToString(" ")
-    )
-
+): T {
+    classes = classes + darkCardStyles + props.classes
     return this
 }
