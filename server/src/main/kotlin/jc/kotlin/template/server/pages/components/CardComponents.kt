@@ -1,7 +1,7 @@
 package jc.kotlin.template.server.pages.components
 
 import jc.kotlin.template.server.components.CardProps
-import jc.kotlin.template.server.components.asCard
+import jc.kotlin.template.server.components.card
 import jc.kotlin.template.server.components.cardAccent
 import jc.kotlin.template.server.utility.Color
 import kotlinx.html.*
@@ -10,7 +10,7 @@ fun FlowContent.cardComponent() {
     div {
         classes = setOf("flex", "flex-col", "gap-4")
 
-        asCard()
+        card()
         cardAccent()
 
         h2 {
@@ -26,7 +26,7 @@ fun FlowContent.cardComponent() {
         }
         section {
 
-            asCard()
+            card()
             cardAccent()
 
             +"This is a standard card... cardception..."
@@ -35,19 +35,19 @@ fun FlowContent.cardComponent() {
             classes = setOf("grid", "grid-cols-1", "sm:grid-cols-2", "gap-4")
             div {
                 val cardProps = CardProps(accentColor = Color.Mint)
-                asCard(cardProps)
+                card(cardProps)
                 cardAccent(cardProps)
                 +"Mint"
             }
             div {
                 val cardProps = CardProps(accentColor = Color.Peach)
-                asCard(cardProps)
+                card(cardProps)
                 cardAccent(cardProps)
                 +"Peach"
             }
             div {
                 val cardProps = CardProps(accentColor = Color.Purple)
-                asCard(cardProps)
+                card(cardProps)
                 cardAccent(cardProps)
                 +"Purple"
             }

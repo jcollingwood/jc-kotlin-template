@@ -109,7 +109,7 @@ fun FlowContent.modalComponents() {
                             "sm:max-w-lg"
                         )
                         section {
-                            asCard()
+                            card()
                             cardAccent()
                             div {
                                 classes = setOf("flex", "flex-col", "gap-6")

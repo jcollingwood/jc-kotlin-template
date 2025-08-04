@@ -24,10 +24,17 @@ fun FlowContent.componentsPage() {
                 Component("Peek", "/components/peek")
             )
             componentButtons.map { component ->
-                jcButton {
+                button {
                     hxGet(component.route)
                     hxTarget("#component-area")
                     hxSwap("innerHTML")
+
+                    val props = BtnProps(
+                        type = BtnType.Secondary,
+                    )
+                    btn(props)
+                    btnAccent(props)
+
                     +component.name
                 }
             }
@@ -35,7 +42,7 @@ fun FlowContent.componentsPage() {
         section {
             id = "component-area"
             classes = setOf("!w-1/2", "p-4", "py-4")
-            asCard()
+            card()
             cardAccent()
             p {
                 classes = setOf("text-center")

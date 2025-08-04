@@ -14,8 +14,8 @@ val darkCardStyles = setOf(
     "transition-all",
     "duration-300",
     "ease-in-out",
-    "hover:bg-white/[0.04]",
-    "hover:backdrop-blur-md"
+//    "hover:bg-white/[0.04]",
+//    "hover:backdrop-blur-md"
 )
 
 val cardBeforeStyles = setOf(
@@ -46,7 +46,7 @@ fun FlowContent.cardAccent(
     div((cardBeforeStyles + setOf(accentClass)).joinToString(" "))
 }
 
-fun <T : CommonAttributeGroupFacade> T.asCard(
+fun <T : CommonAttributeGroupFacade> T.card(
     props: CardProps = CardProps(),
 ): T {
     classes = classes + darkCardStyles + props.classes

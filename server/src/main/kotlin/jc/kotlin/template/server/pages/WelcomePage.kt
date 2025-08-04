@@ -2,7 +2,7 @@ package jc.kotlin.template.server.pages
 
 import jc.kotlin.template.server.auth.SessionCookie
 import jc.kotlin.template.server.components.CardProps
-import jc.kotlin.template.server.components.asCard
+import jc.kotlin.template.server.components.card
 import jc.kotlin.template.server.components.cardAccent
 import jc.kotlin.template.server.components.titleAccent
 import jc.kotlin.template.server.routes.Page
@@ -28,7 +28,7 @@ fun FlowContent.welcomePage(userEntity: UserEntity, sessionCookie: SessionCookie
                 accentColor = Color.Purple,
                 classes = setOf("flex", "flex-col", "gap-4")
             )
-            asCard(props = cardProps)
+            card(props = cardProps)
             cardAccent(props = cardProps)
             div {
                 classes = setOf("flex", "flex-col", "sm:flex-row", "items-center", "gap-4")
@@ -49,7 +49,7 @@ fun FlowContent.welcomePage(userEntity: UserEntity, sessionCookie: SessionCookie
                 accentColor = Color.Mint,
                 classes = setOf("flex", "flex-col", "gap-3")
             )
-            asCard(props = cardProps)
+            card(props = cardProps)
             cardAccent(props = cardProps)
             p { +"This is a template project for Kotlin web development with Ktor and Htmx." }
             p {

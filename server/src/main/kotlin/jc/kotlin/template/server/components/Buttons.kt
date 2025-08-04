@@ -1,5 +1,6 @@
 package jc.kotlin.template.server.components
 
+import jc.kotlin.template.server.utility.Color
 import kotlinx.html.*
 
 val buttonStyles = setOf("border", "py-1", "px-3", "rounded-md", "shadow-md")
@@ -79,4 +80,104 @@ fun FlowOrInteractiveOrPhrasingContent.jcIconButton(
         contents()
         iconSpan(icon)
     }
+}
+
+enum class BtnType {
+    Primary, Secondary, Tertiary
+}
+
+data class BtnProps(
+    val classes: Set<String> = setOf(),
+    val accentColor: Color = Color.Mint,
+    val type: BtnType = BtnType.Primary
+)
+
+val primaryBtnAccentStyles = setOf(
+    "absolute",
+    "top-0",
+    "left-2",
+    "right-2",
+    "h-[2px]",
+    "bg-gradient-to-r",
+    "from-transparent",
+    "to-transparent"
+)
+val secondaryBtnAccentStyles = setOf(
+    "transition-all",
+    "duration-300",
+    "group-hover:w-full",
+    "group-hover:to-peach"
+)
+
+fun FlowContent.btnAccent(
+    props: BtnProps = BtnProps(),
+) {
+    val accentClass = when (props.accentColor) {
+        Color.Peach -> "via-peach/[0.27]"
+        Color.Mint -> "via-mint/[0.27]"
+        Color.Purple -> "via-purple/[0.27]"
+    }
+
+    when (props.type) {
+        BtnType.Primary -> {
+            div((primaryBtnAccentStyles + setOf(accentClass)).joinToString(" "))
+        }
+
+        BtnType.Secondary -> {
+            titleAccent(
+                props = AccentProps(
+                    color = props.accentColor,
+                    classes = secondaryBtnAccentStyles
+                )
+            )
+        }
+
+        BtnType.Tertiary -> {
+            // Tertiary buttons do not have an accent
+            return
+        }
+    }
+}
+
+val primaryBtnClasses = setOf(
+    "px-6",
+    "py-3",
+    "bg-white/[0.02]",
+    "border-none",
+    "text-gray-300",
+    "font-light",
+    "cursor-pointer",
+    "relative",
+    "transition-all",
+    "duration-300",
+    "ease-in-out",
+    "text-base",
+    "no-underline",
+    "inline-block",
+    "hover:bg-white/[0.04]",
+    "hover:text-white",
+    "hover:translate-y-[-1px]"
+)
+
+val secondaryBtnClasses = setOf(
+    "text-zinc-400",
+    "no-underline",
+    "font-light",
+    "transition-all",
+    "duration-300",
+    "relative",
+    "hover:text-white",
+    "group"
+)
+
+fun <T : CommonAttributeGroupFacade> T.btn(
+    props: BtnProps = BtnProps(),
+): T {
+    classes = classes +
+            when (props.type) {
+                BtnType.Primary -> primaryBtnClasses
+                BtnType.Secondary -> primaryBtnClasses
+                BtnType.Tertiary -> primaryBtnClasses
+            } + props.classes
+    return this
 }
