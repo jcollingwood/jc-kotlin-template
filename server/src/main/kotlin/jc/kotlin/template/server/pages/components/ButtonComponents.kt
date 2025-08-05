@@ -1,6 +1,7 @@
 package jc.kotlin.template.server.pages.components
 
 import jc.kotlin.template.server.components.*
+import jc.kotlin.template.server.utility.Color
 import kotlinx.html.*
 
 fun FlowContent.buttonComponent() {
@@ -20,47 +21,61 @@ fun FlowContent.buttonComponent() {
         }
         div {
             classes = setOf("grid", "grid-cols-1", "sm:grid-cols-2", "w-full", "items-center", "gap-4")
-            jcButton {
-                +"Default"
-            }
-            jcButton(
-                buttonColor = ButtonColor(
-                    hoverText = "hover:text-white",
-                    color = "bg-red-100",
-                    hover = "hover:bg-red-400",
-                    active = "active:bg-red-500",
-                    border = "border-red-400",
-                    activeBorder = "active:border-red-300"
-                )
-            ) {
-                +"Snazzy Styles"
-            }
-            jcButton(
-                buttonColor = ButtonColor(
-                    hover = "hover:bg-green-100",
-                    active = "active:bg-green-200",
-                )
-            ) {
+            button {
+                btn()
+                btnAccent()
 
-                +"Green Hover"
+                +"Primary Mint"
             }
-            jcButton(setOf("font-bold")) {
-                +"Bold"
-            }
-            jcButton(setOf("!rounded-full")) {
-                +"Rounded"
-            }
-            jcButton(
-                setOf("rounded-none"),
-                buttonColor = ButtonColor(
-                    text = "text-white",
-                    hoverText = "hover:text-white",
-                    color = "bg-gray-500",
-                    hover = "hover:bg-gray-600",
-                    active = "active:bg-black"
+            button {
+                val props = BtnProps(
+                    accentColor = Color.Peach,
+                    type = BtnType.Primary
                 )
-            ) {
-                +"Serious"
+                btn(props)
+                btnAccent(props)
+
+                +"Primary Peach"
+            }
+            button {
+                val props = BtnProps(
+                    accentColor = Color.Purple,
+                    type = BtnType.Primary
+                )
+                btn(props)
+                btnAccent(props)
+
+                +"Primary Purple"
+            }
+            button {
+                val props = BtnProps(
+                    accentColor = Color.Mint,
+                    type = BtnType.Secondary
+                )
+                btn(props)
+                btnAccent(props)
+
+                +"Secondary Mint"
+            }
+            button {
+                val props = BtnProps(
+                    accentColor = Color.Peach,
+                    type = BtnType.Secondary
+                )
+                btn(props)
+                btnAccent(props)
+
+                +"Secondary Peach"
+            }
+            button {
+                val props = BtnProps(
+                    accentColor = Color.Purple,
+                    type = BtnType.Secondary
+                )
+                btn(props)
+                btnAccent(props)
+
+                +"Secondary Purple"
             }
             jcButton(icon = "add") {
                 +"Icon"

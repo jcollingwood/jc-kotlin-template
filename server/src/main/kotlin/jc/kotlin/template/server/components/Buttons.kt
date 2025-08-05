@@ -28,6 +28,8 @@ fun FlowContent.iconSpan(icon: String, extraClasses: Set<String> = setOf()) {
     }
 }
 
+// TODO remove - old buttons
+
 fun FlowOrInteractiveOrPhrasingContent.jcButton(
     extraClasses: Set<String> = setOf(),
     buttonColor: ButtonColor = ButtonColor(),
@@ -82,6 +84,8 @@ fun FlowOrInteractiveOrPhrasingContent.jcIconButton(
     }
 }
 
+// new buttons
+
 enum class BtnType {
     Primary, Secondary, Tertiary
 }
@@ -106,7 +110,6 @@ val secondaryBtnAccentStyles = setOf(
     "transition-all",
     "duration-300",
     "group-hover:w-full",
-    "group-hover:to-peach"
 )
 
 fun FlowContent.btnAccent(
@@ -124,10 +127,15 @@ fun FlowContent.btnAccent(
         }
 
         BtnType.Secondary -> {
+            val secondaryAccentClass = when (props.accentColor) {
+                Color.Peach -> setOf("group-hover:to-peach")
+                Color.Mint -> setOf("group-hover:to-mint")
+                Color.Purple -> setOf("group-hover:to-purple")
+            }
             titleAccent(
                 props = AccentProps(
                     color = props.accentColor,
-                    classes = secondaryBtnAccentStyles
+                    classes = secondaryBtnAccentStyles + secondaryAccentClass
                 )
             )
         }
@@ -139,6 +147,7 @@ fun FlowContent.btnAccent(
     }
 }
 
+// TODO button click animations
 val primaryBtnClasses = setOf(
     "px-6",
     "py-3",
@@ -176,7 +185,7 @@ fun <T : CommonAttributeGroupFacade> T.btn(
     classes = classes +
             when (props.type) {
                 BtnType.Primary -> primaryBtnClasses
-                BtnType.Secondary -> primaryBtnClasses
+                BtnType.Secondary -> secondaryBtnClasses
                 BtnType.Tertiary -> primaryBtnClasses
             } + props.classes
     return this
