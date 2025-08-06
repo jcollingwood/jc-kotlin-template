@@ -48,13 +48,16 @@ fun FlowContent.componentsPage() {
                 }
             }
             section {
-                id = "component-area"
                 classes = setOf("max-w-full", "p-4", "py-4")
                 card()
                 cardAccent()
-                p {
-                    classes = setOf("text-center")
-                    +"Select a component to test"
+                div {
+                    id = "component-area"
+
+                    p {
+                        classes = setOf("text-center")
+                        +"Select a component to test"
+                    }
                 }
             }
         }

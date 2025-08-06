@@ -10,9 +10,6 @@ fun FlowContent.cardComponent() {
     div {
         classes = setOf("flex", "flex-col", "gap-4")
 
-        card()
-        cardAccent()
-
         h2 {
             classes = setOf("text-xl")
             +"Card"

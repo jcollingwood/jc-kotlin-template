@@ -7,8 +7,15 @@ import kotlinx.html.*
 fun FlowContent.buttonComponent() {
     div {
         classes = setOf("flex", "flex-col", "gap-4")
+
         h2 {
-            classes = setOf("text-xl")
+            classes = setOf("text-xl", "relative")
+            titleAccent(
+                AccentProps(
+                    color = Color.Purple,
+                    width = AccentWidth.Title
+                )
+            )
             +"Button"
         }
         p {
@@ -99,23 +106,33 @@ fun FlowContent.buttonComponent() {
                 +"Loading Spinner"
                 iconSpan("progress_activity", setOf("animate-spin"))
             }
-            button {
-                classes = setOf("animate-bounce")
-                val props = BtnProps(
-                    accentColor = Color.Peach,
-                    type = BtnType.Secondary
-                )
-                btn(props)
-                btnAccent(props)
-                +":)"
-            }
+            // I hate this one but leaving as an example
+//            button {
+//                classes = setOf("animate-bounce")
+//                val props = BtnProps(
+//                    accentColor = Color.Peach,
+//                    type = BtnType.Secondary
+//                )
+//                btn(props)
+//                btnAccent(props)
+//                +":)"
+//            }
             div {
-                classes = setOf("flex", "flex-col", "gap-2")
-                p { +"Icon Buttons" }
+                classes = setOf("flex", "flex-col", "gap-4", "mt-4")
+                h3 {
+                    classes = setOf("text-lg", "relative")
+                    titleAccent(
+                        AccentProps(
+                            color = Color.Peach,
+                            width = AccentWidth.Title
+                        )
+                    )
+                    +"Icon Buttons"
+                }
                 div {
                     classes = setOf("flex", "gap-2")
                     button {
-                        classes = setOf("rounded-full", "shadow", "shadow-lg")
+                        classes = setOf("rounded-full", "!p-3")
                         val props = BtnProps(
                             accentColor = Color.Purple,
                             type = BtnType.Primary
@@ -125,26 +142,28 @@ fun FlowContent.buttonComponent() {
 
                         iconSpan("add")
                     }
-                    jcIconButton(
-                        icon = "add", buttonColor = ButtonColor(
-                            color = "bg-green-100",
-                            hover = "hover:bg-green-200",
-                            active = "active:bg-green-300",
+                    button {
+                        classes = setOf("rounded-full", "!p-3")
+                        val props = BtnProps(
+                            accentColor = Color.Peach,
+                            type = BtnType.Primary
                         )
-                    ) {}
-                    jcIconButton("star") {}
-                    jcIconButton(
-                        icon = "bolt",
-                        buttonColor = ButtonColor(
-                            text = "text-white",
-                            hoverText = "hover:text-white",
-                            color = "bg-yellow-500",
-                            hover = "hover:bg-yellow-600",
-                            active = "active:bg-yellow-700",
-                            border = "border-white",
-                            activeBorder = "active:border-white",
+                        btn(props)
+                        bgAccent(props)
+
+                        iconSpan("star")
+                    }
+                    button {
+                        classes = setOf("rounded-full", "!p-3")
+                        val props = BtnProps(
+                            accentColor = Color.Mint,
+                            type = BtnType.Primary
                         )
-                    ) {}
+                        btn(props)
+                        bgAccent(props)
+
+                        iconSpan("bolt")
+                    }
                 }
             }
         }
