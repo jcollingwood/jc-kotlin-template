@@ -1,10 +1,7 @@
 package jc.kotlin.template.server.pages
 
 import jc.kotlin.template.server.auth.SessionCookie
-import jc.kotlin.template.server.components.CardProps
-import jc.kotlin.template.server.components.card
-import jc.kotlin.template.server.components.cardAccent
-import jc.kotlin.template.server.components.titleAccent
+import jc.kotlin.template.server.components.*
 import jc.kotlin.template.server.routes.Page
 import jc.kotlin.template.server.user.UserEntity
 import jc.kotlin.template.server.utility.Color
@@ -20,7 +17,7 @@ fun FlowContent.welcomePage(userEntity: UserEntity, sessionCookie: SessionCookie
         classes = setOf("flex", "flex-col", "gap-6", "w-full", "max-w-2xl", "font-xl")
 
         h1(classes = "header text-xl relative") {
-            titleAccent()
+            titleAccent(AccentProps(width = AccentWidth.Title))
             +"Welcome"
         }
         section {

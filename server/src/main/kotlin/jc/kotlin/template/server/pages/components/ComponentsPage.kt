@@ -16,7 +16,7 @@ fun FlowContent.componentsPage() {
         classes = setOf("flex", "flex-col", "gap-6", "w-full", "max-w-2xl", "font-xl")
 
         h1(classes = "header text-xl relative") {
-            titleAccent()
+            titleAccent(AccentProps(width = AccentWidth.Title))
             +"Components"
         }
         div {

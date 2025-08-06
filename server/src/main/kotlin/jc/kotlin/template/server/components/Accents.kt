@@ -7,8 +7,13 @@ import kotlinx.html.div
 
 data class AccentProps(
     val classes: Set<String> = setOf(),
-    val color: Color = Color.Mint
+    val color: Color = Color.Mint,
+    val width: AccentWidth = AccentWidth.Third
 )
+
+enum class AccentWidth(val classes: Set<String>) {
+    Third(setOf("w-1/3")), Title(setOf("w-14")), Half(setOf("w-1/2"));
+}
 
 fun FlowContent.titleAccent(
     props: AccentProps = AccentProps()
@@ -23,12 +28,12 @@ fun FlowContent.titleAccent(
             "absolute",
             "-bottom-2",
             "left-0",
-            "w-10",
+            "max-w-full",
             "h-px",
             "bg-gradient-to-r",
             accentBgClass,
             "to-transparent"
-        ) + props.classes
+        ) + props.width.classes + props.classes
     }
 }
 

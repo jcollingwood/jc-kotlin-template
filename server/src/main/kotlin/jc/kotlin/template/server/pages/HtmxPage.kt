@@ -17,7 +17,7 @@ fun FlowContent.htmxPage() {
         classes = setOf("flex", "flex-col", "gap-6", "w-full", "max-w-3xl", "font-xl")
 
         h1(classes = "header text-xl relative") {
-            titleAccent()
+            titleAccent(AccentProps(width = AccentWidth.Title))
             +"HTMX Samples"
         }
         p { +"This section shows off a lot of the HTMX features" }

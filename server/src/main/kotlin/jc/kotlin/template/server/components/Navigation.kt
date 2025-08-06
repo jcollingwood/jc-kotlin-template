@@ -45,7 +45,7 @@ fun FlowContent.navigation(currentPage: Page, navPages: Set<Page>) {
                     "group"
                 )
                 +"Template Project"
-                titleAccent()
+                titleAccent(AccentProps(width = AccentWidth.Title))
             }
 
             nav {
