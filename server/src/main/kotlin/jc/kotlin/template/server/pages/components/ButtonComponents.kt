@@ -20,7 +20,7 @@ fun FlowContent.buttonComponent() {
             """
         }
         div {
-            classes = setOf("grid", "grid-cols-1", "sm:grid-cols-2", "w-full", "items-center", "gap-4")
+            classes = setOf("grid", "grid-cols-1", "sm:grid-cols-2", "w-full", "items-center", "gap-5")
             button {
                 btn()
                 btnAccent()
@@ -77,37 +77,36 @@ fun FlowContent.buttonComponent() {
 
                 +"Secondary Purple"
             }
-            jcButton(icon = "add") {
+            button {
+                btn()
+                btnAccent()
+                iconSpan("add")
                 +"Icon"
             }
-            jcButton(icon = "chevron_right", iconPosition = IconPosition.AFTER) {
+            button {
+                btn()
+                btnAccent()
                 +"Alt Icon"
+                iconSpan("chevron_right")
             }
-            jcButton(setOf("!shadow-lg")) {
-                +"Extra Shadow"
-            }
-            jcButton(
-                setOf("border-none"),
-                buttonColor = ButtonColor(
-                    text = "text-white",
-                    hoverText = "hover:text-white",
-                    color = "bg-blue-500",
-                    hover = "hover:bg-blue-600",
-                    active = "active:bg-blue-700"
+            button {
+                val props = BtnProps(
+                    accentColor = Color.Purple,
+                    type = BtnType.Secondary
                 )
-            ) {
-                +"Flat"
-            }
-            jcButton(
-                iconButtonStyles
-            ) {
+                btn(props)
+                btnAccent(props)
                 +"Loading Spinner"
                 iconSpan("progress_activity", setOf("animate-spin"))
             }
-            jcButton(
-                extraClasses = setOf("animate-bounce")
-
-            ) {
+            button {
+                classes = setOf("animate-bounce")
+                val props = BtnProps(
+                    accentColor = Color.Peach,
+                    type = BtnType.Secondary
+                )
+                btn(props)
+                btnAccent(props)
                 +":)"
             }
             div {

@@ -150,6 +150,10 @@ fun FlowContent.btnAccent(
 
 // TODO button click animations
 val primaryBtnClasses = setOf(
+    "flex",
+    "items-center",
+    "justify-center",
+    "gap-2",
     "px-6",
     "py-3",
     "bg-white/[0.02]",
@@ -170,6 +174,10 @@ val primaryBtnClasses = setOf(
 )
 
 val secondaryBtnClasses = setOf(
+    "flex",
+    "items-center",
+    "justify-center",
+    "gap-2",
     "text-zinc-400",
     "no-underline",
     "font-light",
