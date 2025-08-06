@@ -114,6 +114,17 @@ fun FlowContent.buttonComponent() {
                 p { +"Icon Buttons" }
                 div {
                     classes = setOf("flex", "gap-2")
+                    button {
+                        classes = setOf("rounded-full", "shadow", "shadow-lg")
+                        val props = BtnProps(
+                            accentColor = Color.Purple,
+                            type = BtnType.Primary
+                        )
+                        btn(props)
+                        bgAccent(props)
+
+                        iconSpan("add")
+                    }
                     jcIconButton(
                         icon = "add", buttonColor = ButtonColor(
                             color = "bg-green-100",

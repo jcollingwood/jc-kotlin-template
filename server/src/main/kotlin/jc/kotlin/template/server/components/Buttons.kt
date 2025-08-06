@@ -125,6 +125,7 @@ fun FlowContent.btnAccent(
     when (props.type) {
         BtnType.Primary -> {
             div((primaryBtnAccentStyles + setOf(accentClass)).joinToString(" "))
+            bgAccent(props)
         }
 
         BtnType.Secondary -> {
@@ -146,6 +147,29 @@ fun FlowContent.btnAccent(
             return
         }
     }
+}
+
+fun FlowContent.bgAccent(
+    props: BtnProps = BtnProps(),
+) {
+    val accentClass = when (props.accentColor) {
+        Color.Peach -> "via-peach/[0.08]"
+        Color.Mint -> "via-mint/[0.08]"
+        Color.Purple -> "via-purple/[0.08]"
+    }
+    val bgAccentClasses = setOf(
+        "absolute",
+        "inset-0",
+        "bg-gradient-to-r",
+        "from-transparent",
+//        "via-[#a8e6cf]",
+        accentClass,
+        "to-transparent",
+        "opacity-0",
+        "hover:opacity-100",
+        "transition-opacity"
+    )
+    div((bgAccentClasses).joinToString(" "))
 }
 
 // TODO button click animations
