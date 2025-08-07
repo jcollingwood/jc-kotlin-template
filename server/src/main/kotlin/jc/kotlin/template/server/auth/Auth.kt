@@ -8,16 +8,13 @@ import io.ktor.server.html.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
-import jc.kotlin.template.server.components.appHead
-import jc.kotlin.template.server.components.buttonStyles
+import jc.kotlin.template.server.components.*
 import jc.kotlin.template.server.config.CoreServices
 import jc.kotlin.template.server.config.GOOGLE_CLIENT_ID
 import jc.kotlin.template.server.config.GOOGLE_CLIENT_SECRET
 import jc.kotlin.template.server.session.SessionService
-import kotlinx.html.a
-import kotlinx.html.body
-import kotlinx.html.classes
-import kotlinx.html.main
+import jc.kotlin.template.server.utility.Color
+import kotlinx.html.*
 import kotlin.time.Duration.Companion.hours
 
 fun Application.authModule(core: CoreServices, userInfoService: UserInfoService, sessionService: SessionService) {
@@ -67,19 +64,41 @@ fun Application.authRouting(userInfoService: UserInfoService, sessionService: Se
             call.respondHtml {
                 appHead("Login")
                 body {
+                    classes = defaultMainClasses
                     main {
                         classes = setOf(
-                            "font-inter",
                             "flex",
                             "flex-col",
-                            "h-full",
-                            "w-screen",
                             "items-center",
-                            "p-6"
+                            "justify-center",
+                            "gap-4",
+                            "w-full",
+                            "h-full"
                         )
-                        a(LOGIN_ROUTE) {
-                            classes = buttonStyles
-                            +"Login with Google"
+                        section {
+                            classes = setOf("flex", "flex-col", "items-center", "gap-4", "min-w-3xl", "min-h-96")
+
+                            card()
+                            cardAccent()
+
+                            h1 {
+                                classes = setOf("text-2xl", "mb-3", "relative")
+                                titleAccent()
+                                +"Template Project"
+                            }
+
+                            a(LOGIN_ROUTE) {
+                                classes = setOf("w-54")
+                                val props = BtnProps(
+                                    accentColor = Color.Purple,
+                                    type = BtnType.Primary
+                                )
+                                btn(props)
+                                btnAccent(props)
+                                iconSpan("g_mobiledata")
+
+                                +"Login with Google"
+                            }
                         }
                     }
                 }

@@ -10,18 +10,20 @@ import kotlinx.html.*
 
 val navPages = setOf(welcomePage, htmxPage, componentsPage, adminPage)
 
+val defaultMainClasses = setOf(
+    "font-inter",
+    "bg-zinc-950",
+    "text-gray-100",
+    "leading-relaxed",
+    "overflow-x-hidden",
+    // height of the header
+    "pt-[77px]"
+)
+
 fun HTML.mainTemplate(user: UserEntity, page: Page, content: FlowContent.() -> Unit) {
     appHead(page.title)
     body {
-        classes = setOf(
-            "font-inter",
-            "bg-zinc-950",
-            "text-gray-100",
-            "leading-relaxed",
-            "overflow-x-hidden",
-            // height of the header
-            "pt-[77px]"
-        )
+        classes = defaultMainClasses
         navigation(currentPage = page, navPages = filterNavPages(user, navPages))
         main {
             classes = setOf(

@@ -8,8 +8,7 @@ import java.time.Instant
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
-val sectionStyles = setOf("h-full", "border", "border-gray-400", "p-4", "rounded-md", "shadow-sm", "space-y-4")
-
+val htmxSectionClasses = setOf("flex", "flex-col", "gap-6")
 val htmxPage = Page("/htmx", "HTMX Page")
 
 fun FlowContent.htmxPage() {
@@ -26,12 +25,14 @@ fun FlowContent.htmxPage() {
 
             section {
                 id = "htmx-section-1"
+                classes = htmxSectionClasses
 
                 card()
                 cardAccent()
 
                 h2 {
-                    classes = setOf("text-xl")
+                    classes = setOf("text-xl", "relative")
+                    titleAccent()
                     +"HTMX Section 1"
                 }
                 p {
@@ -45,6 +46,7 @@ fun FlowContent.htmxPage() {
                 )
 
                 id = "htmx-section-2"
+                classes = htmxSectionClasses
                 hxGet("/htmx/section/2")
                 hxSwap("outerHTML")
                 hxTrigger("load delay:1000ms")
@@ -53,7 +55,8 @@ fun FlowContent.htmxPage() {
                 cardAccent(props = cardProps)
 
                 h2 {
-                    classes = setOf("text-xl")
+                    classes = setOf("text-xl", "relative")
+                    titleAccent()
                     +"HTMX Section 2"
                 }
                 p {
@@ -63,10 +66,12 @@ fun FlowContent.htmxPage() {
 
             section {
                 id = "htmx-section-3"
+                classes = htmxSectionClasses
                 card()
                 cardAccent()
                 h2 {
-                    classes = setOf("text-xl")
+                    classes = setOf("text-xl", "relative")
+                    titleAccent()
                     +"HTMX Section 3"
                 }
                 p {
@@ -86,10 +91,12 @@ fun FlowContent.htmxPage() {
 
             section {
                 id = "htmx-section-4"
+                classes = htmxSectionClasses
                 card()
                 cardAccent()
                 h2 {
-                    classes = setOf("text-xl")
+                    classes = setOf("text-xl", "relative")
+                    titleAccent()
                     +"HTMX Section 4"
                 }
                 p {
@@ -114,10 +121,12 @@ fun FlowContent.htmxPage() {
                 hxSwap("outerHTML")
                 section {
                     id = "htmx-section-5"
+                    classes = htmxSectionClasses
                     card()
                     cardAccent()
                     h2 {
-                        classes = setOf("text-xl")
+                        classes = setOf("text-xl", "relative")
+                        titleAccent()
                         +"HTMX Section 5"
                     }
                     p {
@@ -128,7 +137,7 @@ fun FlowContent.htmxPage() {
 
             section {
                 id = "htmx-section-6"
-                classes = setOf("hover:bg-gray-100")
+                classes = htmxSectionClasses + setOf("hover:bg-purple/[0.1]", "transition-colors", "duration-500")
                 hxGet("/htmx/section/6")
                 hxSwap("outerHTML")
                 hxTrigger("mouseenter delay:500ms")
@@ -138,7 +147,8 @@ fun FlowContent.htmxPage() {
                 cardAccent()
 
                 h2 {
-                    classes = setOf("text-xl")
+                    classes = setOf("text-xl", "relative")
+                    titleAccent()
                     +"HTMX Section 6"
                 }
                 p {
@@ -151,10 +161,12 @@ fun FlowContent.htmxPage() {
 
             section {
                 id = "htmx-section-7"
+                classes = htmxSectionClasses
                 card()
                 cardAccent()
                 h2 {
-                    classes = setOf("text-xl")
+                    classes = setOf("text-xl", "relative")
+                    titleAccent()
                     +"HTMX Section 7"
                 }
                 p {
@@ -180,10 +192,12 @@ fun FlowContent.htmxPage() {
 
             section {
                 id = "htmx-section-8"
+                classes = htmxSectionClasses
                 card()
                 cardAccent()
                 h2 {
-                    classes = setOf("text-xl")
+                    classes = setOf("text-xl", "relative")
+                    titleAccent()
                     +"HTMX Section 8"
                 }
                 p {
@@ -213,10 +227,12 @@ fun FlowContent.htmxPage() {
 
             section {
                 id = "htmx-section-9"
+                classes = htmxSectionClasses
                 card()
                 cardAccent()
                 h2 {
-                    classes = setOf("text-xl")
+                    classes = setOf("text-xl", "relative")
+                    titleAccent()
                     +"HTMX Section 9"
                 }
                 p {
@@ -240,6 +256,7 @@ fun FlowContent.htmxPage() {
 fun FlowContent.genericHtmxSection(sectionNum: Int, color: String? = null) {
     section {
         id = "htmx-section-$sectionNum"
+        classes = htmxSectionClasses
 
         val cardProps = CardProps(
             accentColor = when (color) {
@@ -254,11 +271,17 @@ fun FlowContent.genericHtmxSection(sectionNum: Int, color: String? = null) {
         cardAccent(props = cardProps)
 
         h2 {
-            classes = setOf("text-xl")
+            classes = setOf("text-xl", "relative")
+            titleAccent()
+
             +"HTMX Section $sectionNum"
         }
         p {
-            +"HTMX Loaded Section ${getCurrentTime()} "
+            +"HTMX Loaded Section"
+        }
+        p {
+            classes = setOf("text-sm", "text-purple/[0.5]", "italic", "align-self-end")
+            +getCurrentTime()
         }
     }
 }
