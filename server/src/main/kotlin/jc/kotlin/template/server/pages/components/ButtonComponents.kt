@@ -98,6 +98,16 @@ fun FlowContent.buttonComponent() {
             }
             button {
                 val props = BtnProps(
+                    accentColor = Color.Mint,
+                    type = BtnType.Secondary
+                )
+                btn(props)
+                btnAccent(props)
+                iconSpan("progress_activity", setOf("animate-spin"))
+                +"Loading Spinner"
+            }
+            button {
+                val props = BtnProps(
                     accentColor = Color.Purple,
                     type = BtnType.Secondary
                 )

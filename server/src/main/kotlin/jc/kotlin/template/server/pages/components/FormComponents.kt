@@ -3,9 +3,6 @@ package jc.kotlin.template.server.pages.components
 import io.ktor.http.*
 import jc.kotlin.template.server.components.*
 import kotlinx.html.*
-import kotlin.collections.component1
-import kotlin.collections.component2
-import kotlin.collections.set
 
 // basic styling for form label/input spacing
 val formFieldStyles = setOf("flex", "flex-col", "gap-2")
@@ -186,18 +183,45 @@ fun FlowContent.formValidation(input: String, parameters: Parameters) {
 fun FlowContent.formInputs() {
     // inputs
     span {
-        classes = formFieldStyles
-        label {
-            +"First Input"
-        }
+        formField()
+
         input {
-            classes = inputStyles
+            inputField()
 
             type = InputType.text
+            id = "first_input"
             name = "first_input"
 
-            placeholder = "Placeholder"
+            placeholder = " "
         }
+        inputLabel(
+            id = "first_input",
+            labelText = "First Input",
+        )
+    }
+
+    span {
+        formField()
+
+        input {
+            hxPost("/components/form/validate?input=second_input")
+            hxTrigger("change")
+            hxSwap()
+            hxSync()
+
+            inputField()
+
+            type = InputType.text
+            id = "second_input"
+            name = "second_input"
+
+            placeholder = " "
+        }
+        inputLabel(
+            id = "second_input",
+            labelText = "Second Input w/ Validations",
+            required = true
+        )
     }
 
     span {

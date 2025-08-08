@@ -238,15 +238,43 @@ fun FlowContent.htmxPage() {
                 p {
                     +"This section shows how to use input triggers"
                 }
-                input {
-                    hxGet("/htmx/section/9")
-                    hxSwap("outerHTML")
-                    hxTrigger("keyup delay:2s")
-                    hxTarget("#htmx-section-9")
+                /*
+            <div class="relative mb-8"> <!-- .input-wrapper equivalent -->
+                <input
+                    type="text"
+                    id="email"
+                    placeholder=" "
+                    class="w-full max-w-sm pt-4 pb-4 px-0 bg-transparent border-0 border-b border-custom-dark text-custom-light text-base font-light transition-all duration-300 ease-in-out focus:outline-none focus:border-custom-green peer"
+                />
+                <label
+                    for="email"
+                    class="absolute left-0 top-4 text-custom-gray text-base font-light transition-all duration-300 ease-in-out pointer-events-none peer-focus:-top-2 peer-focus:text-sm peer-focus:text-custom-green peer-[:not(:placeholder-shown)]:-top-2 peer-[:not(:placeholder-shown)]:text-sm peer-[:not(:placeholder-shown)]:text-custom-green"
+                >
+                    Email Address
+                </label>
+            </div>
+                 */
+                div {
+                    formField()
 
-                    classes = inputStyles
+                    input {
+                        hxGet("/htmx/section/9")
+                        hxSwap("outerHTML")
+                        hxTrigger("keyup delay:2s")
+                        hxTarget("#htmx-section-9")
 
-                    placeholder = "Typing anything"
+                        inputField()
+
+                        type = InputType.text
+                        id = "htmx-input-9"
+                        name = "htmx-input-9"
+
+                        placeholder = " "
+                    }
+                    inputLabel(
+                        id = "htmx-input-9",
+                        labelText = "Type anything",
+                    )
                 }
             }
         }
