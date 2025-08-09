@@ -28,7 +28,7 @@ fun FlowContent.inputLabel(
             "absolute",
             "left-0",
             "top-4",
-            "text-custom-gray",
+            "text-gray",
             "text-base",
             "font-light",
             "transition-all",
@@ -37,12 +37,13 @@ fun FlowContent.inputLabel(
             "pointer-events-none",
             "peer-focus:-top-2",
             "peer-focus:text-sm",
-            "peer-focus:text-custom-green",
+            "peer-focus:text-mint",
             "peer-[:not(:placeholder-shown)]:-top-2",
             "peer-[:not(:placeholder-shown)]:text-sm",
-            "peer-[:not(:placeholder-shown)]:text-custom-green"
+            "peer-[:not(:placeholder-shown)]:text-mint"
         ) + extraClasses
-        required()
+
+        if (required) required()
         +labelText
     }
 }
@@ -57,15 +58,15 @@ fun <T : CommonAttributeGroupFacade> T.inputField(): T {
         "bg-transparent",
         "border-0",
         "border-b",
-        "border-custom-dark",
-        "text-custom-light",
+//        "border-dark",
+        "text-light",
         "text-base",
         "font-light",
         "transition-all",
         "duration-300",
         "ease-in-out",
         "focus:outline-none",
-        "focus:border-custom-green",
+        "focus:border-mint",
         "peer"
     )
     return this

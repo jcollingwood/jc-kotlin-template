@@ -222,28 +222,6 @@ fun FlowContent.formInputs() {
             labelText = "Second Input w/ Validations",
             required = true
         )
-    }
-
-    span {
-        classes = formFieldStyles
-        label {
-            required()
-            +"Second Input w/ Validations"
-        }
-        input {
-            hxPost("/components/form/validate?input=second_input")
-            hxTrigger("change")
-            hxSwap()
-            hxSync()
-
-            classes = inputStyles
-
-            type = InputType.text
-            name = "second_input"
-            required = true
-
-            placeholder = "Must be between 3 and 10 characters"
-        }
         p {
             id = "second_input_error"
         }
