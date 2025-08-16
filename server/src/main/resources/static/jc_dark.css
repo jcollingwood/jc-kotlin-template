@@ -44,53 +44,21 @@ footer {
     right: 0;
 }
 
-/* Alternative 1: Gradient Border + Dot Accent */
-.btn-gradient-dot {
-    padding: 1rem 2.5rem 1rem 3rem;
-    background: rgba(255, 255, 255, 0.02);
-    border: none;
-    color: #ddd;
-    font-weight: 300;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.3s ease;
-    font-size: 1rem;
-    text-decoration: none;
-    display: inline-block;
+/* Custom styles that can't be achieved with Tailwind utility classes */
+.radio-input:checked + .radio-custom {
+    box-shadow: 0 0 0 1px rgba(168, 230, 207, 0.3);
 }
 
-.btn-gradient-dot::before {
+.radio-input:checked + .radio-custom::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #a8e6cf66, transparent);
-}
-
-.btn-gradient-dot::after {
-    content: '';
-    position: absolute;
-    left: 1.2rem;
     top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 4px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
     background: #a8e6cf;
     border-radius: 50%;
-    opacity: 0.7;
-}
-
-.btn-gradient-dot:hover {
-    background: rgba(255, 255, 255, 0.04);
-    color: #fff;
-    transform: translateY(-1px);
-}
-
-
-.btn-gradient-dot:hover::after {
     opacity: 1;
-    background: #ffd3a5;
+    transition: all 0.3s ease;
 }
-/* end */

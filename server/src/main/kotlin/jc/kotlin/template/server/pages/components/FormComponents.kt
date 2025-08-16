@@ -2,6 +2,10 @@ package jc.kotlin.template.server.pages.components
 
 import io.ktor.http.*
 import jc.kotlin.template.server.components.*
+import jc.kotlin.template.server.components.form.radioCustom
+import jc.kotlin.template.server.components.form.radioInput
+import jc.kotlin.template.server.components.form.radioItem
+import jc.kotlin.template.server.components.form.radioLabel
 import kotlinx.html.*
 
 // basic styling for form label/input spacing
@@ -28,7 +32,6 @@ fun FlowContent.formComponent() {
             radioFormInputs()
             checkboxFormInputs()
             selectFormInputs()
-            textareaFormInputs()
 
             span {
                 classes = setOf("mt-4")
@@ -231,7 +234,7 @@ fun FlowContent.formInputs() {
 fun FlowContent.radioFormInputs() {
     // radio buttons
     div {
-        classes = setOf("flex", "flex-col", "md:flex-row", "w-full", "justify-between")
+        classes = setOf("flex", "flex-col", "w-full", "justify-between")
 
         div {
             classes = formFieldStyles
@@ -240,54 +243,53 @@ fun FlowContent.radioFormInputs() {
                 +"Pick your favorite number:"
             }
             div {
-                classes = setOf("flex", "flex-col", "gap-3")
+                classes = setOf("flex", "flex-col", "mb-4")
 
-                val radioButtonStyles = setOf("flex", "flex-row", "gap-4")
-                val radioInputStyles = setOf("cursor-pointer")
-                val radioLabelStyles = setOf("cursor-pointer", "block")
-
-                div {
-                    classes = radioButtonStyles
+                label {
+                    radioItem()
                     input {
-                        classes = radioInputStyles
                         type = InputType.radio
                         name = "first_radio_group"
                         id = "first_radio_group_one"
                         value = "one"
+                        radioInput()
                     }
-                    label {
-                        classes = radioLabelStyles
+                    span { radioCustom() }
+                    span {
                         attributes["for"] = "first_radio_group_one"
+                        radioLabel()
                         +"One"
                     }
                 }
-                div {
-                    classes = radioButtonStyles
+                label {
+                    radioItem()
                     input {
-                        classes = radioInputStyles
                         type = InputType.radio
                         name = "first_radio_group"
                         id = "first_radio_group_two"
                         value = "two"
+                        radioInput()
                     }
-                    label {
-                        classes = radioLabelStyles
+                    span { radioCustom() }
+                    span {
                         attributes["for"] = "first_radio_group_two"
+                        radioLabel()
                         +"Two"
                     }
                 }
-                div {
-                    classes = radioButtonStyles
+                label {
+                    radioItem()
                     input {
-                        classes = radioInputStyles
                         type = InputType.radio
                         name = "first_radio_group"
                         id = "first_radio_group_three"
                         value = "three"
+                        radioInput()
                     }
-                    label {
-                        classes = radioLabelStyles
+                    span { radioCustom() }
+                    span {
                         attributes["for"] = "first_radio_group_three"
+                        radioLabel()
                         +"Three"
                     }
                 }
@@ -313,11 +315,12 @@ fun FlowContent.radioFormInputs() {
                         "flex-row",
                         "gap-3",
                         "relative",
-                        "border",
                         "w-full",
-                        "border-gray-400",
-                        "hover:border-gray-500",
-                        "rounded-md"
+                        "border",
+                        "border-gray-700",
+                        "hover:border-gray-600",
+                        "rounded-md",
+                        "hover:translate-y-[-1px]"
                     )
                     val radioInputStyles =
                         setOf(
@@ -354,8 +357,8 @@ fun FlowContent.radioFormInputs() {
                         label {
                             classes =
                                 radioLabelStyles + setOf(
-                                    "peer-checked:bg-yellow-100",
-                                    "peer-checked:border-yellow-400"
+                                    "peer-checked:bg-peach/[0.1]",
+                                    "peer-checked:border-peach"
                                 )
                             attributes["for"] = "second_radio_group_yellow"
                             +"Yellow"
@@ -373,8 +376,8 @@ fun FlowContent.radioFormInputs() {
                         label {
                             classes =
                                 radioLabelStyles + setOf(
-                                    "peer-checked:bg-red-100",
-                                    "peer-checked:border-red-400"
+                                    "peer-checked:bg-purple/[0.1]",
+                                    "peer-checked:border-purple"
                                 )
                             attributes["for"] = "second_radio_group_red"
                             +"Red"
@@ -392,8 +395,8 @@ fun FlowContent.radioFormInputs() {
                         label {
                             classes =
                                 radioLabelStyles + setOf(
-                                    "peer-checked:bg-blue-100",
-                                    "peer-checked:border-blue-400"
+                                    "peer-checked:bg-mint/[0.1]",
+                                    "peer-checked:border-mint"
                                 )
                             attributes["for"] = "second_radio_group_blue"
                             +"Blue"
@@ -597,21 +600,6 @@ fun FlowContent.selectFormInputs() {
         }
         p {
             id = "first_select_error"
-        }
-    }
-}
-
-fun FlowContent.textareaFormInputs() {
-    // textarea
-    span {
-        classes = formFieldStyles
-        label {
-            +"Textarea"
-        }
-        textArea {
-            classes = inputStyles
-            name = "first_textarea"
-            placeholder = "Placeholder"
         }
     }
 }

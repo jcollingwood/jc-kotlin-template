@@ -30,14 +30,14 @@ fun FlowContent.componentsPage() {
                     Component("Modal", "/components/modal"),
                     Component("Peek", "/components/peek")
                 )
-                componentButtons.map { component ->
+                componentButtons.mapIndexed { idx, component ->
                     button {
                         hxGet(component.route)
                         hxTarget("#component-area")
                         hxSwap("innerHTML")
 
                         val props = BtnProps(
-                            accentColor = Color.entries.random(),
+                            accentColor = Color.entries[idx % Color.entries.size],
                             type = BtnType.Secondary,
                         )
                         btn(props)
