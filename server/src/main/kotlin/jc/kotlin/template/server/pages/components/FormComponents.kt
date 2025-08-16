@@ -2,10 +2,8 @@ package jc.kotlin.template.server.pages.components
 
 import io.ktor.http.*
 import jc.kotlin.template.server.components.*
-import jc.kotlin.template.server.components.form.radioCustom
+import jc.kotlin.template.server.components.form.*
 import jc.kotlin.template.server.components.form.radioInput
-import jc.kotlin.template.server.components.form.radioItem
-import jc.kotlin.template.server.components.form.radioLabel
 import kotlinx.html.*
 
 // basic styling for form label/input spacing
@@ -319,7 +317,7 @@ fun FlowContent.radioFormInputs() {
                         "border",
                         "border-gray-700",
                         "hover:border-gray-600",
-                        "rounded-md",
+                        "rounded-sm",
                         "hover:translate-y-[-1px]"
                     )
                     val radioInputStyles =
@@ -330,7 +328,7 @@ fun FlowContent.radioFormInputs() {
                             "opacity-0",
                             "w-full",
                             "h-full",
-                            "rounded-md"
+                            "rounded-sm"
                         )
                     val radioLabelStyles =
                         setOf(
@@ -339,7 +337,7 @@ fun FlowContent.radioFormInputs() {
                             "p-4",
                             "w-full",
                             "text-center",
-                            "rounded-md",
+                            "rounded-sm",
                             "shadow-md",
                             "peer-focus:shadow-lg",
                         )
@@ -419,49 +417,53 @@ fun FlowContent.checkboxFormInputs() {
                 +"More than one favorite number?"
             }
             div {
-                classes = setOf("flex", "flex-col", "gap-3")
-                div {
-                    classes = setOf("flex", "flex-row", "gap-4")
+                classes = setOf("flex", "flex-col", "gap-1")
+                label {
+                    checkboxItem()
                     input {
-                        classes = setOf("cursor-pointer")
                         type = InputType.checkBox
                         name = "first_checkbox_one"
                         id = "first_checkbox_one"
                         value = "one"
+                        checkboxInput()
                     }
-                    label {
+                    span { checkboxCustom() }
+                    span {
                         classes = setOf("cursor-pointer", "block")
                         attributes["for"] = "first_checkbox_one"
+                        checkboxLabel()
                         +"One"
                     }
                 }
-                div {
-                    classes = setOf("flex", "flex-row", "gap-4")
+                label {
+                    checkboxItem()
                     input {
-                        classes = setOf("cursor-pointer")
                         type = InputType.checkBox
                         name = "first_checkbox_two"
                         id = "first_checkbox_two"
                         value = "two"
+                        checkboxInput()
                     }
-                    label {
-                        classes = setOf("cursor-pointer", "block")
+                    span { checkboxCustom() }
+                    span {
                         attributes["for"] = "first_checkbox_two"
+                        checkboxLabel()
                         +"Two"
                     }
                 }
-                div {
-                    classes = setOf("flex", "flex-row", "gap-4")
+                label {
+                    checkboxItem()
                     input {
-                        classes = setOf("cursor-pointer")
                         type = InputType.checkBox
                         name = "first_checkbox_three"
                         id = "first_checkbox_three"
                         value = "three"
+                        checkboxInput()
                     }
-                    label {
-                        classes = setOf("cursor-pointer", "block")
+                    span { checkboxCustom() }
+                    span {
                         attributes["for"] = "first_checkbox_three"
+                        checkboxLabel()
                         +"Three"
                     }
                 }
@@ -485,9 +487,10 @@ fun FlowContent.checkboxFormInputs() {
                         "relative",
                         "border",
                         "w-full",
-                        "border-gray-400",
-                        "hover:border-gray-500",
-                        "rounded-md"
+                        "border-gray-700",
+                        "hover:border-gray-600",
+                        "rounded-sm",
+                        "hover:translate-y-[-1px]"
                     )
                     val checkboxInputStyles =
                         setOf(
@@ -497,7 +500,7 @@ fun FlowContent.checkboxFormInputs() {
                             "opacity-0",
                             "w-full",
                             "h-full",
-                            "rounded-md"
+                            "rounded-sm"
                         )
                     val checkboxLabelStyles =
                         setOf(
@@ -506,7 +509,7 @@ fun FlowContent.checkboxFormInputs() {
                             "p-4",
                             "w-full",
                             "text-center",
-                            "rounded-md",
+                            "rounded-sm",
                             "shadow-md",
                             "peer-focus:shadow-lg",
                         )
@@ -524,8 +527,8 @@ fun FlowContent.checkboxFormInputs() {
                         label {
                             classes =
                                 checkboxLabelStyles + setOf(
-                                    "peer-checked:bg-yellow-100",
-                                    "peer-checked:border-yellow-400"
+                                    "peer-checked:bg-peach/[0.1]",
+                                    "peer-checked:border-peach"
                                 )
                             attributes["for"] = "second_checkbox_yellow"
                             +"Yellow"
@@ -543,8 +546,8 @@ fun FlowContent.checkboxFormInputs() {
                         label {
                             classes =
                                 checkboxLabelStyles + setOf(
-                                    "peer-checked:bg-red-100",
-                                    "peer-checked:border-red-400"
+                                    "peer-checked:bg-purple/[0.1]",
+                                    "peer-checked:border-purple"
                                 )
                             attributes["for"] = "second_checkbox_red"
                             +"Red"
@@ -562,8 +565,8 @@ fun FlowContent.checkboxFormInputs() {
                         label {
                             classes =
                                 checkboxLabelStyles + setOf(
-                                    "peer-checked:bg-blue-100",
-                                    "peer-checked:border-blue-400"
+                                    "peer-checked:bg-mint/[0.1]",
+                                    "peer-checked:border-mint"
                                 )
                             attributes["for"] = "second_checkbox_blue"
                             +"Blue"

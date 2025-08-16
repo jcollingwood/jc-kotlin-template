@@ -3,7 +3,7 @@ package jc.kotlin.template.server.components.form
 import kotlinx.html.CommonAttributeGroupFacade
 import kotlinx.html.classes
 
-fun <T : CommonAttributeGroupFacade> T.radioItem(): T {
+fun <T : CommonAttributeGroupFacade> T.checkboxItem(): T {
     classes = setOf(
         "relative",
         "cursor-pointer",
@@ -20,9 +20,9 @@ fun <T : CommonAttributeGroupFacade> T.radioItem(): T {
     return this
 }
 
-fun <T : CommonAttributeGroupFacade> T.radioInput(): T {
+fun <T : CommonAttributeGroupFacade> T.checkboxInput(): T {
     classes = setOf(
-        "radio-input",
+        "checkbox-input",
         "absolute",
         "opacity-0",
         "cursor-pointer"
@@ -30,14 +30,13 @@ fun <T : CommonAttributeGroupFacade> T.radioInput(): T {
     return this
 }
 
-fun <T : CommonAttributeGroupFacade> T.radioCustom(): T {
+fun <T : CommonAttributeGroupFacade> T.checkboxCustom(): T {
     classes = setOf(
-        "radio-custom",
+        "checkbox-custom",
         "w-5",
         "h-5",
         "border",
         "border-gray-600",
-        "rounded-full",
         "mr-4",
         "relative",
         "transition-all",
@@ -49,7 +48,7 @@ fun <T : CommonAttributeGroupFacade> T.radioCustom(): T {
     return this
 }
 
-fun <T : CommonAttributeGroupFacade> T.radioLabel(): T {
+fun <T : CommonAttributeGroupFacade> T.checkboxLabel(): T {
     classes = setOf(
         "text-gray-100",
         "font-light",
