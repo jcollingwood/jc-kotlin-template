@@ -3,6 +3,7 @@ package jc.kotlin.template.server.components.form
 import kotlinx.html.CommonAttributeGroupFacade
 import kotlinx.html.classes
 
+// TODO add color options
 fun <T : CommonAttributeGroupFacade> T.radioItem(): T {
     classes = setOf(
         "relative",

@@ -580,27 +580,44 @@ fun FlowContent.checkboxFormInputs() {
 
 fun FlowContent.selectFormInputs() {
     span {
-        classes = formFieldStyles
-        label {
-            required()
-            +"Select"
+        span {
+            selectWrapper()
+
+            select {
+                name = "first_select"
+                formSelect()
+
+                option {
+                    value = ""
+                    attributes["disabled"] = "disabled"
+                    attributes["selected"] = "selected"
+                    attributes["hidden"] = "hidden"
+
+                    formSelectOption()
+                }
+                option {
+                    value = "one"
+                    formSelectOption()
+                    +"One"
+                }
+                option {
+                    value = "two"
+                    formSelectOption()
+                    +"Two"
+                }
+                option {
+                    value = "three"
+                    formSelectOption()
+                    +"Three"
+                }
+            }
+            label {
+                formSelectLabel()
+                +"Select"
+            }
+            selectArrow()
         }
-        select {
-            classes = inputStyles
-            name = "first_select"
-            option {
-                value = "one"
-                +"One"
-            }
-            option {
-                value = "two"
-                +"Two"
-            }
-            option {
-                value = "three"
-                +"Three"
-            }
-        }
+
         p {
             id = "first_select_error"
         }

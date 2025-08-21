@@ -80,3 +80,18 @@ footer {
     font-weight: bold;
     opacity: 1;
 }
+
+.form-select:focus + .form-label,
+.form-select:valid + .form-label {
+    top: -0.5rem;
+    font-size: 0.8rem;
+    color: #a8e6cf;
+}
+
+.form-select:focus ~ .select-arrow {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.form-select:focus ~ .select-arrow svg path {
+    stroke: #a8e6cf;
+}
