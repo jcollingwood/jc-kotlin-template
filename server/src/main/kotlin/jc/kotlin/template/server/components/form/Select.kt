@@ -137,6 +137,7 @@ fun <T : CommonAttributeGroupFacade> T.formSelect(): T {
         "focus:outline-none",
         "focus:border-mint",
         "appearance-none",
+        "valid:focus:border-mint",
     )
     return this
 }

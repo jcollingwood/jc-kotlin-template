@@ -33,8 +33,12 @@ fun FlowContent.formComponent() {
 
             span {
                 classes = setOf("mt-4")
-                jcButton(iconButtonStyles + setOf("pr-10")) {
+                button {
+                    classes = setOf("pr-10")
                     type = ButtonType.submit
+
+                    btn()
+                    btnAccent()
 
                     iconSpan(
                         icon = "progress_activity",
