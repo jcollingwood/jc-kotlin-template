@@ -593,9 +593,8 @@ fun FlowContent.selectFormInputs() {
 
                 option {
                     value = ""
-                    attributes["disabled"] = "disabled"
-                    attributes["selected"] = "selected"
-                    attributes["hidden"] = "hidden"
+                    disabled = true
+                    attributes["selected"] = "true"
 
                     formSelectOption()
                 }

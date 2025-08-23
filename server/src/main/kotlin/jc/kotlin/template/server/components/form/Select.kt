@@ -4,7 +4,6 @@ import jc.kotlin.template.server.components.iconSpan
 import kotlinx.html.CommonAttributeGroupFacade
 import kotlinx.html.FlowContent
 import kotlinx.html.classes
-import kotlinx.html.div
 
 // TODO add color options
 /*
@@ -122,21 +121,20 @@ fun <T : CommonAttributeGroupFacade> T.formSelect(): T {
         "form-select",
         "w-full",
         "py-4",
-        "pl-8",
-        "pr-2",
+        "px-2",
         "bg-transparent",
         "border-b",
         "border-gray-600",
         "text-gray-100",
-        "text-base",
-        "font-light",
         "transition-all",
         "duration-300",
         "ease-in-out",
         "cursor-pointer",
+        "appearance-none",
+        // focus styles
         "focus:outline-none",
         "focus:border-mint",
-        "appearance-none",
+        // valid styles
         "valid:focus:border-mint",
     )
     return this
@@ -146,9 +144,9 @@ fun <T : CommonAttributeGroupFacade> T.formSelectOption(): T {
     classes = setOf(
         "bg-dark-800",
         "text-gray-100",
-        "py-2",
-        "px-4",
+        "p-2",
         "border-none",
+        // hover styles
         "hover:bg-dark-700"
     )
     return this
@@ -159,7 +157,7 @@ fun <T : CommonAttributeGroupFacade> T.formSelectLabel(): T {
         "form-label",
         "absolute",
         "left-0",
-        "top-4",
+//        "top-2",
         "text-gray-500",
         "text-base",
         "font-light",
@@ -172,20 +170,6 @@ fun <T : CommonAttributeGroupFacade> T.formSelectLabel(): T {
 }
 
 fun FlowContent.selectArrow() {
-    div("select-arrow") {
-        classes = setOf(
-            "select-arrow",
-            "absolute",
-            "right-0",
-            "top-1/2",
-            "-translate-y-1/2",
-            "pointer-events-none",
-            "transition-all",
-            "duration-300",
-            "ease-in-out"
-        )
-
-        iconSpan(icon = "keyboard_arrow_down")
-    }
+    iconSpan(icon = "keyboard_arrow_down", extraClasses = setOf("select-arrow"))
 }
 

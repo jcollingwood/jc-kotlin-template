@@ -81,17 +81,30 @@ footer {
     opacity: 1;
 }
 
-.form-select:focus + .form-label,
-.form-select:valid + .form-label {
+/*
+.form-select:valid + .form-label
+*/
+.form-select:focus + .form-label
+{
     top: -1.5rem;
     font-size: 0.8rem;
     color: #a8e6cf;
+}
+
+
+.select-arrow {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition: all 0.3s ease;
 }
 
 .form-select:focus ~ .select-arrow {
     transform: translateY(-50%) rotate(180deg);
 }
 
-.form-select:focus ~ .select-arrow svg path {
+.form-select:focus ~ .select-arrow {
     stroke: #a8e6cf;
 }
