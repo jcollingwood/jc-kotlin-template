@@ -81,16 +81,16 @@ footer {
     opacity: 1;
 }
 
-/*
-.form-select:valid + .form-label
-*/
-.form-select:focus + .form-label
-{
-    top: -1.5rem;
-    font-size: 0.8rem;
+.form-select:focus + .form-label {
     color: #a8e6cf;
 }
 
+.form-select:valid + .form-label
+{
+    top: -2rem;
+    font-size: 0.8rem;
+    color: #a8e6cf;
+}
 
 .select-arrow {
     position: absolute;

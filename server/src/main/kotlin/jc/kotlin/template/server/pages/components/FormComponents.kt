@@ -589,12 +589,14 @@ fun FlowContent.selectFormInputs() {
 
             select {
                 name = "first_select"
+                required = true
                 formSelect()
 
                 option {
                     value = ""
                     disabled = true
-                    attributes["selected"] = "true"
+                    selected = true
+                    hidden = true
 
                     formSelectOption()
                 }

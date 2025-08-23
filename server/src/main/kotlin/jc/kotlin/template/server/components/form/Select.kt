@@ -111,7 +111,7 @@ fun <T : CommonAttributeGroupFacade> T.selectWrapper(): T {
     classes = setOf(
         "select-wrapper",
         "relative",
-        "mb-8"
+        "my-8"
     )
     return this
 }
