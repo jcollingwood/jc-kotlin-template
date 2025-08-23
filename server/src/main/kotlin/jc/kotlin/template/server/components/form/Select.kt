@@ -170,6 +170,20 @@ fun <T : CommonAttributeGroupFacade> T.formSelectLabel(): T {
 }
 
 fun FlowContent.selectArrow() {
-    iconSpan(icon = "keyboard_arrow_down", extraClasses = setOf("select-arrow"))
+    iconSpan(
+        icon = "keyboard_arrow_down",
+        extraClasses = setOf(
+            "select-arrow",
+            "absolute",
+            "right-0",
+            "top-1/2",
+            "transform",
+            "-translate-y-1/2",
+            "pointer-events-none",
+            "transition-all",
+            "duration-300",
+            "ease-in-out"
+        )
+    )
 }
 

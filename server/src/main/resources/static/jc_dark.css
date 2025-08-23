@@ -39,11 +39,14 @@ footer {
     background: #444;
 }
 
+/* mobile navigation styles */
 .mobile-nav.active {
     right: 0;
 }
 
 /* Custom styles that can't be achieved with Tailwind utility classes */
+
+/* radio button styles */
 .radio-input:checked + .radio-custom {
     box-shadow: 0 0 0 1px rgba(168, 230, 207, 0.3);
 }
@@ -63,6 +66,7 @@ footer {
     transition: all 0.3s ease;
 }
 
+/* checkbox styles */
 .checkbox-input:checked + .checkbox-custom {
     border-color: #a8e6cf;
     background: rgba(255, 179, 186, 0.1);
@@ -81,24 +85,12 @@ footer {
     opacity: 1;
 }
 
-.form-select:focus + .form-label {
-    color: #a8e6cf;
-}
-
-.form-select:valid + .form-label
-{
+/* form select styles */
+.form-select:focus + .form-label,
+.form-select:valid + .form-label {
     top: -2rem;
     font-size: 0.8rem;
     color: #a8e6cf;
-}
-
-.select-arrow {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    transition: all 0.3s ease;
 }
 
 .form-select:focus ~ .select-arrow {
