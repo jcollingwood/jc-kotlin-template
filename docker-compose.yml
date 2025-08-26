@@ -1,6 +1,6 @@
 services:
   server:
-    image: ghcr.io/jcollingwood/jc-kotlin-template:70f9ff5251f72d7699b414632e57491dcff5f1bb
+    image: ghcr.io/jcollingwood/jc-kotlin-template:d165e061cca6d689213a9ba22383fb5e9a81f548
     env_file:
       - .env
     environment:
