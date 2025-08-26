@@ -1,13 +1,21 @@
 package jc.kotlin.template.server.pages.components
 
 import jc.kotlin.template.server.components.*
+import jc.kotlin.template.server.utility.Color
 import kotlinx.html.*
 
 fun FlowContent.buttonComponent() {
     div {
         classes = setOf("flex", "flex-col", "gap-4")
+
         h2 {
-            classes = setOf("text-xl")
+            classes = setOf("text-xl", "relative")
+            titleAccent(
+                AccentProps(
+                    color = Color.Purple,
+                    width = AccentWidth.Title
+                )
+            )
             +"Button"
         }
         p {
@@ -19,107 +27,153 @@ fun FlowContent.buttonComponent() {
             """
         }
         div {
-            classes = setOf("grid", "grid-cols-1", "sm:grid-cols-2", "w-full", "items-center", "gap-4")
-            jcButton {
-                +"Default"
-            }
-            jcButton(
-                buttonColor = ButtonColor(
-                    hoverText = "hover:text-white",
-                    color = "bg-red-100",
-                    hover = "hover:bg-red-400",
-                    active = "active:bg-red-500",
-                    border = "border-red-400",
-                    activeBorder = "active:border-red-300"
-                )
-            ) {
-                +"Snazzy Styles"
-            }
-            jcButton(
-                buttonColor = ButtonColor(
-                    hover = "hover:bg-green-100",
-                    active = "active:bg-green-200",
-                )
-            ) {
+            classes = setOf("grid", "grid-cols-1", "sm:grid-cols-2", "w-full", "items-center", "gap-5")
+            button {
+                btn()
+                btnAccent()
 
-                +"Green Hover"
+                +"Primary Mint"
             }
-            jcButton(setOf("font-bold")) {
-                +"Bold"
-            }
-            jcButton(setOf("!rounded-full")) {
-                +"Rounded"
-            }
-            jcButton(
-                setOf("rounded-none"),
-                buttonColor = ButtonColor(
-                    text = "text-white",
-                    hoverText = "hover:text-white",
-                    color = "bg-gray-500",
-                    hover = "hover:bg-gray-600",
-                    active = "active:bg-black"
+            button {
+                val props = BtnProps(
+                    accentColor = Color.Peach,
+                    type = BtnType.Primary
                 )
-            ) {
-                +"Serious"
+                btn(props)
+                btnAccent(props)
+
+                +"Primary Peach"
             }
-            jcButton(icon = "add") {
+            button {
+                val props = BtnProps(
+                    accentColor = Color.Purple,
+                    type = BtnType.Primary
+                )
+                btn(props)
+                btnAccent(props)
+
+                +"Primary Purple"
+            }
+            button {
+                val props = BtnProps(
+                    accentColor = Color.Mint,
+                    type = BtnType.Secondary
+                )
+                btn(props)
+                btnAccent(props)
+
+                +"Secondary Mint"
+            }
+            button {
+                val props = BtnProps(
+                    accentColor = Color.Peach,
+                    type = BtnType.Secondary
+                )
+                btn(props)
+                btnAccent(props)
+
+                +"Secondary Peach"
+            }
+            button {
+                val props = BtnProps(
+                    accentColor = Color.Purple,
+                    type = BtnType.Secondary
+                )
+                btn(props)
+                btnAccent(props)
+
+                +"Secondary Purple"
+            }
+            button {
+                btn()
+                btnAccent()
+                iconSpan("add")
                 +"Icon"
             }
-            jcButton(icon = "chevron_right", iconPosition = IconPosition.AFTER) {
+            button {
+                btn()
+                btnAccent()
                 +"Alt Icon"
+                iconSpan("chevron_right")
             }
-            jcButton(setOf("!shadow-lg")) {
-                +"Extra Shadow"
-            }
-            jcButton(
-                setOf("border-none"),
-                buttonColor = ButtonColor(
-                    text = "text-white",
-                    hoverText = "hover:text-white",
-                    color = "bg-blue-500",
-                    hover = "hover:bg-blue-600",
-                    active = "active:bg-blue-700"
+            button {
+                val props = BtnProps(
+                    accentColor = Color.Mint,
+                    type = BtnType.Secondary
                 )
-            ) {
-                +"Flat"
+                btn(props)
+                btnAccent(props)
+                iconSpan("progress_activity", setOf("animate-spin"))
+                +"Loading Spinner"
             }
-            jcButton(
-                iconButtonStyles
-            ) {
+            button {
+                val props = BtnProps(
+                    accentColor = Color.Purple,
+                    type = BtnType.Secondary
+                )
+                btn(props)
+                btnAccent(props)
                 +"Loading Spinner"
                 iconSpan("progress_activity", setOf("animate-spin"))
             }
-            jcButton(
-                extraClasses = setOf("animate-bounce")
-
-            ) {
-                +":)"
-            }
+            // I hate this one but leaving as an example
+//            button {
+//                classes = setOf("animate-bounce")
+//                val props = BtnProps(
+//                    accentColor = Color.Peach,
+//                    type = BtnType.Secondary
+//                )
+//                btn(props)
+//                btnAccent(props)
+//                +":)"
+//            }
             div {
-                classes = setOf("flex", "flex-col", "gap-2")
-                p { +"Icon Buttons" }
+                classes = setOf("flex", "flex-col", "gap-4", "mt-4")
+                h3 {
+                    classes = setOf("text-lg", "relative")
+                    titleAccent(
+                        AccentProps(
+                            color = Color.Peach,
+                            width = AccentWidth.Title
+                        )
+                    )
+                    +"Icon Buttons"
+                }
                 div {
                     classes = setOf("flex", "gap-2")
-                    jcIconButton(
-                        icon = "add", buttonColor = ButtonColor(
-                            color = "bg-green-100",
-                            hover = "hover:bg-green-200",
-                            active = "active:bg-green-300",
+                    button {
+                        classes = setOf("rounded-full", "!p-3")
+                        val props = BtnProps(
+                            accentColor = Color.Purple,
+                            type = BtnType.Primary
                         )
-                    ) {}
-                    jcIconButton("star") {}
-                    jcIconButton(
-                        icon = "bolt",
-                        buttonColor = ButtonColor(
-                            text = "text-white",
-                            hoverText = "hover:text-white",
-                            color = "bg-yellow-500",
-                            hover = "hover:bg-yellow-600",
-                            active = "active:bg-yellow-700",
-                            border = "border-white",
-                            activeBorder = "active:border-white",
+                        btn(props)
+                        bgAccent(props)
+
+                        iconSpan("add")
+                    }
+                    button {
+                        classes = setOf("rounded-full", "!p-3")
+                        val props = BtnProps(
+                            accentColor = Color.Peach,
+                            type = BtnType.Primary
                         )
-                    ) {}
+                        btn(props)
+                        bgAccent(props)
+
+                        iconSpan("star")
+                    }
+                    button {
+                        classes = setOf("rounded-full", "!p-3")
+                        val props = BtnProps(
+                            accentColor = Color.Mint,
+                            type = BtnType.Primary
+                        )
+                        btn(props)
+                        bgAccent(props)
+
+                        iconSpan("bolt")
+                    }
                 }
             }
         }

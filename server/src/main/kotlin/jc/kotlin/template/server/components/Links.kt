@@ -19,6 +19,9 @@ fun FlowOrMetaDataOrPhrasingContent.stylesAndFonts() {
         href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap",
         rel = "stylesheet"
     )
+
+    // custom stylesheet
+    link(rel = "stylesheet", href = "/static/jc_dark.css", type = "text/css")
 }
 
 fun FlowOrMetaDataOrPhrasingContent.htmx() {

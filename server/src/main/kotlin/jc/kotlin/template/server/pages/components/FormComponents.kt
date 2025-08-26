@@ -2,10 +2,9 @@ package jc.kotlin.template.server.pages.components
 
 import io.ktor.http.*
 import jc.kotlin.template.server.components.*
+import jc.kotlin.template.server.components.form.*
+import jc.kotlin.template.server.components.form.radioInput
 import kotlinx.html.*
-import kotlin.collections.component1
-import kotlin.collections.component2
-import kotlin.collections.set
 
 // basic styling for form label/input spacing
 val formFieldStyles = setOf("flex", "flex-col", "gap-2")
@@ -31,12 +30,15 @@ fun FlowContent.formComponent() {
             radioFormInputs()
             checkboxFormInputs()
             selectFormInputs()
-            textareaFormInputs()
 
             span {
                 classes = setOf("mt-4")
-                jcButton(iconButtonStyles + setOf("pr-10")) {
+                button {
+                    classes = setOf("pr-10")
                     type = ButtonType.submit
+
+                    btn()
+                    btnAccent()
 
                     iconSpan(
                         icon = "progress_activity",
@@ -186,40 +188,45 @@ fun FlowContent.formValidation(input: String, parameters: Parameters) {
 fun FlowContent.formInputs() {
     // inputs
     span {
-        classes = formFieldStyles
-        label {
-            +"First Input"
-        }
+        formField()
+
         input {
-            classes = inputStyles
+            inputField()
 
             type = InputType.text
+            id = "first_input"
             name = "first_input"
 
-            placeholder = "Placeholder"
+            placeholder = " "
         }
+        inputLabel(
+            id = "first_input",
+            labelText = "First Input",
+        )
     }
 
     span {
-        classes = formFieldStyles
-        label {
-            required()
-            +"Second Input w/ Validations"
-        }
+        formField()
+
         input {
             hxPost("/components/form/validate?input=second_input")
             hxTrigger("change")
             hxSwap()
             hxSync()
 
-            classes = inputStyles
+            inputField()
 
             type = InputType.text
+            id = "second_input"
             name = "second_input"
-            required = true
 
-            placeholder = "Must be between 3 and 10 characters"
+            placeholder = " "
         }
+        inputLabel(
+            id = "second_input",
+            labelText = "Second Input w/ Validations",
+            required = true
+        )
         p {
             id = "second_input_error"
         }
@@ -229,7 +236,7 @@ fun FlowContent.formInputs() {
 fun FlowContent.radioFormInputs() {
     // radio buttons
     div {
-        classes = setOf("flex", "flex-col", "md:flex-row", "w-full", "justify-between")
+        classes = setOf("flex", "flex-col", "w-full", "justify-between")
 
         div {
             classes = formFieldStyles
@@ -238,54 +245,53 @@ fun FlowContent.radioFormInputs() {
                 +"Pick your favorite number:"
             }
             div {
-                classes = setOf("flex", "flex-col", "gap-3")
+                classes = setOf("flex", "flex-col", "mb-4")
 
-                val radioButtonStyles = setOf("flex", "flex-row", "gap-4")
-                val radioInputStyles = setOf("cursor-pointer")
-                val radioLabelStyles = setOf("cursor-pointer", "block")
-
-                div {
-                    classes = radioButtonStyles
+                label {
+                    radioItem()
                     input {
-                        classes = radioInputStyles
                         type = InputType.radio
                         name = "first_radio_group"
                         id = "first_radio_group_one"
                         value = "one"
+                        radioInput()
                     }
-                    label {
-                        classes = radioLabelStyles
+                    span { radioCustom() }
+                    span {
                         attributes["for"] = "first_radio_group_one"
+                        radioLabel()
                         +"One"
                     }
                 }
-                div {
-                    classes = radioButtonStyles
+                label {
+                    radioItem()
                     input {
-                        classes = radioInputStyles
                         type = InputType.radio
                         name = "first_radio_group"
                         id = "first_radio_group_two"
                         value = "two"
+                        radioInput()
                     }
-                    label {
-                        classes = radioLabelStyles
+                    span { radioCustom() }
+                    span {
                         attributes["for"] = "first_radio_group_two"
+                        radioLabel()
                         +"Two"
                     }
                 }
-                div {
-                    classes = radioButtonStyles
+                label {
+                    radioItem()
                     input {
-                        classes = radioInputStyles
                         type = InputType.radio
                         name = "first_radio_group"
                         id = "first_radio_group_three"
                         value = "three"
+                        radioInput()
                     }
-                    label {
-                        classes = radioLabelStyles
+                    span { radioCustom() }
+                    span {
                         attributes["for"] = "first_radio_group_three"
+                        radioLabel()
                         +"Three"
                     }
                 }
@@ -311,11 +317,12 @@ fun FlowContent.radioFormInputs() {
                         "flex-row",
                         "gap-3",
                         "relative",
-                        "border",
                         "w-full",
-                        "border-gray-400",
-                        "hover:border-gray-500",
-                        "rounded-md"
+                        "border",
+                        "border-gray-700",
+                        "hover:border-gray-600",
+                        "rounded-sm",
+                        "hover:translate-y-[-1px]"
                     )
                     val radioInputStyles =
                         setOf(
@@ -325,7 +332,7 @@ fun FlowContent.radioFormInputs() {
                             "opacity-0",
                             "w-full",
                             "h-full",
-                            "rounded-md"
+                            "rounded-sm"
                         )
                     val radioLabelStyles =
                         setOf(
@@ -334,7 +341,7 @@ fun FlowContent.radioFormInputs() {
                             "p-4",
                             "w-full",
                             "text-center",
-                            "rounded-md",
+                            "rounded-sm",
                             "shadow-md",
                             "peer-focus:shadow-lg",
                         )
@@ -352,8 +359,8 @@ fun FlowContent.radioFormInputs() {
                         label {
                             classes =
                                 radioLabelStyles + setOf(
-                                    "peer-checked:bg-yellow-100",
-                                    "peer-checked:border-yellow-400"
+                                    "peer-checked:bg-peach/[0.1]",
+                                    "peer-checked:border-peach"
                                 )
                             attributes["for"] = "second_radio_group_yellow"
                             +"Yellow"
@@ -371,8 +378,8 @@ fun FlowContent.radioFormInputs() {
                         label {
                             classes =
                                 radioLabelStyles + setOf(
-                                    "peer-checked:bg-red-100",
-                                    "peer-checked:border-red-400"
+                                    "peer-checked:bg-purple/[0.1]",
+                                    "peer-checked:border-purple"
                                 )
                             attributes["for"] = "second_radio_group_red"
                             +"Red"
@@ -390,8 +397,8 @@ fun FlowContent.radioFormInputs() {
                         label {
                             classes =
                                 radioLabelStyles + setOf(
-                                    "peer-checked:bg-blue-100",
-                                    "peer-checked:border-blue-400"
+                                    "peer-checked:bg-mint/[0.1]",
+                                    "peer-checked:border-mint"
                                 )
                             attributes["for"] = "second_radio_group_blue"
                             +"Blue"
@@ -414,49 +421,53 @@ fun FlowContent.checkboxFormInputs() {
                 +"More than one favorite number?"
             }
             div {
-                classes = setOf("flex", "flex-col", "gap-3")
-                div {
-                    classes = setOf("flex", "flex-row", "gap-4")
+                classes = setOf("flex", "flex-col", "gap-1")
+                label {
+                    checkboxItem()
                     input {
-                        classes = setOf("cursor-pointer")
                         type = InputType.checkBox
                         name = "first_checkbox_one"
                         id = "first_checkbox_one"
                         value = "one"
+                        checkboxInput()
                     }
-                    label {
+                    span { checkboxCustom() }
+                    span {
                         classes = setOf("cursor-pointer", "block")
                         attributes["for"] = "first_checkbox_one"
+                        checkboxLabel()
                         +"One"
                     }
                 }
-                div {
-                    classes = setOf("flex", "flex-row", "gap-4")
+                label {
+                    checkboxItem()
                     input {
-                        classes = setOf("cursor-pointer")
                         type = InputType.checkBox
                         name = "first_checkbox_two"
                         id = "first_checkbox_two"
                         value = "two"
+                        checkboxInput()
                     }
-                    label {
-                        classes = setOf("cursor-pointer", "block")
+                    span { checkboxCustom() }
+                    span {
                         attributes["for"] = "first_checkbox_two"
+                        checkboxLabel()
                         +"Two"
                     }
                 }
-                div {
-                    classes = setOf("flex", "flex-row", "gap-4")
+                label {
+                    checkboxItem()
                     input {
-                        classes = setOf("cursor-pointer")
                         type = InputType.checkBox
                         name = "first_checkbox_three"
                         id = "first_checkbox_three"
                         value = "three"
+                        checkboxInput()
                     }
-                    label {
-                        classes = setOf("cursor-pointer", "block")
+                    span { checkboxCustom() }
+                    span {
                         attributes["for"] = "first_checkbox_three"
+                        checkboxLabel()
                         +"Three"
                     }
                 }
@@ -480,9 +491,10 @@ fun FlowContent.checkboxFormInputs() {
                         "relative",
                         "border",
                         "w-full",
-                        "border-gray-400",
-                        "hover:border-gray-500",
-                        "rounded-md"
+                        "border-gray-700",
+                        "hover:border-gray-600",
+                        "rounded-sm",
+                        "hover:translate-y-[-1px]"
                     )
                     val checkboxInputStyles =
                         setOf(
@@ -492,7 +504,7 @@ fun FlowContent.checkboxFormInputs() {
                             "opacity-0",
                             "w-full",
                             "h-full",
-                            "rounded-md"
+                            "rounded-sm"
                         )
                     val checkboxLabelStyles =
                         setOf(
@@ -501,7 +513,7 @@ fun FlowContent.checkboxFormInputs() {
                             "p-4",
                             "w-full",
                             "text-center",
-                            "rounded-md",
+                            "rounded-sm",
                             "shadow-md",
                             "peer-focus:shadow-lg",
                         )
@@ -519,8 +531,8 @@ fun FlowContent.checkboxFormInputs() {
                         label {
                             classes =
                                 checkboxLabelStyles + setOf(
-                                    "peer-checked:bg-yellow-100",
-                                    "peer-checked:border-yellow-400"
+                                    "peer-checked:bg-peach/[0.1]",
+                                    "peer-checked:border-peach"
                                 )
                             attributes["for"] = "second_checkbox_yellow"
                             +"Yellow"
@@ -538,8 +550,8 @@ fun FlowContent.checkboxFormInputs() {
                         label {
                             classes =
                                 checkboxLabelStyles + setOf(
-                                    "peer-checked:bg-red-100",
-                                    "peer-checked:border-red-400"
+                                    "peer-checked:bg-purple/[0.1]",
+                                    "peer-checked:border-purple"
                                 )
                             attributes["for"] = "second_checkbox_red"
                             +"Red"
@@ -557,8 +569,8 @@ fun FlowContent.checkboxFormInputs() {
                         label {
                             classes =
                                 checkboxLabelStyles + setOf(
-                                    "peer-checked:bg-blue-100",
-                                    "peer-checked:border-blue-400"
+                                    "peer-checked:bg-mint/[0.1]",
+                                    "peer-checked:border-mint"
                                 )
                             attributes["for"] = "second_checkbox_blue"
                             +"Blue"
@@ -572,44 +584,47 @@ fun FlowContent.checkboxFormInputs() {
 
 fun FlowContent.selectFormInputs() {
     span {
-        classes = formFieldStyles
-        label {
-            required()
-            +"Select"
+        span {
+            selectWrapper()
+
+            select {
+                name = "first_select"
+                required = true
+                formSelect()
+
+                option {
+                    value = ""
+                    disabled = true
+                    selected = true
+                    hidden = true
+
+                    formSelectOption()
+                }
+                option {
+                    value = "one"
+                    formSelectOption()
+                    +"One"
+                }
+                option {
+                    value = "two"
+                    formSelectOption()
+                    +"Two"
+                }
+                option {
+                    value = "three"
+                    formSelectOption()
+                    +"Three"
+                }
+            }
+            label {
+                formSelectLabel()
+                +"Select"
+            }
+            selectArrow()
         }
-        select {
-            classes = inputStyles
-            name = "first_select"
-            option {
-                value = "one"
-                +"One"
-            }
-            option {
-                value = "two"
-                +"Two"
-            }
-            option {
-                value = "three"
-                +"Three"
-            }
-        }
+
         p {
             id = "first_select_error"
-        }
-    }
-}
-
-fun FlowContent.textareaFormInputs() {
-    // textarea
-    span {
-        classes = formFieldStyles
-        label {
-            +"Textarea"
-        }
-        textArea {
-            classes = inputStyles
-            name = "first_textarea"
-            placeholder = "Placeholder"
         }
     }
 }

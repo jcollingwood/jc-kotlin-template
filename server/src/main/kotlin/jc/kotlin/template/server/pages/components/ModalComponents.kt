@@ -1,22 +1,7 @@
 package jc.kotlin.template.server.pages.components
 
-import jc.kotlin.template.server.components.hxGet
-import jc.kotlin.template.server.components.hxSwap
-import jc.kotlin.template.server.components.hxTarget
-import jc.kotlin.template.server.components.jcButton
-import jc.kotlin.template.server.components.jcCard
-import kotlinx.html.FlowContent
-import kotlinx.html.classes
-import kotlinx.html.div
-import kotlinx.html.h1
-import kotlinx.html.h2
-import kotlinx.html.id
-import kotlinx.html.onClick
-import kotlinx.html.p
-import kotlinx.html.script
-import kotlinx.html.section
-import kotlinx.html.span
-import kotlinx.html.unsafe
+import jc.kotlin.template.server.components.*
+import kotlinx.html.*
 
 const val MODAL_JS = """
 const modalContainer = document.getElementById("modal-container");
@@ -123,7 +108,9 @@ fun FlowContent.modalComponents() {
                             "sm:w-full",
                             "sm:max-w-lg"
                         )
-                        jcCard {
+                        section {
+                            card()
+                            cardAccent()
                             div {
                                 classes = setOf("flex", "flex-col", "gap-6")
                                 h1 {

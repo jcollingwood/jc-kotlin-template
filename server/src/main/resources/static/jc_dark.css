@@ -1,0 +1,102 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@keyframes shimmer {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+}
+
+/* Footer with creative line work */
+footer {
+    margin-top: 8rem;
+    padding: 4rem 0;
+    position: relative;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateX(-20px); opacity: 0.2; }
+    50% { transform: translateX(20px); opacity: 0.6; }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+::-webkit-scrollbar-track {
+    background: #111;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 1px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #444;
+}
+
+/* mobile navigation styles */
+.mobile-nav.active {
+    right: 0;
+}
+
+/* Custom styles that can't be achieved with Tailwind utility classes */
+
+/* radio button styles */
+.radio-input:checked + .radio-custom {
+    box-shadow: 0 0 0 1px rgba(168, 230, 207, 0.3);
+}
+
+.radio-input:checked + .radio-custom::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    /* TODO use tailwind colors */
+    background: #a8e6cf;
+    border-radius: 50%;
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+/* checkbox styles */
+.checkbox-input:checked + .checkbox-custom {
+    border-color: #a8e6cf;
+    background: rgba(255, 179, 186, 0.1);
+    box-shadow: 0 0 0 1px rgba(168, 230, 207, 0.3);
+}
+
+.checkbox-input:checked + .checkbox-custom::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #a8e6cf;
+    font-size: 12px;
+    font-weight: bold;
+    opacity: 1;
+}
+
+/* form select styles */
+.form-select:focus + .form-label,
+.form-select:valid + .form-label {
+    top: -2rem;
+    font-size: 0.8rem;
+    color: #a8e6cf;
+}
+
+.form-select:focus ~ .select-arrow {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.form-select:focus ~ .select-arrow {
+    stroke: #a8e6cf;
+}
